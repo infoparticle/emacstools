@@ -1,0 +1,66 @@
+#+TITLE: Java Ref
+#+AUTHOR: Gopinath Sadasivam
+
+#+TEXINFO_DIR_CATEGORY: Java
+#+TEXINFO_DIR_TITLE: Java: (java-ref).
+#+TEXINFO_DIR_DESC: Java Coding Snippets and References
+
+
+* Welcome
+
+#+CINDEX: welcome
+This contains some basic java code snippets and references to make the life of
+copy-pasta little bit easier.
+
+* Snippets
+
+Collection of snippets.
+
+** Logging
+
+*** Basic Logging
+
+Note this doesn't have log rotate
+
+#+CINDEX: logging
+
+#+begin_example
+import java.util.*;
+import java.text.*;
+import java.io.*;
+
+private static void mydebug(final String s) {
+
+    String debugClassName = "ChangeThis"; //FixThis
+
+    String OS = System.getProperty("os.name").toLowerCase();
+    String log_file_path = OS.contains("win")?"C:/Temp/mydebug.log":"/tmp/mydebug.log";
+
+    try (FileWriter fw = new FileWriter(log_file_path, true);
+         BufferedWriter bw = new BufferedWriter(fw);
+         PrintWriter out = new PrintWriter(bw)) {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date();
+        out.println(dateFormat.format(date) + " : " + debugClassName + " : " + s);
+        out.flush();
+    } catch (IOException e) {
+        //exception handling left as an exercise for the reader
+    }
+}
+#+end_example
+
+TODO : Try truncating file
+#+begin_example
+try (FileChannel outChan = new FileOutputStream(f, true).getChannel()) {
+  outChan.truncate(newSize);
+}
+
+file.length();
+
+#+end_example
+
+* Command Index
+:PROPERTIES:
+:APPENDIX:   t
+:INDEX:      cp
+:END:

@@ -1,0 +1,87 @@
+#+TITLE: My Code Gists
+Last Saved: "May 04, 2022 Wed"
+
+*** Table of contents                                                                   :TOC_7:
+- [[#elisp][elisp]]
+  - [[#append-to-load-path][append to load path]]
+- [[#java][java]]
+  - [[#simple-logger][Simple logger]]
+  - [[#simple-logger-with-size-limit-10mb][simple logger with size limit 10MB]]
+- [[#git][Git]]
+  - [[#specify-ssh-key-locations][Specify ssh key locations]]
+
+* elisp
+
+** append to load path
+#+begin_src emacs-lisp
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/jademode"))
+#+end_src
+
+* java
+
+** Simple logger
+
+#+begin_src java
+import java.util.*;
+import java.text.*;
+import java.io.*;
+
+private static void mydebug(final String s) {
+    String debugClassName = "CsrfGuardFilter";
+    String OS = System.getProperty("os.name").toLowerCase();
+    String log_file_path = OS.contains("win")?"C:/Temp/mydebug.log":"/tmp/mydebug.log";
+    try (FileWriter fw = new FileWriter(log_file_path, true);
+         BufferedWriter bw = new BufferedWriter(fw);
+         PrintWriter out = new PrintWriter(bw)) {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date();
+        out.println(dateFormat.format(date) + " : " + debugClassName + " : " + s);
+        out.flush();
+    } catch (IOException e) {
+        //exception handling left as an exercise for the reader
+    }
+}
+#+end_src
+
+** simple logger with size limit 10MB
+#+begin_src java
+import java.util.*;
+import java.text.*;
+import java.io.*;
+
+private static void mydebug(final String debugClassName, final String s) {
+    String OS = System.getProperty("os.name").toLowerCase();
+    String log_file_path = OS.contains("win")?"C:/Temp/mydebug.log":"/tmp/mydebug.log";
+    File mylogfile = new File(log_file_path)
+    if (mylogfile.exists() && mylogfile.isFile() &&
+        file.length() && mylogfile.length() > 1024*1024*1024*10) { //10 MB
+        FileWriter fw = new FileWriter(mylogfile);
+        fw.close();
+    }
+
+    try (FileWriter fw = new FileWriter(log_file_path, true);
+         BufferedWriter bw = new BufferedWriter(fw);
+         PrintWriter out = new PrintWriter(bw)) {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date();
+        out.println(dateFormat.format(date) + " : " + debugClassName + " : " + s);
+        out.flush();
+    } catch (IOException e) {
+        //exception handling left as an exercise for the reader
+    }
+}
+
+#+end_src
+
+* Git
+
+** Specify ssh key locations
+
+https://stackoverflow.com/questions/4565700/how-to-specify-the-private-ssh-key-to-use-when-executing-shell-command-on-git
+
+#+begin_src bash
+ # cd /path/to/my/repo/already/cloned
+git config core.sshCommand 'ssh -i private_key_file'
+
+# set "GIT_SSH_COMMAND=ssh -i private_key_file" in windows
+#+end_src

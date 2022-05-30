@@ -1,0 +1,116 @@
+\input texinfo    @c -*- texinfo -*-
+@c %**start of header
+@setfilename java-ref.info
+@settitle Java Ref
+@documentencoding UTF-8
+@documentlanguage en
+@c %**end of header
+
+@dircategory Java
+@direntry
+* Java: (java-ref).     Java Coding Snippets and References.
+@end direntry
+
+@finalout
+@titlepage
+@title Java Ref
+@author Gopinath Sadasivam
+@end titlepage
+
+@contents
+
+@ifnottex
+@node Top
+@top Java Ref
+@end ifnottex
+
+@menu
+* Welcome::
+* Snippets::
+* Command Index::
+
+@detailmenu
+--- The Detailed Node Listing ---
+
+Snippets
+
+* Logging::
+
+Logging
+
+* Basic Logging::
+
+@end detailmenu
+@end menu
+
+@node Welcome
+@chapter Welcome
+
+@cindex welcome
+This contains some basic java code snippets and references to make the life of
+copy-pasta little bit easier.
+
+@node Snippets
+@chapter Snippets
+
+Collection of snippets.
+
+@menu
+* Logging::
+@end menu
+
+@node Logging
+@section Logging
+
+@menu
+* Basic Logging::
+@end menu
+
+@node Basic Logging
+@subsection Basic Logging
+
+Note this doesn't have log rotate
+
+@cindex logging
+
+@example
+import java.util.*;
+import java.text.*;
+import java.io.*;
+
+private static void mydebug(final String s) @{
+
+    String debugClassName = "ChangeThis"; //FixThis
+
+    String OS = System.getProperty("os.name").toLowerCase();
+    String log_file_path = OS.contains("win")?"C:/Temp/mydebug.log":"/tmp/mydebug.log";
+
+    try (FileWriter fw = new FileWriter(log_file_path, true);
+         BufferedWriter bw = new BufferedWriter(fw);
+         PrintWriter out = new PrintWriter(bw)) @{
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date();
+        out.println(dateFormat.format(date) + " : " + debugClassName + " : " + s);
+        out.flush();
+    @} catch (IOException e) @{
+        //exception handling left as an exercise for the reader
+    @}
+@}
+@end example
+
+TODO : Try truncating file
+@example
+try (FileChannel outChan = new FileOutputStream(f, true).getChannel()) @{
+  outChan.truncate(newSize);
+@}
+
+file.length();
+
+@end example
+
+@node Command Index
+@appendix Command Index
+
+@printindex cp
+
+@bye

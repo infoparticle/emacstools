@@ -1,0 +1,32 @@
+#+TITLE: #+TITLE: Software Lexicon
+#+AUTHOR: Gopinath Sadasivam
+
+#+TEXINFO_DIR_CATEGORY: Lexicon
+#+TEXINFO_DIR_TITLE: Lexicon: (software-lexicon).
+#+TEXINFO_DIR_DESC: Software Concepts and Definitions
+
+
+* Welcome
+
+#+CINDEX: welcome
+
+Lexicon for clear thinking
+
+* Definitions
+
+** Homoiconicity
+
+#+CINDEX: homoiconicity
+
+Homoiconicity allows you to write lisp functions that take lisp source
+(represented as lists of lists) and do list manipulation operations on it to
+produce other lisp source.
+
+You can later call eval on the new generated code.
+
+* Command Index
+:PROPERTIES:
+:APPENDIX:   t
+:INDEX:      cp
+:END:
+Software Lexicon

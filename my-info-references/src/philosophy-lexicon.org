@@ -1,0 +1,181 @@
+#+TITLE: Philosophy lexicon
+#+AUTHOR: Gopinath Sadasivam
+
+#+TEXINFO_DIR_CATEGORY: Lexicon
+#+TEXINFO_DIR_TITLE: Lexicon: (philosophy-lexicon).
+#+TEXINFO_DIR_DESC: Lexicon to think clearly
+
+# XXX: We cannot use TODO keyword as a node starts with "TODO".
+#+todo: REVIEW FIXME | DONE
+#+property: header-args :eval no
+#+startup: overview nologdone
+
+# Use proper quote and backtick for code sections in PDF output
+# Cf. Texinfo manual 14.2
+#+texinfo_header: @set txicodequoteundirected
+#+texinfo_header: @set txicodequotebacktick
+
+# Contact Info
+#+texinfo_header: @set MAINTAINERSITE @uref{https://orgmode.org,maintainers webpage}
+#+texinfo_header: @set MAINTAINER Bastien Guerry
+#+texinfo_header: @set MAINTAINEREMAIL @email{bzg@gnu.org}
+#+texinfo_header: @set MAINTAINERCONTACT @uref{mailto:bzg@gnu.org,contact the maintainer}
+
+#+options: H:4 num:t toc:t author:t \n:nil ::t |:t ^:nil -:t f:t *:t <:t e:t ':t
+#+options: d:nil todo:nil pri:nil tags:not-in-toc stat:nil broken-links:mark
+#+select_tags: export
+#+exclude_tags: noexport
+
+#+macro: cite @@texinfo:@cite{@@$1@@texinfo:}@@
+#+macro: var @@texinfo:@var{@@$1@@texinfo:}@@
+
+# The "version" macro extracts "Version" keyword from "org.el".  It
+# returns major.minor version number.  This is sufficient since bugfix
+# releases are not expected to add features and therefore imply manual
+# modifications.
+#+macro: version (eval (with-current-buffer (find-file-noselect "../lisp/org.el") (org-with-point-at 1 (if (re-search-forward "Version: +\\([0-9.]+\\)" nil t) (mapconcat #'identity (cl-subseq (split-string (match-string-no-properties 1) "\\.") 0 2) ".") (error "Missing \"Version\" keyword in \"org.el\"")))))
+
+# The "kbd" macro turns KBD into @kbd{KBD}.  Additionally, it
+# encloses case-sensitive special keys (SPC, RET...) within @key{...}.
+#+macro: kbd (eval (let ((case-fold-search nil) (regexp (regexp-opt '("SPC" "RET" "LFD" "TAB" "BS" "ESC" "DELETE" "SHIFT" "Ctrl" "Meta" "Alt" "Cmd" "Super" "UP" "LEFT" "RIGHT" "DOWN") 'words))) (format "@@texinfo:@kbd{@@%s@@texinfo:}@@" (replace-regexp-in-string regexp "@@texinfo:@key{@@\\&@@texinfo:}@@" $1 t))))
+
+
+
+
+* Welcome
+:PROPERTIES:
+:DESCRIPTION: A welcome description
+:END:
+
+
+
+#+CINDEX: welcome
+
+Lexicon for clear thinking
+
+* Definitions
+
+** Action
+:PROPERTIES:
+:NUMBERED: notoc
+:END:
+*** Dilemma vs Choice
+
+forced to pick equally awful choices!
+
+eg: painful radiation therapy or drugs that cause kidney failure.
+
+*** Choice
+
+The ability to pick the alternatives in a non automatic way.
+
+An option; a decision; an opportunity to choose or select something, based on your value judgment.
+No penalty attached.
+
+You have the option to drink lime juice, tea or coffee, pick whatever you like as per weather/mood.
+
+*** Freewill
+
+#+CINDEX: Freewill
+#+CINDEX: Volition
+
+Capability of mind.
+
+The ultimate choice is to focus or not focus/evade your mind, the rest automatically follows..
+
+Can some one choose to focus their mind and choose to evade? yes.
+
+*** Volition
+
+#+CINDEX: freewill
+#+CINDEX: Volition
+
+Not happening automatically unlike heart beat or digestion. Man must choose to focus.
+
+** Relationship
+:PROPERTIES:
+:NUMBERED: notoc
+:END:
+*** Love
+
+You are falling back into you, when all your 'stuff' are not blocking you.
+
+*** Sex
+
+#+CINDEX: sex
+#+CINDEX: love
+
+Integration of mind, body and virtues.
+
+Concrete reflection of values and virtues you have achieved.
+A conscious mirror of the soul!
+
+** Emotions
+:PROPERTIES:
+:NUMBERED: notoc
+:END:
+*** Happiness
+
+#+CINDEX: Happiness
+
+**** Objectivism
+:PROPERTIES:
+:UNNUMBERED: notoc
+:END:
+
+
+State of mind.
+
+
+Happiness is the successful state of life, pain is an agent of death. Happiness
+is that state of consciousness which proceeds from the achievement of one's
+values.
+
+A morality that dares to tell you to find happiness in the renunciation of your
+happiness--to value the failure of your values--is an insolent negation of
+morality.
+
+**** Yoga
+:PROPERTIES:
+:UNNUMBERED: notoc
+:END:
+
+Not being closed/blocking to the flow of life energy.
+
+The more resistance to the flow, the greater the neurosis and suffering.
+
+#+attr_texinfo: :sep ,
+- {{{kbd(C-c C-c)}}} ::
+
+  Re-align the table without moving point.
+
+- {{{kbd(TAB)}}} ::
+
+  Re-align the table, move to the next field.  Creates a new row if
+  necessary.
+
+- {{{kbd(S-TAB)}}} ::
+
+  Re-align, move to previous field.
+
+
+*** Self Esteem
+
+#+CINDEX: self-esteem
+
+The idea that one's mind is capable of survival and he is worthy of good life.
+
+*** Self Respect
+
+#+CINDEX: self-respect
+
+The person should be valued just as the values he is going achieve.
+
+Not having self-respect, you don't see as worthy.
+
+
+* Concept Index
+:PROPERTIES:
+:APPENDIX:   t
+:INDEX:      cp
+:END:

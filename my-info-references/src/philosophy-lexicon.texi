@@ -1,0 +1,209 @@
+\input texinfo    @c -*- texinfo -*-
+@c %**start of header
+@setfilename philosophy-lexicon.info
+@settitle Philosophy lexicon
+@documentencoding UTF-8
+@documentlanguage en
+@set txicodequoteundirected
+@set txicodequotebacktick
+@set MAINTAINERSITE @uref{https://orgmode.org,maintainers webpage}
+@set MAINTAINER Bastien Guerry
+@set MAINTAINEREMAIL @email{bzg@gnu.org}
+@set MAINTAINERCONTACT @uref{mailto:bzg@gnu.org,contact the maintainer}
+@c %**end of header
+
+@dircategory Lexicon
+@direntry
+* Lexicon: (philosophy-lexicon). Lexicon to think clearly.
+@end direntry
+
+@finalout
+@titlepage
+@title Philosophy lexicon
+@author Gopinath Sadasivam
+@end titlepage
+
+@contents
+
+@ifnottex
+@node Top
+@top Philosophy lexicon
+@end ifnottex
+
+@menu
+* Welcome::                      A welcome description
+* Definitions::
+* Command Index::
+
+@detailmenu
+--- The Detailed Node Listing ---
+
+Definitions
+
+* Action::
+* Relationship::
+* Emotions::
+
+Action
+
+* Choice::
+* Freewill::
+* Volition::
+
+Relationship
+
+* Love::
+* Sex::
+
+Emotions
+
+* Happiness::
+* Self Esteem::
+* Self Respect::
+
+@end detailmenu
+@end menu
+
+@node Welcome
+@chapter Welcome
+
+@cindex welcome
+
+Lexicon for clear thinking
+
+@node Definitions
+@chapter Definitions
+
+@menu
+* Action::
+* Relationship::
+* Emotions::
+@end menu
+
+@node Action
+@section Action
+
+@menu
+* Choice::
+* Freewill::
+* Volition::
+@end menu
+
+@node Choice
+@subsection Choice
+
+The ability to pick the alternatives in a non automatic way.
+
+@node Freewill
+@subsection Freewill
+
+@cindex Freewill
+@cindex Volition
+
+Capability of mind.
+
+The ultimate choice is to focus or not focus/evade your mind, the rest automatically follows..
+
+Can some one choose to focus their mind and choose to evade? yes.
+
+@node Volition
+@subsection Volition
+
+@cindex freewill
+@cindex Volition
+
+Not happening automatically unlike heart beat or digestion. Man must choose to focus.
+
+@node Relationship
+@section Relationship
+
+@menu
+* Love::
+* Sex::
+@end menu
+
+@node Love
+@subsection Love
+
+You are falling back into you, when all your 'stuff' are not blocking you.
+
+@node Sex
+@subsection Sex
+
+@cindex sex
+@cindex love
+
+Integration of mind, body and virtues.
+
+Concrete reflection of values and virtues you have achieved.
+A conscious mirror of the soul!
+
+@node Emotions
+@section Emotions
+
+@menu
+* Happiness::
+* Self Esteem::
+* Self Respect::
+@end menu
+
+@node Happiness
+@subsection Happiness
+
+@cindex Happiness
+
+@anchor{Objectivism}
+@subsubheading Objectivism
+
+State of mind.
+
+
+Happiness is the successful state of life, pain is an agent of death. Happiness
+is that state of consciousness which proceeds from the achievement of one's
+values.
+
+A morality that dares to tell you to find happiness in the renunciation of your
+happiness--to value the failure of your values--is an insolent negation of
+morality.
+
+@anchor{Yoga}
+@subsubheading Yoga
+
+Not being closed/blocking to the flow of life energy.
+
+The more resistance to the flow, the greater the neurosis and suffering.
+
+@table @asis
+@item @kbd{C-c C-c}
+Re-align the table without moving point.
+
+@item @kbd{@key{TAB}}
+Re-align the table, move to the next field.  Creates a new row if
+necessary.
+
+@item @kbd{S-@key{TAB}}
+Re-align, move to previous field.
+@end table
+
+@node Self Esteem
+@subsection Self Esteem
+
+@cindex self-esteem
+
+The idea that one's mind is capable of survival and he is worthy of good life.
+
+@node Self Respect
+@subsection Self Respect
+
+@cindex self-respect
+
+The person should be valued just as the values he is going achieve.
+
+Not having self-respect, you don't see as worthy.
+
+@node Command Index
+@appendix Command Index
+
+@printindex cp
+
+@bye

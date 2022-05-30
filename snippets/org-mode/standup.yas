@@ -1,0 +1,18 @@
+# -*- mode: snippet -*-
+# name: standup
+# key: ,standup
+# --
+
+** `(format-time-string "%Y-%m-%d %a")`
+
+| People | Update   |
+|--------+----------|
+| Mayank | $0 |
+|--------+-|
+| Ganesh | |
+|--------+-|
+| Anil   | |
+|--------+-|
+| Chakra | |
+
+
