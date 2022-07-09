@@ -3,7 +3,7 @@
 # key: <p
 # --
 
-#+BEGIN_SRC python :results output :session `(insert (concat "python-" (buffer-name)))`
+#+BEGIN_SRC python :results output :session `(concat "python-" (buffer-name))`
 
 $0
 #+END_SRC

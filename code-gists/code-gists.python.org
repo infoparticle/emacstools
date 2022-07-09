@@ -1,0 +1,245 @@
+* logging
+
+https://coralogix.com/blog/python-logging-best-practices-tips/
+
+[[https://gist.github.com/panamantis/5797dda98b1fa6fab2f739a7aacc5e9d][Python logging configuration files (yaml, json, ini) · GitHub]]
+
+- disable_existing_loggers=False disables everything except root logger, unless they are nammed in config file
+- propogate : False - don't pass this record to parent loggers (in logger hierarchy)
+
+** Simple logging - basicConfig
+#+begin_src python
+import logging
+from pathlib import Path
+
+script_name=Path(__file__).stem
+logging.basicConfig(
+                    filename=script_name +'.log', filemode='w', # Use this line or next line!
+                    #handlers=[RotatingFileHandler('./my_log.log', maxBytes=100000, backupCount=10)],
+
+                    format='%(asctime)s %(name)s - %(levelname)s - %(message)s',
+                    datefmt='%d-%b-%y %H:%M:%S')
+logger = logging.getLogger(script_name)
+
+logger.info(" ============ Started " + script_name + " ================")
+#+end_src
+
+** Logging with a config file
+
+#+begin_src
+import logging
+import logging.config
+
+logging.config.fileConfig(fname='mylogger.conf', disable_existing_loggers=False)
+
+# Get the logger specified in the file
+logger = logging.getLogger(__name__)
+
+#--------------8<---- mylogger.conf----8<----------------------
+[loggers]
+keys=root
+
+[handlers]
+keys=logfile
+
+[formatters]
+keys=logfileformatter
+
+[logger_root]
+level=DEBUG
+handlers=logfile
+
+[formatter_logfileformatter]
+format=%(asctime)s %(name)-12s: %(levelname)s %(message)s
+
+[handler_logfile]
+class=handlers.RotatingFileHandler
+level=DEBUG
+args=('testing.log','a',10,100)
+formatter=logfileformatter
+#--------------8<---- mylogger.conf----8<----------------------
+#+end_src
+
+*** Logging with json/dictConfig
+
+from :https://stackoverflow.com/questions/32353723/having-difficulties-understanding-pythons-logger-propagation
+
+#+begin_src python
+import json
+import logging
+import logging.config
+
+with open('logging.json','rt') as file:
+    logging.config.dictConfig(json.load(file))
+
+#logger = logging.getLogger(__name__)
+logger = logging.getLogger("script_logger")
+
+#--------------8<---- logging.json----8<----------------------
+{
+    "version": 1,
+    "disable_existing_loggers": false,
+    "formatters": {
+        "simple": {
+            "format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+        }
+    },
+
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "level": "DEBUG",
+            "formatter": "simple",
+            "stream": "ext://sys.stdout"
+        },
+
+        "info_file_handler": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "level": "INFO",
+            "formatter": "simple",
+            "filename": "info.log",
+            "maxBytes": 10485760,
+            "backupCount": 20,
+            "encoding": "utf8"
+        },
+
+        "error_file_handler": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "level": "ERROR",
+            "formatter": "simple",
+            "filename": "errors.log",
+            "maxBytes": 10485760,
+            "backupCount": 10,
+            "encoding": "utf8"
+        }
+    },
+
+    "loggers": {
+        "script_logger": {
+            "level": "DEBUG",
+            "handlers": ["console"],
+            "propagate": False
+        }
+    },
+
+    "root": {
+        "level": "DEBUG",
+        "handlers": ["console", "info_file_handler", "error_file_handler"]
+    }
+}
+#+end_src
+
+
+* click
+
+** CliRunner
+#+begin_src python
+from click.testing import CliRunner
+runner = CliRunner()
+out = runner.invoke(build_pizza, ['s', 'normal', '-t', 'blah f']).output
+print(out)
+#+end_src
+
+** basic cli with options and arguments with click.choice - pizza builder cli
+
+#+begin_src python
+import click
+
+SIZES = {"s": "Small", "m": "Medium", "l": "Large", "xl": "Extra large", "xxl": "Extra extra large"}
+CRUSTS = {"normal": "", "thin": " thin crust", "deep": " deep dish"}
+
+@click.command()
+
+#nargs = 1
+@click.argument("size", type=click.Choice(SIZES.keys()), default="l")
+@click.argument("crust", type=click.Choice(CRUSTS.keys()), default="normal")
+
+#default= ..., --debug/--no-debug, type=int
+@click.option("-t", "--toppings", type=str, multiple=True, help="One or more toppings for your pizza")
+@click.option("--extra-cheese", "cheese", is_flag=True, help="Add extra cheese to your pizza")
+@click.option("--extra-sauce", "sauce", is_flag=True, help="Add extra sauce to your pizza")
+def build_pizza(size, crust, toppings, cheese, sauce):
+    """Welcome to the pizza builder, let's build a pizza!!"""
+    pizza = f"{SIZES[size]}{CRUSTS[crust]}"
+    if toppings:
+        pizza +=  " with " + ", ".join(toppings)
+    if cheese:
+        pizza += " plus extra cheese"
+    if sauce:
+        pizza += " and extra sauce"
+    click.secho(f"Your pizza is: {pizza}!!", fg="green")
+#+end_src
+
+produces:
+
+#+begin_src
+Usage: pizza.py [OPTIONS] [[s|m|l|xl|xxl]] [[normal|thin|deep]]
+
+  Welcome to the pizza builder, let's build a pizza!!
+
+Options:
+  -t, --toppings TEXT  One or more toppings for your pizza
+  --extra-cheese       Add extra cheese to your pizza
+  --extra-sauce        Add extra sauce to your pizza
+  --help               Show this message and exit.
+
+#+end_src
+** cli with command groups, options and arguments
+
+#+begin_src python
+import click
+
+click.command()
+click.options("-n", "--name")
+click.argument("blah")
+def main():
+    pass
+
+if __name__ == '__main__':
+    main()
+#+end_src
+
+
+** cli with command groups, options, arguments and context
+
+
+#+begin_src python
+import click
+
+click.command()
+click.options("-n", "--name")
+click.argument("blah")
+def main():
+    pass
+
+if __name__ == '__main__':
+    main()
+import click
+
+click.command()
+click.options("-n", "--name")
+click.argument("blah")
+def main():
+    pass
+
+if __name__ == '__main__':
+    main()
+#+end_src
+
+* pathlib
+
+** directory walk
+
+#+begin_src python
+from pathlib import Path
+
+#rglob('*') is same as glob('**/*')
+for i in Path('docs').rglob('*'):
+     print(i.name)
+#+end_src
+
+* pipe data to python in cli
+
+#+begin_src python
+echo 'Hello!' | python -c "import sys;d=sys.stdin.read(); print('{}\n'.format(d))"
+#+end_src

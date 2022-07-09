@@ -1,0 +1,75 @@
+#+TITLE: Org Mode References
+Last Saved: "Jul 03, 2022 Sun"
+
+*** Table of contents                                                                   :TOC_7:
+- [[#org-table][org table]]
+  - [[#summing-tables][Summing tables]]
+    - [[#sample---with-variable-name][Sample - with variable name]]
+    - [[#summing-items-of-row-vsum-just-works-fine-for-horizontal-sums-too][summing items of row (vsum just works fine for horizontal sums too!)]]
+    - [[#summing-4th-column-when-there-is-no-header-seperator][summing 4th column when there is no header seperator]]
+    - [[#simple-addition][Simple addition]]
+
+* org table
+
+** Summing tables
+
+#+BEGIN_SRC emacs-lisp
+,#+TBLFM: @>$3=vsum(@2..@-1)  ; sum 3rd column from 2 row to one row above last
+
+,#+TBLFM: @>$2=vsum(@I..@II)  ; same sum in 2nd column
+
+,#+TBLFM: $x=vsum(@1..@-1)
+
+,#+TBLFM: $4=vsum(@2..@-1)  ; simplest of all sum the 4 the column
+
+,#+TBLFM: @4$1=vsum(@1..@-1) ;%0.2f   //print 2 decimal points
+#+END_SRC
+
+*** Sample - with variable name
+
+|---+-----|
+|   |   1 |
+|   |  20 |
+|   |   3 |
+|---+-----|
+|   |  24 |
+| ^ |   x |
+|---+-----|
+|   | one |
+|   | two |
+|---+-----|
+#+TBLFM: $x=vsum(@1..@-1)
+
+*** summing items of row (vsum just works fine for horizontal sums too!)
+
+|------+-----+-----+-----+-----+-----+-------|
+| Task | Mon | Tue | Wed | Thu | Fri | Total |
+|------+-----+-----+-----+-----+-----+-------|
+| Foo  |   2 |   3 |   4 |   5 |   6 |    20 |
+| Bar  |   2 |   3 |   4 |   5 |   7 |    21 |
+#+TBLFM: $7=vsum($2..$6)
+
+*** summing 4th column when there is no header seperator
+
+| Time                   | Input | Test | InQty |
+| <2018-03-13 Tue 06:15> | Water |      |   200 |
+| <2018-03-13 Tue 07:03> |       |      |       |
+|                        |       |      |       |
+| <2018-03-13 Tue 07:31> | Water |      |   180 |
+| <2018-03-13 Tue 09:00> | Chai  |      |   240 |
+| <2018-03-13 Tue 11:30> | Chai  |      |   240 |
+| <2018-03-13 Tue 16:01> | Water |      |    60 |
+|                        |       |      |       |
+|------------------------+-------+------+-------|
+|                        |       |      |   920 |
+#+TBLFM: $4=vsum(@2..@-1)
+
+if you add header divider above stops working.
+
+*** Simple addition
+
+|  3 |
+|  2 |
+|  5 |
+| 10 |
+#+TBLFM: @4$1=vsum(@1..@-1)

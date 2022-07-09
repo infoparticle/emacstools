@@ -6,3 +6,4 @@
 (load-helper-file "welcome.el")
 (load-helper-file "string-helpers.el")
 (load-helper-file "java-helper.el")
+(load-helper-file "python-helper.el")

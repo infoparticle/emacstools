@@ -1,0 +1,18 @@
+# -*- mode: snippet -*-
+# name: org-python-proj-init
+# key: oppi
+# --
+#+TITLE: $1
+Last Saved: "Jul 09, 2022 Sat"
+#+property: header-args :tangle `(concat (file-name-sans-extension (buffer-name)) ".py")`
+#+select_tags: export
+#+exclude_tags: noexport
+#+auto_tangle: t
+
+** Intro
+
+** Imports
+#+BEGIN_SRC python :results output :session `(concat "python-" (buffer-name))`
+
+$0
+#+END_SRC
