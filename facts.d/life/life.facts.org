@@ -1,0 +1,30 @@
+* Family
+
+** Birthdays and anniversaries
+#+begin_src org
+my birthday - 23 march 1983
+#+end_src
+
+* Docs
+** ID cards pan passport aadhar - gopi
+
+#+begin_src org
+my aadhar - 12345
+#+end_src
+** Phone numbers
+x#+begin_src org
+| Name |     Number |
+|------+------------|
+| Gopi | 8072364074 |
+#+end_src
+
+* Address
+
+** gopi home address
+
+#+begin_src org
+164, 5th Street,
+Ganapathy Pudur,
+Coimbatore - 641006,
+Tamilnadu.
+#+end_src

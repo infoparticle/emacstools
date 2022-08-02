@@ -1,0 +1,18 @@
+#+TITLE: mytitle
+Last Saved: "Jul 18, 2022 Mon"
+#+property: header-args :tangle ../../src/{{cookiecutter.package_name}}/{{cookiecutter.module_name}}.py
+#+auto_tangle: t
+
+
+*** Table of contents                                                                   :TOC_7:
+- [[#intro][Intro]]
+- [[#code][Code]]
+
+* Intro
+
+* Code
+
+#+BEGIN_SRC python :results output :session python-{{cookiecutter.module_name}}.py.org
+def isModuleRead():
+    return True
+#+END_SRC

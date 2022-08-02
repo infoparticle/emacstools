@@ -1,0 +1,22 @@
+
+* Pre market
+
+#+begin_src org
+1. mark the charts with SR levels
+    1.a Start with higher Time frame
+#+end_src
+
+
+* market continuous evaluation
+
+#+begin_src org
+1. Keep an eye
+2. Anticipate and be ready to respond with if-then else.
+#+end_src
+
+* Initiate a trade
+
+#+begin_src org
+postion size check
+risk check
+#+end_src

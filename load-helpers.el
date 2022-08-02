@@ -7,3 +7,4 @@
 (load-helper-file "string-helpers.el")
 (load-helper-file "java-helper.el")
 (load-helper-file "python-helper.el")
+(load-helper-file "get-facts-helper.el")

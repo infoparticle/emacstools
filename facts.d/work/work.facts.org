@@ -1,0 +1,36 @@
+* work
+** PI 32 sprint calendar with leave plans
+#+begin_src sh
+| Sprint              | Start      | End        | Planned Leave |
+|---------------------+------------+------------+---------------|
+| Sprint 32.1         | 06-Jun-22  | 17-Jun-22  |             0 |
+| Sprint 32.2         | 20-Jun-22  | 01-Jul-22  |             1 |
+|---------------------+------------+------------+---------------|
+| Sprint 32.3         | 04-Jul-22  | 15-Jul-22  |             1 |
+| Sprint 32.4         | 18-Jul-22  | 29-Jul-22  |             1 |
+|---------------------+------------+------------+---------------|
+| PI32 Closure sprint | 01-Aug-22  | 05-Aug-22  |             0 |
+#+end_src
+
+** 2022 holiday calendar
+
+#+begin_src sh
+| Aug | 15-Aug-22 | Monday    | Independence Day         |
+| Aug | 31-Aug-22 | Wednesday | Ganesh Chaturthi         |
+|-----+-----------+-----------+--------------------------|
+| Oct | 04-Oct-22 | Tuesday   | Mahanavami / Ayudha Puja |
+| Oct | 05-Oct-22 | Wednesday | Vijayadashami            |
+| Oct | 24-Oct-22 | Monday    | Deepavali / Diwali       |
+| Oct | 26-Oct-22 | Wednesday | Balipadyami              |
+|-----+-----------+-----------+--------------------------|
+| Nov | 01-Nov-22 | Tuesday   | Karnataka Rajyotsava     |
+#+end_src
+
+* bookmarks
+
+** HCM portal vm creation deletion
+#+begin_src org
+https://sachcm.swinfra.net:8089/org/ITOM
+
+https://hcmmgmt.swinfra.net:8089/account/login    #to register
+#+end_src

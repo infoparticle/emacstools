@@ -1,0 +1,21 @@
+#+TITLE: mytitle
+Last Saved: "Aug 02, 2022 Tue"
+#+property: header-args :tangle ../../tests/{{cookiecutter.package_name}}/test_{{cookiecutter.module_name}}.py
+#+auto_tangle: nil
+
+
+*** Table of contents                                                                   :TOC_7:
+- [[#intro][Intro]]
+- [[#code][Code]]
+
+* Intro
+
+* Code
+
+#+BEGIN_SRC python :results output :session python-test_{{cookiecutter.module_name}}.org
+import {{cookiecutter.module_name}} as m
+
+def test_yourtest():
+    assert m.isModuleReady() == True
+
+#+END_SRC

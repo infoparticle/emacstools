@@ -1,0 +1,20 @@
+* Computing
+
+** Abstraction
+
+#+begin_src org
+Abstraction is based on
+- generalization through the introduction of a name to replace a value and
+- specialization through the replacement of a name with another value.
+
+Eg:
+10 apples cost = 10 * 20 Rs/-  <----->  total_cost = items * unit_cost
+#+end_src
+
+* Philosophy
+
+** Free will
+
+#+begin_src org
+Some screwed up concepts go here!
+#+end_src

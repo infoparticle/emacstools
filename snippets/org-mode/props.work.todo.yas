@@ -1,0 +1,19 @@
+# -*- mode: snippet -*-
+# name:props.work.todo
+# key:p.w| Sprint              | Start      | End        | Planned Leave |
+|---------------------+------------+------------+---------------|
+| Sprint 32.1         | 06-Jun-22  | 17-Jun-22  |             0 |
+| Sprint 32.2         | 20-Jun-22  | 01-Jul-22  |             1 |
+|---------------------+------------+------------+---------------|
+| Sprint 32.3         | 04-Jul-22  | 15-Jul-22  |             1 |
+| Sprint 32.4         | 18-Jul-22  | 29-Jul-22  |             1 |
+|---------------------+------------+------------+---------------|
+| PI32 Closure sprint | 01-Aug-22  | 05-Aug-22  |             0 |
+t
+# --
+** TODO $0
+
+:PROPERTIES:
+:ProjectURL:
+:Created: `(format-time-string "%Y-%m-%d %a")`
+:END:

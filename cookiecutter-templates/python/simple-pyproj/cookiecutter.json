@@ -1,9 +1,11 @@
 {
     "full_name": "Gopinath Sadasivam",
     "email": "gopinath-sadasivam@microfocus.com",
-    "project_name": "Python Boilerplate",
+    "project_name":  "my_proj",
+    "package_name":  "my_package",
+    "module_name":  "my_module",
     "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '_') }}",
-    "project_short_description": "Python Boilerplate contains all the boilerplate you need to create a Python package.",
+    "project_short_description": "short desc",
     "version": "0.1.0",
     "use_pytest": "y"
 }

@@ -1,0 +1,2 @@
+def isModuleReady():
+    return True

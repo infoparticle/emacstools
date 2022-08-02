@@ -1,11 +1,29 @@
+* dict
+** add, update, merge dict
+#+begin_src python
+merged = base | new
+#create new merged dict  #new overwrites base if same key is present. (3.5)
+merged = {**base, **new}
+
+#merge into base (2.7)
+base.update(new)
+
+if base.get(newkey, None):
+    base[newkey] = newvalue
+#+end_src
+* list
+** update, merge list  - append, insert
+#+begin_src python
+pass
+#+end_src
 * logging
 
 https://coralogix.com/blog/python-logging-best-practices-tips/
 
 [[https://gist.github.com/panamantis/5797dda98b1fa6fab2f739a7aacc5e9d][Python logging configuration files (yaml, json, ini) · GitHub]]
 
-- disable_existing_loggers=False disables everything except root logger, unless they are nammed in config file
-- propogate : False - don't pass this record to parent loggers (in logger hierarchy)
+- ~disable_existing_loggers~ =False disables everything except root logger, unless they are nammed in config file
+- ~propogate~ : False - don't pass this record to parent loggers (in logger hierarchy)
 
 ** Simple logging - basicConfig
 #+begin_src python
@@ -16,10 +34,9 @@ script_name=Path(__file__).stem
 logging.basicConfig(
                     filename=script_name +'.log', filemode='w', # Use this line or next line!
                     #handlers=[RotatingFileHandler('./my_log.log', maxBytes=100000, backupCount=10)],
-
                     format='%(asctime)s %(name)s - %(levelname)s - %(message)s',
                     datefmt='%d-%b-%y %H:%M:%S',
-                    level="debug")
+                    level="DEBUG")
 logger = logging.getLogger(script_name)
 
 logger.info(" ============ Started " + script_name + " ================")
@@ -129,8 +146,6 @@ logger = logging.getLogger("script_logger")
     }
 }
 #+end_src
-
-
 * click
 
 ** CliRunner
@@ -158,8 +173,9 @@ CRUSTS = {"normal": "", "thin": " thin crust", "deep": " deep dish"}
 #default= ..., --debug/--no-debug, type=int
 @click.option("-t", "--toppings", type=str, multiple=True, help="One or more toppings for your pizza")
 @click.option("--extra-cheese", "cheese", is_flag=True, help="Add extra cheese to your pizza")
-@click.option("--extra-sauce", "sauce", is_flag=True, help="Add extra sauce to your pizza")
-def build_pizza(size, crust, toppings, cheese, sauce):
+@click.option("--experiment-setup-dir", "to_dir", type=click.Path(exists=True),
+              help="a setup dir to copy properties files to", required=True)
+def build_pizza(size, crust, toppings, cheese, to_dir):
     """Welcome to the pizza builder, let's build a pizza!!"""
     pizza = f"{SIZES[size]}{CRUSTS[crust]}"
     if toppings:
@@ -199,10 +215,9 @@ def main():
 if __name__ == '__main__':
     main()
 #+end_src
-
-
 ** cli with command groups, options, arguments and context
 
+https://click.palletsprojects.com/en/8.1.x/complex/
 
 #+begin_src python
 import click
@@ -215,29 +230,130 @@ def main():
 
 if __name__ == '__main__':
     main()
-import click
-
-click.command()
-click.options("-n", "--name")
-click.argument("blah")
-def main():
-    pass
-
-if __name__ == '__main__':
-    main()
 #+end_src
+** click - options types summary
+
+#+begin_src python
+
+#mostly you want:
+@click.option("--my-dir", "mydir", type=click.Path(exists=True), help="myhelp")
+
+<TYPE> can be
+click.STRING  click.INT click.FLOAT click.BOOL click.UUID
+
+    #returns returns file handle, use it read/write file
+    click.File(mode='r', encoding=None, errors='strict', lazy=None, atomic=False)
+
+    #returns filename str, when path_type is set to Path(?)
+    click.Path(exists=False, file_okay=True, dir_okay=True, writable=False, readable=True,
+            resolve_path=False, allow_dash=False, path_type=None, executable=False)
+
+#+end_src
+** click - setup tools
+
+#+BEGIN_SRC emacs-lisp
+# setup.py
+from setuptools import setup, find_packages
+
+setup(
+    name='yourpackage',
+    version='0.1.0',
+    packages=find_packages(),
+    include_package_data=True,
+    install_requires=[
+        'Click',
+    ],
+    entry_points={
+        'console_scripts': [
+            'yourscript = yourpackage.scripts.yourscript:cli',
+        ],
+    },
+)
+#+END_SRC
 
 * pathlib
 
-** directory walk
+** directory walk with - pathlib
 
 #+begin_src python
 from pathlib import Path
-
-#rglob('*') is same as glob('**/*')
-for i in Path('docs').rglob('*'):
+#p.rglob('*') is same as glob('**/*')
+#p.glob("*.txt"):     # only ocean dir non recursive
+#p.iterdir():         # non-recursive
+#p.glob("**/*.txt"):  #recursive
+#p.glob("**/*"):      #recursive both dir and files, use i.is_dir() or i.is_file()
+#p.glob("**/")        #recursive only directory!
+for i in Path('ocean').rglob('*.properites'):
      print(i.name)
 #+end_src
+
+** directory walk with os
+#+begin_src python
+import fnmatch
+import os
+
+matches = []
+for root, dirnames, filenames in os.walk('src'):
+    for filename in fnmatch.filter(filenames, '*.c'):
+        matches.append(os.path.join(root, filename))
+#+end_src
+
+** directory walk with glob
+
+#+begin_src python
+import glob
+# for child in p.glob('**/'):      # just directories alone recursively!
+for f in glob.glob('/path/**/*.c', recursive=True): # python >= 3.5
+
+    print(f)
+
+#+end_src
+** dissect path elements (base, dir, parent, suffix) - pathlib
+#+begin_src python
+p = Path("/Users/sammy/ocean/wave.txt")
+p.parent        # /Users/sammy/ocean
+p.parent.parent # /Users/sammy
+p.name          # wave.txt
+p.suffix        # txt
+p.stem          # wave  i.e name = stem + suffix
+#+end_src
+
+** joining paths - pathlib
+#+begin_src python
+# /Users/sammy/ocean/animals/fish/shark.txt
+shark = Path(Path.home(), "ocean", "animals", Path("fish", "shark.txt"))
+#+end_src
+** relative paths  - pathlib
+#+begin_src python
+
+#ocean/animals/fish/shark.txt
+shark = Path("ocean", "animals", "fish", "shark.txt")
+
+#animals/fish/shark.txt
+below_ocean = shark.relative_to(Path("ocean"))
+
+#fish/shark.txt
+below_animals = shark.relative_to(Path("ocean", "animals"))
+#+end_src
+* File Operations
+** filter files and copy them recursively (os walk + shutil.copy)
+#+begin_src python
+from pathlib import Path
+import shutil
+#p.rglob('*') is same as glob('**/*')
+#p.glob("*.txt"):     # only ocean dir non recursive
+#p.iterdir():         # non-recursive
+#p.glob("**/*.txt"):  #recursive
+#p.glob("**/*"):      #recursive both dir and files, use i.is_dir() or i.is_file()
+#p.glob("**/")        #recursive only directory!
+for i in Path('ocean').rglob('*.properites'):
+    # validate str(i.name) is what you want
+    target_file_path = Path(to_path, i.relative_to(from_dir).parent, i.name)
+    target_file_path.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copy(str(i), str(target_file_path)) #copy2 is also there
+#+end_src
+
+
 
 * pipe data to python in cli
 

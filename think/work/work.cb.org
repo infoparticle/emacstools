@@ -1,0 +1,12 @@
+
+
+#+begin_src
+| Sprint              | Start      | End        | PlannedLeave |
+|---------------------+------------+------------+--------------|
+| Sprint 32.1         | 06-June-22 | 17-June-22 |            0 |
+| Sprint 32.2         | 20-June-22 | 1-July-22  |            1 |
+| Sprint 32.3         | 04-July-22 | 15-July-22 |            1 |
+| Sprint 32.4         | 18-July-22 | 29-July-22 |            1 |
+| PI32 Closure sprint | 01-Aug-22  | 5-Aug-22   |            0 |
+
+#+end_src

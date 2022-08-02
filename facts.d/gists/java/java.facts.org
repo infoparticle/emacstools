@@ -1,0 +1,88 @@
+
+** detect windows or linux os
+#+begin_src java
+String OS = System.getProperty("os.name").toLowerCase();
+String log_file_path = OS.contains("win")?"C:/Temp/mydebug.log":"/tmp/mydebug.log";
+#+end_src
+
+** mydebuglogger
+
+#+begin_src java
+
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.*;
+import java.text.*;
+import java.io.*;
+
+public class MyDebugLogger {
+
+    String debugClassName = "default";
+    String log_file_path = "c:/Temp/mydebug.log";
+    static boolean isTurnedOn = true;
+
+    public MyDebugLogger(String mname) {
+        isTurnedOn = false;
+        debugClassName = mname;
+        log_file_path = "C:/RUM/log/rum_extra_debug.log";
+        String OS = System.getProperty("os.name").toLowerCase();
+        String log_file_path = OS.contains("win")?"C:/Temp/mydebug.log":"/tmp/mydebug.log";
+    }
+
+    public void printStackTraceException(Exception e) {
+        if (!isTurnedOn) return;
+        StringWriter sw = new StringWriter();
+        e.printStackTrace(new PrintWriter(sw));
+        log(sw.toString());
+    }
+
+    public void printStackTrace() {
+        if (!isTurnedOn) return;
+        log(Arrays.toString(Thread.currentThread().getStackTrace()));
+    }
+
+    public static String getDataHash(String data) {
+        if (!isTurnedOn) return "NA";
+        MessageDigest messageDigest;
+        try {
+            messageDigest = MessageDigest.getInstance("sha-1");
+            messageDigest.update(data.getBytes());
+            byte[] digest = messageDigest.digest();
+            String hex = String.format("%x", new BigInteger(1, digest));
+            return (hex);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return "<NA>";
+    }
+
+    public void log(final String s) {
+        if (!isTurnedOn) return;
+
+        try {
+            File mylogfile = new File(log_file_path);
+            FileWriter fw;
+            if (mylogfile.exists() && mylogfile.isFile() &&
+                    mylogfile.length() >= 1024 * 1024 * 200) { //200 MB
+                fw = new FileWriter(mylogfile);
+            } else
+                fw = new FileWriter(log_file_path, true);
+
+            BufferedWriter bw = new BufferedWriter(fw);
+            PrintWriter out = new PrintWriter(bw);
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date date = new Date();
+            out.println(dateFormat.format(date) + " : " + Thread.currentThread().getName() + "-" + Thread.currentThread().getId() + " : "
+                        + " : " + debugClassName + " : " + s);
+            out.flush();
+            out.close();
+        } catch (IOException e) {
+        }
+    }
+
+
+}
+
+
+#+end_src

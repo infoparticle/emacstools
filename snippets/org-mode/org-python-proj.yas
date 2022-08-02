@@ -3,16 +3,29 @@
 # key: oppi
 # --
 #+TITLE: $1
-Last Saved: "Jul 09, 2022 Sat"
+Last Saved: "Jul 15, 2022 Fri"
 #+property: header-args :tangle `(concat (file-name-sans-extension (buffer-name)) ".py")`
 #+select_tags: export
 #+exclude_tags: noexport
 #+auto_tangle: t
 
-** Intro
+*** Table of contents                                                                   :TOC_7:
+
+* Intro
 
 ** Imports
 #+BEGIN_SRC python :results output :session `(concat "python-" (buffer-name))`
-
 $0
+#+END_SRC
+
+** main
+#+BEGIN_SRC python :results output :session `(concat "python-" (buffer-name))`
+def main():
+    pass
+#+END_SRC
+
+** if-main
+#+BEGIN_SRC python :results output :session `(concat "python-" (buffer-name))`
+if __name__ == '__main__':
+   main()
 #+END_SRC

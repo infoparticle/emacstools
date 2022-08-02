@@ -1,0 +1,29 @@
+
+
+** Path manipulation
+
+(setq path "/sun/earth/country/thing.tar.gz")
+
+path = directory/nondirectory
+filename = file-name-sans-extension + file-name-extension
+
+#+begin_src elisp
+dir-name/parent - (file-name-directory      path)        ; /sun/earth/country/
+base-name       - (file-name-nondirectory   path)        ; thing.tar.gz
+extension       - (file-name-extension      path)        ; gz
+no extension    - (file-name-sans-extension path)
+
+relative-name   - (file-relative-name       path "/sun") ; earth/country/thing.tar.gz
+
+(expand-file-name "bar/../foo")        ; "/xcssun/users/rms/lewis/foo"
+(expand-file-name "foo" "/usr/spool/") ; /usr/spool/foo   // join
+(expand-file-name "foo")               ; default-dir + foo
+
+(file-truename "/tmp/bar/../myfile") ; "/tmp/foo/myfile"
+#+end_src
+
+*** mkdir
+
+#+BEGIN_SRC emacs-lisp
+(make-directory dirname :parents t)
+#+END_SRC
