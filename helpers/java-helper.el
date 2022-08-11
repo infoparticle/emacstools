@@ -56,19 +56,26 @@
                                                                    (format-time-string "%Y%m%d-"))
                                                       )))
 
-(defun java-helper-create-maven-quickstart-project()
-  "Downloads zip from github and unzips it to create mvn java project."
+
+;; (defun java-helper-create-maven-quickstart-project()
+;;   "Downloads zip from github and unzips it to create mvn java project."
+;;   (interactive)
+;;   (setq maven-app-url "https://github.com/infoparticle/project-templates/raw/main/java/myapp-hello-world.zip")
+;;   (setq java-helper--java-tmp-dir (concat java-helper-throwaway-root
+;;                                           (java-helper--read-clean-path "Enter java project folder name : ")
+;;                                           ".javaproj/"))
+;;   (make-directory java-helper--java-tmp-dir :parent)
+;;   (setq abs-path-zip-file (concat java-helper--java-tmp-dir "app-maven.zip"))
+;;   (url-copy-file maven-app-url abs-path-zip-file)
+;;   (shell-command
+;;    (concat "cd " java-helper--java-tmp-dir " && " "unzip -oq " "app-maven.zip"
+;;            " && rm app-maven.zip")))
+
+(defun java-helper-create-simple-maven-project ()
   (interactive)
-  (setq maven-app-url "https://github.com/infoparticle/project-templates/raw/main/java/myapp-hello-world.zip")
-  (setq java-helper--java-tmp-dir (concat java-helper-throwaway-root
-                                          (java-helper--read-clean-path "Enter java project folder name : ")
-                                          ".javaproj/"))
-  (make-directory java-helper--java-tmp-dir :parent)
-  (setq abs-path-zip-file (concat java-helper--java-tmp-dir "app-maven.zip"))
-  (url-copy-file maven-app-url abs-path-zip-file)
-  (shell-command
-   (concat "cd " java-helper--java-tmp-dir " && " "unzip -oq " "app-maven.zip"
-           " && rm app-maven.zip")))
+  (cd "c:/my/tmp/throwaway/java")
+  (compile  "cookiecutter 'c:/Users/gopinat/AppData/Roaming/emacstools/cookiecutter-templates/java/simple-maven-java-project'" t))
+
 
 (provide 'java-helper)
 ;;; java-helper.el ends here

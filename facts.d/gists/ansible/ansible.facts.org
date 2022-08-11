@@ -1,0 +1,40 @@
+
+
+** windows
+
+#+begin_src #+TITLE:
+
+Invoke-Command -FilePath 'C:\my\work\ansible\install_ansible_remote.ps1' -ComputerName myd-hvm02524.swinfra.net -Credential (Get-Credential -UserName swinfra.net\gopinat)
+
+#+end_src
+
+#+begin_src
+netsh advfirewall firewall add rule name="WinRM-HTTP" dir=in localport=5985 protocol=TCP action=allow
+
+#+end_src
+
+
+https://adamtheautomator.com/ansible-winrm/
+
+#+begin_src
+Set-Service -Name "WinRM" -StartupType Automatic
+Start-Service -Name "WinRM"
+
+
+if (-not (Get-PSSessionConfiguration) -or (-not (Get-ChildItem WSMan:\localhost\Listener))) {
+    ## Use SkipNetworkProfileCheck to make available even on Windows Firewall public profiles
+    ## Use Force to not be prompted if we're sure or not.
+    Enable-PSRemoting -SkipNetworkProfileCheck -Force
+}
+
+Set-Item -Path WSMan:\localhost\Service\Auth\Certificate -Value $true
+
+#+end_src
+
+** chocolate
+
+on powershell admin
+#+begin_src
+Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+
+#+end_src
