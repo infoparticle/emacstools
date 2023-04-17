@@ -1,5 +1,6 @@
 * work
-** PI 32 sprint calendar with leave plans
+
+** PI 33 sprint calendar with leave plans
 #+begin_src sh
 | Sprint              | Start      | End        | Planned Leave |
 |---------------------+------------+------------+---------------|
@@ -15,6 +16,14 @@
 ** 2022 holiday calendar
 
 #+begin_src sh
+| Aug | 31-Aug-22 | Wednesday | Ganesh Chaturthi         |
+|-----+-----------+-----------+--------------------------|
+| Oct | 04-Oct-22 | Tuesday   | Mahanavami / Ayudha Puja |
+| Oct | 05-Oct-22 | Wednesday | Vijayadashami            |
+| Oct | 24-Oct-22 | Monday    | Deepavali / Diwali       |
+| Oct | 26-Oct-22 | Wednesday | Balipadyami              |
+|-----+-----------+-----------+--------------------------|
+| Nov | 01-Nov-22 | Tuesday   | Karnataka Rajyotsava     |
 | Aug | 15-Aug-22 | Monday    | Independence Day         |
 | Aug | 31-Aug-22 | Wednesday | Ganesh Chaturthi         |
 |-----+-----------+-----------+--------------------------|

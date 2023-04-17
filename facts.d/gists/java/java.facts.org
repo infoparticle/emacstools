@@ -1,3 +1,9 @@
+#+TITLE: Java Facts
+Last Saved: "Oct 24, 2022 Mon"
+
+*** Table of contents                                                                   :TOC_7:
+  - [[#detect-windows-or-linux-os][detect windows or linux os]]
+  - [[#mydebuglogger][mydebuglogger]]
 
 ** detect windows or linux os
 #+begin_src java
@@ -8,7 +14,6 @@ String log_file_path = OS.contains("win")?"C:/Temp/mydebug.log":"/tmp/mydebug.lo
 ** mydebuglogger
 
 #+begin_src java
-
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -64,11 +69,10 @@ public class MyDebugLogger {
             File mylogfile = new File(log_file_path);
             FileWriter fw;
             if (mylogfile.exists() && mylogfile.isFile() &&
-                    mylogfile.length() >= 1024 * 1024 * 200) { //200 MB
+                mylogfile.length() >= 1024 * 1024 * 200) { //200 MB
                 fw = new FileWriter(mylogfile);
             } else
                 fw = new FileWriter(log_file_path, true);
-
             BufferedWriter bw = new BufferedWriter(fw);
             PrintWriter out = new PrintWriter(bw);
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -82,7 +86,27 @@ public class MyDebugLogger {
     }
 
 
-}
+
+    import java.util.*;
+    import java.text.*;
+    import java.io.*;
+
+    private static void mydebug(final String s) {
+        String debugClassName = "CsrfGuardFilter";
+        String OS = System.getProperty("os.name").toLowerCase();
+        String log_file_path = OS.contains("win")?"C:/Temp/mydebug.log":"/tmp/mydebug.log";
+        try (FileWriter fw = new FileWriter(log_file_path, true);
+             BufferedWriter bw = new BufferedWriter(fw);
+             PrintWriter out = new PrintWriter(bw)) {
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date date = new Date();
+            out.println(dateFormat.format(date) + " : " + debugClassName + " : " + s);
+            out.flush();
+        } catch (IOException e) {
+            //exception handling left as an exercise for the reader
+        }
+    }
+
 
 
 #+end_src

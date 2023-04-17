@@ -271,6 +271,24 @@ setup(
 )
 #+END_SRC
 
+* requests
+
+** simple get with auth
+#+begin_src python
+
+resp = requests.get(URL, auth=('admin','admin'))
+resp = requests.get(URL, cookies=mycookies_dict)
+
+
+requests.post("https://httpbin.org/post", data=payload_json)
+
+resp = requests.get(URL, auth=('admin','admin'))
+resp = requests.get(URL, cookies=mycookies_dict)
+
+
+requests.post("https://httpbin.org/post", data=payload_json)
+#+end_src
+
 * pathlib
 
 ** directory walk with - pathlib
@@ -286,7 +304,6 @@ from pathlib import Path
 for i in Path('ocean').rglob('*.properites'):
      print(i.name)
 #+end_src
-
 ** directory walk with os
 #+begin_src python
 import fnmatch
@@ -297,7 +314,6 @@ for root, dirnames, filenames in os.walk('src'):
     for filename in fnmatch.filter(filenames, '*.c'):
         matches.append(os.path.join(root, filename))
 #+end_src
-
 ** directory walk with glob
 
 #+begin_src python
@@ -317,7 +333,6 @@ p.name          # wave.txt
 p.suffix        # txt
 p.stem          # wave  i.e name = stem + suffix
 #+end_src
-
 ** joining paths - pathlib
 #+begin_src python
 # /Users/sammy/ocean/animals/fish/shark.txt
@@ -335,6 +350,7 @@ below_ocean = shark.relative_to(Path("ocean"))
 #fish/shark.txt
 below_animals = shark.relative_to(Path("ocean", "animals"))
 #+end_src
+
 * File Operations
 ** filter files and copy them recursively (os walk + shutil.copy)
 #+begin_src python

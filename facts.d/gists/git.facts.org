@@ -1,5 +1,6 @@
-* config
-** git ~/.gitconfig file (aliases)
+* Git
+** config
+*** git ~/.gitconfig file (aliases)
 Some times you may need:
 
 [http]
@@ -62,9 +63,9 @@ Some times you may need:
     whitespace = nowarn
 #+end_src
 
-* Fix
+** Fix
 
-** move commit from one branch to another (cherrypick, reset --hard)
+*** move commit from one branch to another (cherrypick, reset --hard)
 
 you made wrong commit to wrong banch say master instead of mybranch
 
@@ -75,3 +76,20 @@ git cherrypick mycommit_hash
 git checkout master
 git reset --hard HEAD~1
 #+end_src
+
+* Maven
+
+** svn checkout with invalid https certificates : pkix
+
+
+#+BEGIN_SRC
+mvn -Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true
+
+or
+
+>cat ~/.mavenrc
+MAVEN_OPTS="-Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true -Dmaven.wagon.http.ssl.ignore.validity.dates=true"
+
+//or you can import the certs to jks
+//https://stackoverflow.com/questions/21076179/pkix-path-building-failed-and-unable-to-find-valid-certification-path-to-requ
+#+END_SRC
