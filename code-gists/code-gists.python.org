@@ -8,6 +8,7 @@ https://coralogix.com/blog/python-logging-best-practices-tips/
 - propogate : False - don't pass this record to parent loggers (in logger hierarchy)
 
 ** Simple logging - basicConfig
+
 #+begin_src python
 import logging
 from pathlib import Path
