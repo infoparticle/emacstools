@@ -1,0 +1,11 @@
+# -*- coding: utf-8 -*-
+# name: create zettle
+# key: z
+# --
+z$1 - ${2:Short description}
+:PROPERTIES:
+:CUSTOM_ID: z$1
+:SUMMARY:  ${3:one line summary}
+:CREATED:  `(format-time-string "%Y-%m-%d %H:%M:%S")`
+:UPDATED:  `(format-time-string "%Y-%m-%d %H:%M:%S")`
+:END:

@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# name: Anki Basic Card
+# key: ,anki
+# --
+
+** $0
+  :PROPERTIES:
+  :ANKI_DECK: $1
+  :ANKI_NOTE_TYPE: Basic
+  :ANKI_TAGS: $2
+  :END:
+*** Front
+  $3
+*** Back
+  $4
