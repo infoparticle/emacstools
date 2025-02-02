@@ -1,0 +1,7 @@
+{:mode :database
+ :output-dir "target/generated-dtos"
+ :package "com.example.models"
+ :db {:subprotocol "h2"
+      :subname "mem:testdb"
+      :user "sa"
+      :password ""}}

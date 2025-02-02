@@ -1,0 +1,18 @@
+package {{ package }};
+
+public class {{ className }} {
+    {% for column in columns %}
+    private {{ column.data_type|type_mapping }} {{ column.column_name }};
+    {% endfor %}
+
+    // Getters and setters
+    {% for column in columns %}
+    public {{ column.data_type|type_mapping }} get{{ column.column_name|capitalize }}() {
+        return this.{{ column.column_name }};
+    }
+
+    public void set{{ column.column_name|capitalize }}({{ column.data_type|type_mapping }} {{ column.column_name }}) {
+        this.{{ column.column_name }} = {{ column.column_name }};
+    }
+    {% endfor %}
+}

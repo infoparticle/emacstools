@@ -1,0 +1,14 @@
+package {{ package }};
+
+public class {{ className }} {
+    private static {{ className }} instance;
+
+    private {{ className }}() {}
+
+    public static {{ className }} getInstance() {
+        {% if lazy %}if (instance == null) {% endif %}{
+            instance = new {{ className }}();
+        {% if lazy %}}{% endif %}
+        return instance;
+    }
+}

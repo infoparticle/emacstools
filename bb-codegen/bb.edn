@@ -1,0 +1,6 @@
+{
+ :paths ["src" "templates"]
+ :dependencies
+ {selmer/selmer {:mvn/version "1.12.64"}
+  org.clojure/java.jdbc {:mvn/version "0.7.12"}
+  com.h2database/h2 {:mvn/version "2.2.224"}}}

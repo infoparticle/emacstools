@@ -1,0 +1,12 @@
+{:mode :filesystem
+ :output-dir "target/generated-sources"
+ :package "com.example"
+ :files [
+   {:template "springboot/Application.java.selmer"
+    :target "Application.java"
+    :context {:className "DemoApp"}}
+
+   {:template "java/singleton.selmer"
+    :target "SingletonInstance.java"
+    :context {:className "GlobalConfig" :lazy true}}
+ ]}

@@ -1,0 +1,6 @@
+{
+ :template "java/singleton.selmer"
+ :package "com.example"
+ :className "SingletonDemo"
+ :lazy true
+ }
