@@ -1,5 +1,15 @@
 package {{ package }};
 
+(comment
+;; BEGIN_ARGS
+{
+ :package "com.example"
+ :className "SingletonDemo"
+ :lazy true
+}
+;; END_ARGS
+)
+
 public class {{ className }} {
     private static {{ className }} instance;
 
