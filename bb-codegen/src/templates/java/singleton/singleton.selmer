@@ -1,14 +1,12 @@
-package {{ package }};
-
-(comment
-;; BEGIN_ARGS
+{% if print_args %}
 {
  :package "com.example"
  :className "SingletonDemo"
  :lazy true
 }
-;; END_ARGS
-)
+{% endif %}
+
+package {{ package }};
 
 public class {{ className }} {
     private static {{ className }} instance;

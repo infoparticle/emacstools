@@ -12,6 +12,20 @@
       selected)))
 
 ;; (message (bb-select-templates))
+(defun bb--extract-print-args-block-from-file (file-path)
+  "Extract text between print_args markers from FILE-PATH using rx."
+  (with-temp-buffer
+    (insert-file-contents file-path)
+    (let ((start-rx (rx (seq "{%" (0+ space) "if" (0+ space) "print_args" (0+ space) "%}")))
+          (end-rx (rx (seq "{%" (0+ space) "endif" (0+ space) "%}"))))
+      (when (re-search-forward start-rx nil t)
+        (let ((content-start (point)))
+          (when (re-search-forward end-rx nil t)
+            (let ((content-end (match-beginning 0)))
+              ;; Extract and clean the content
+              (buffer-substring-no-properties content-start content-end))))))))
+
+
 
 (defun bb-generate-code ()
   (interactive)
@@ -29,7 +43,7 @@
     (with-current-buffer buf
       (erase-buffer)
       (when (file-exists-p input-file)
-        (insert-file-contents (concat bb-gen-root "src/templates/" template_path ".edn")))
+        (insert (extract-print-args-block-from-file (concat  bb-gen-root "src/templates/" template_path))))
       (pop-to-buffer buf)
 
       (local-set-key
