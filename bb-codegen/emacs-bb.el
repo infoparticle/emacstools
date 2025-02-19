@@ -33,7 +33,7 @@
 
 (defun bb-popup-edn-config (template_path)
   "Edit EDN config and run code generation, output to *codegen-output*."
-  (let* ((input-file "c:/tmp/del.edn")
+  (let* ((input-file (expand-file-name (concat bb-gen-root "tmp/bb-user-input-template.edn")))
          (buf (get-buffer-create "*codegen-input*"))
          (window-conf (current-window-configuration)))
 
@@ -43,7 +43,7 @@
     (with-current-buffer buf
       (erase-buffer)
       (when (file-exists-p input-file)
-        (insert (extract-print-args-block-from-file (concat  bb-gen-root "src/templates/" template_path))))
+        (insert (bb--extract-print-args-block-from-file (concat  bb-gen-root "src/templates/" template_path))))
       (pop-to-buffer buf)
 
       (local-set-key
