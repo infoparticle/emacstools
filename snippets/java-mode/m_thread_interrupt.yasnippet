@@ -1,0 +1,11 @@
+# [[file:../../all-snippets.org::*Thread Creation and Management Snippets][Thread Creation and Management Snippets:6]]
+# -*- mode: snippet -*-
+# name: Java Thread Interrupt
+# key: m_thread_interrupt
+# group: Java Threads
+# type: snippet
+# --
+if (${1:thread}.isAlive()) {
+   $1.interrupt();
+}${0:}
+# Thread Creation and Management Snippets:6 ends here

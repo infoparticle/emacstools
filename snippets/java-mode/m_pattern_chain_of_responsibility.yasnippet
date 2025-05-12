@@ -1,0 +1,82 @@
+# -*- mode: snippet -*-
+# name: Java Chain of Responsibility Pattern
+# key: m_pattern_chain_of_responsibility
+# group: Java Design Patterns (Behavioral)
+# type: snippet
+# --
+// Chain of Responsibility Pattern
+//
+// Passes a request along a chain of handlers until one of them handles the request.
+
+// Handler interface
+abstract class ${1:Handler} {
+   protected $1 ${2:nextHandler};
+
+   public $1 set${3:Next}($1 $2) {
+       this.$2 = $2;
+       return $2;
+   }
+
+   public abstract void ${4:handle}(${5:String} ${6:request});
+}
+
+// Concrete Handler A
+class ${7:ConcreteHandlerA} extends $1 {
+   @Override
+   public void $4($5 $6) {
+       if (${8:$6.contains("A")}) {
+           System.out.println("${9:ConcreteHandlerA handled the request}");
+       } else if ($2 != null) {
+           System.out.println("${10:ConcreteHandlerA passing to next handler}");
+           $2.$4($6);
+       } else {
+           System.out.println("${11:Request unhandled}");
+       }
+   }
+}
+
+// Concrete Handler B
+class ${12:ConcreteHandlerB} extends $1 {
+   @Override
+   public void $4($5 $6) {
+       if (${13:$6.contains("B")}) {
+           System.out.println("${14:ConcreteHandlerB handled the request}");
+       } else if ($2 != null) {
+           System.out.println("${15:ConcreteHandlerB passing to next handler}");
+           $2.$4($6);
+       } else {
+           System.out.println("${16:Request unhandled}");
+       }
+   }
+}
+
+// Concrete Handler C
+class ${17:ConcreteHandlerC} extends $1 {
+   @Override
+   public void $4($5 $6) {
+       if (${18:$6.contains("C")}) {
+           System.out.println("${19:ConcreteHandlerC handled the request}");
+       } else if ($2 != null) {
+           System.out.println("${20:ConcreteHandlerC passing to next handler}");
+           $2.$4($6);
+       } else {
+           System.out.println("${21:Request unhandled}");
+       }
+   }
+}
+
+${0:// Usage example:
+// $1 handlerA = new $7();
+// $1 handlerB = new $12();
+// $1 handlerC = new $17();
+//
+// // Set up the chain
+// handlerA.set$3(handlerB);
+// handlerB.set$3(handlerC);
+//
+// // Process requests
+// handlerA.$4("Request for B");
+// handlerA.$4("Request for A");
+// handlerA.$4("Request for C");
+// handlerA.$4("Request for None");
+}

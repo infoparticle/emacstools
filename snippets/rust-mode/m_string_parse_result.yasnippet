@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# name: Rust Parse String with Result
+# key: m_string_parse_result
+# group: Rust Strings
+# type: snippet
+# --
+match ${1:string}.parse::<${2:i32}>() {
+   Ok(${3:value}) => {
+       ${4:// Use parsed value}
+   },
+   Err(${5:e}) => {
+       ${0:// Handle parsing error}
+   }
+}

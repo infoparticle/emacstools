@@ -1,0 +1,17 @@
+# [[file:../../all-snippets.org::*Error Handling Snippets][Error Handling Snippets:3]]
+# -*- mode: snippet -*-
+# name: PowerShell Try-Catch with Specific Exception
+# key: m_trycatch_specific
+# group: PowerShell Error Handling
+# type: snippet
+# --
+try {
+   ${1:# Your code that might throw an exception}
+} catch [${2:System.IO.FileNotFoundException}] {
+   Write-Error "File not found: $$_"
+   ${3:# Specific error handling}
+} catch {
+   Write-Error "An unexpected error occurred: $$_"
+   ${0:# Generic error handling}
+}
+# Error Handling Snippets:3 ends here

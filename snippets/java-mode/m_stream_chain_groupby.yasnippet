@@ -1,0 +1,11 @@
+# [[file:../../all-snippets.org::*Stream Chaining Snippets][Stream Chaining Snippets:5]]
+# -*- mode: snippet -*-
+# name: Java Stream Chain with GroupBy
+# key: m_stream_chain_groupby
+# group: Java Streams Chains
+# type: snippet
+# --
+Map<${1:String}, List<${2:Person}>> ${3:groupedPeople} = ${4:people}.stream()
+   .collect(Collectors.groupingBy(${2:Person}::${5:getGroup}));
+${0:}
+# Stream Chaining Snippets:5 ends here

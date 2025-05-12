@@ -1,0 +1,116 @@
+# -*- mode: snippet -*-
+# name: Java Abstract Factory Pattern
+# key: m_pattern_abstract_factory
+# group: Java Design Patterns (Creational)
+# type: snippet
+# --
+// Abstract Factory Design Pattern
+
+// Abstract Product A
+interface ${1:ProductA} {
+   void ${2:operationA}();
+}
+
+// Abstract Product B
+interface ${3:ProductB} {
+   void ${4:operationB}();
+   void ${5:collaborateWith}($1 a);
+}
+
+// Concrete Products A1
+class ${6:ConcreteProductA1} implements $1 {
+   @Override
+   public void $2() {
+       ${7:// Implementation for product A1}
+   }
+}
+
+// Concrete Products A2
+class ${8:ConcreteProductA2} implements $1 {
+   @Override
+   public void $2() {
+       ${9:// Implementation for product A2}
+   }
+}
+
+// Concrete Products B1
+class ${10:ConcreteProductB1} implements $3 {
+   @Override
+   public void $4() {
+       ${11:// Implementation for product B1}
+   }
+
+   @Override
+   public void $5($1 a) {
+       ${12:// Collaboration with product A}
+       a.$2();
+   }
+}
+
+// Concrete Products B2
+class ${13:ConcreteProductB2} implements $3 {
+   @Override
+   public void $4() {
+       ${14:// Implementation for product B2}
+   }
+
+   @Override
+   public void $5($1 a) {
+       ${15:// Collaboration with product A}
+       a.$2();
+   }
+}
+
+// Abstract Factory
+interface ${16:AbstractFactory} {
+   $1 create${17:ProductA}();
+   $3 create${18:ProductB}();
+}
+
+// Concrete Factory 1
+class ${19:ConcreteFactory1} implements $16 {
+   @Override
+   public $1 create$17() {
+       return new $6();
+   }
+
+   @Override
+   public $3 create$18() {
+       return new $10();
+   }
+}
+
+// Concrete Factory 2
+class ${20:ConcreteFactory2} implements $16 {
+   @Override
+   public $1 create$17() {
+       return new $8();
+   }
+
+   @Override
+   public $3 create$18() {
+       return new $13();
+   }
+}
+
+// Client
+class ${21:Client} {
+   private $1 productA;
+   private $3 productB;
+
+   // Constructor injects a factory object
+   public $21($16 factory) {
+       productA = factory.create$17();
+       productB = factory.create$18();
+   }
+
+   public void execute() {
+       productB.$5(productA);
+   }
+}
+
+${0:// Usage example:
+// $16 factory1 = new $19();
+// $21 client = new $21(factory1);
+// client.execute();
+}

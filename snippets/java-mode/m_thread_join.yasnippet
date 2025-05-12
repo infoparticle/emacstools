@@ -1,0 +1,14 @@
+# [[file:../../all-snippets.org::*Thread Creation and Management Snippets][Thread Creation and Management Snippets:4]]
+# -*- mode: snippet -*-
+# name: Java Thread Join
+# key: m_thread_join
+# group: Java Threads
+# type: snippet
+# --
+try {
+   ${1:thread}.join(${2:1000}); // Wait for thread to complete, with optional timeout
+} catch (InterruptedException e) {
+   Thread.currentThread().interrupt();
+   ${3:// Handle interruption}
+}${0:}
+# Thread Creation and Management Snippets:4 ends here

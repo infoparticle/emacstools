@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# name: Rust Trait with Default Method
+# key: m_trait_default
+# group: Rust Traits
+# type: snippet
+# --
+/// ${4:Trait description}
+trait ${1:TraitName} {
+   /// ${5:Required method description}
+   fn ${2:required_method}(&self) ${6:-> ReturnType};
+
+   /// ${7:Default method description}
+   fn ${3:default_method}(&self) ${8:-> ReturnType} {
+       ${0:// Default implementation}
+   }
+}

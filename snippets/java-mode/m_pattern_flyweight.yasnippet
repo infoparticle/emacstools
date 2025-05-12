@@ -1,0 +1,79 @@
+# -*- mode: snippet -*-
+# name: Java Flyweight Pattern
+# key: m_pattern_flyweight
+# group: Java Design Patterns (Structural)
+# type: snippet
+# --
+// Flyweight Pattern
+//
+// Uses sharing to support large numbers of fine-grained objects efficiently.
+import java.util.HashMap;
+import java.util.Map;
+
+// Flyweight interface
+interface ${1:Flyweight} {
+   void ${2:operation}(${3:String} ${4:extrinsicState});
+}
+
+// Concrete Flyweight
+class ${5:ConcreteFlyweight} implements $1 {
+   private final ${6:String} ${7:intrinsicState};
+
+   public $5($6 $7) {
+       this.$7 = $7;
+   }
+
+   @Override
+   public void $2($3 $4) {
+       System.out.println("Concrete Flyweight with intrinsic state ["
+               + $7 + "] and extrinsic state [" + $4 + "]");
+   }
+}
+
+// Unshared Concrete Flyweight (optional)
+class ${8:UnsharedConcreteFlyweight} implements $1 {
+   private final ${9:String} ${10:allState};
+
+   public $8($9 $10) {
+       this.$10 = $10;
+   }
+
+   @Override
+   public void $2($3 $4) {
+       System.out.println("Unshared Concrete Flyweight with state ["
+               + $10 + "] and extrinsic state [" + $4 + "]");
+   }
+}
+
+// Flyweight Factory
+class ${11:FlyweightFactory} {
+   private final Map<${6}, $1> ${12:flyweights} = new HashMap<>();
+
+   public $1 ${13:getFlyweight}($6 key) {
+       if (!$12.containsKey(key)) {
+           $12.put(key, new $5(key));
+       }
+       return $12.get(key);
+   }
+
+   public int ${14:getFlyweightCount}() {
+       return $12.size();
+   }
+}
+
+${0:// Usage example:
+// $11 factory = new $11();
+//
+// // Get flyweight objects - reuses existing ones with the same key
+// $1 fw1 = factory.$13("key1");
+// $1 fw2 = factory.$13("key2");
+// $1 fw3 = factory.$13("key1");  // This reuses the first flyweight
+//
+// // Use the flyweights with different extrinsic states
+// fw1.$2("extrinsic state 1");
+// fw2.$2("extrinsic state 2");
+// fw3.$2("extrinsic state 3");
+//
+// // Verify object reuse
+// System.out.println("Total flyweights: " + factory.$14());  // Should be 2
+}

@@ -1,0 +1,53 @@
+# -*- mode: snippet -*-
+# name: Python DP - Memoization (Top-Down)
+# key: m_lc_dp_memoization
+# group: LeetCode DP Patterns
+# type: snippet
+# --
+def solve_problem_memoization(input):
+   """
+   Dynamic Programming - Memoization (Top-Down) approach.
+
+   Args:
+       input: Problem input
+   """
+   # Initialize memoization cache
+   memo = {}
+
+   def dp(state):
+       # Return cached result if available
+       if state in memo:
+           return memo[state]
+
+       # Base case(s)
+       if ${1:base_case_condition}:
+           return ${2:base_case_value}
+
+       # Calculate result using recursion with memoization
+       result = ${3:recursive_formula}
+
+       # Cache and return the result
+       memo[state] = result
+       return result
+
+   # Start recursion from initial state
+   return dp(${4:initial_state})
+
+# Example: Fibonacci sequence
+def fibonacci(n):
+   memo = {}
+
+   def dp(i):
+       if i in memo:
+           return memo[i]
+
+       if i <= 1:
+           return i
+
+       memo[i] = dp(i - 1) + dp(i - 2)
+       return memo[i]
+
+   return dp(n)
+
+result = fibonacci(${5:10})
+${0:}

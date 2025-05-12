@@ -1,0 +1,21 @@
+# -*- mode: snippet -*-
+# name: Rust RefCell
+# key: m_refcell
+# group: Rust Memory
+# type: snippet
+# --
+use std::cell::RefCell;
+
+let ${1:value} = RefCell::new(${2:42});
+
+// Borrow mutably
+{
+   let mut ${3:mut_borrow} = $1.borrow_mut();
+   *$3 += 1;
+}
+
+// Borrow immutably
+{
+   let ${4:borrow} = $1.borrow();
+   println!("{}", *$4);
+}${0:}

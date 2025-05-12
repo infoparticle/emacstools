@@ -1,0 +1,36 @@
+# -*- mode: snippet -*-
+# name: Java Singleton Pattern (Lazy Initialization)
+# key: m_pattern_singleton_lazy
+# group: Java Design Patterns (Creational)
+# type: snippet
+# --
+// Singleton pattern implementation with thread safety using lazy initialization.
+// Uses double-checked locking for thread safety.
+public class ${1:Singleton} {
+   // Private static instance, lazily initialized
+   private static volatile $1 instance;
+
+   // Private constructor prevents instantiation from other classes
+   private $1() {
+       ${2:// Initialization code}
+   }
+
+   // Returns the single instance of this class, creating it if necessary
+   // Thread-safe implementation using double-checked locking
+   // @return the singleton instance
+   public static $1 getInstance() {
+       // First check (no locking)
+       if (instance == null) {
+           // Lock for thread safety
+           synchronized ($1.class) {
+               // Second check (with locking)
+               if (instance == null) {
+                   instance = new $1();
+               }
+           }
+       }
+       return instance;
+   }
+
+   ${0:// Add methods here}
+}

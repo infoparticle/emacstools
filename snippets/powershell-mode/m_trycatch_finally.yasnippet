@@ -1,0 +1,16 @@
+# [[file:../../all-snippets.org::*Error Handling Snippets][Error Handling Snippets:2]]
+# -*- mode: snippet -*-
+# name: PowerShell Try-Catch-Finally
+# key: m_trycatch_finally
+# group: PowerShell Error Handling
+# type: snippet
+# --
+try {
+   ${1:# Your code that might throw an exception}
+} catch {
+   Write-Error "An error occurred: $$_"
+   ${2:# Error handling code}
+} finally {
+   ${0:# Code that always runs, even if there was an exception or exit}
+}
+# Error Handling Snippets:2 ends here

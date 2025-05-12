@@ -1,0 +1,12 @@
+# [[file:../../all-snippets.org::*Thread Creation and Management Snippets][Thread Creation and Management Snippets:2]]
+# -*- mode: snippet -*-
+# name: Java Thread with Lambda
+# key: m_thread_lambda
+# group: Java Threads
+# type: snippet
+# --
+Thread ${1:thread} = new Thread(() -> {
+   ${2:// Thread code here}
+});
+$1.start();${0:}
+# Thread Creation and Management Snippets:2 ends here

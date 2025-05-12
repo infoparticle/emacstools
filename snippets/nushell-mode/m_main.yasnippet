@@ -1,0 +1,118 @@
+# [[file:../../all-snippets.org::*Scripting Snippets][Scripting Snippets:2]]
+# -*- mode: snippet -*-
+# name: Nushell Script Main Template
+# key: m_main
+# group: Nushell Scripting
+# type: snippet
+# --
+#!/usr/bin/env nu
+# ${1:Script name} - ${2:Brief description}
+# Author: ${3:Your Name}
+# Date: ${4:$(format-time-string "%Y-%m-%d")}
+# Version: 1.0.0
+
+# Configuration
+const LOG_FILE = ${5:"$nu.temp-path/script.log"}
+const DEBUG = ${6:false}
+
+# Helper functions
+def log [message: string, level: string = "INFO"] {
+   let timestamp = (date now | format date "%Y-%m-%d %H:%M:%S")
+   let log_entry = $"[$timestamp] [$level] $message"
+
+   # Console output with color
+   match $level {
+       "DEBUG" => { if $DEBUG { $log_entry | print } }
+       "INFO" => { $log_entry | print }
+       "WARNING" => { $log_entry | ansi yellow }
+       "ERROR" => { $log_entry | ansi red_bold }
+   }
+
+   # Write to log file
+   $log_entry | save --append $LOG_FILE
+}
+
+def time-operation [name: string, block: block] {
+   log $"Starting: $name"
+   let start_time = (date now)
+
+   try {
+       do $block
+   } catch {|err|
+       log $"Operation failed: $name - $err" "ERROR"
+       return $"Failed after ($((date now) - $start_time))"
+   }
+
+   let duration = ((date now) - $start_time)
+   log $"Completed: $name (Duration: $duration)"
+
+   return $duration
+}
+
+def retry [
+   attempts: int = 3
+   delay_ms: int = 1000
+   operation: string = "Operation"
+   block: block
+] {
+   mut current_attempt = 1
+   mut success = false
+   mut result = null
+
+   while (not $success) and ($current_attempt <= $attempts) {
+       if $current_attempt > 1 {
+           log $"$operation failed, retrying (Attempt $current_attempt of $attempts)..." "WARNING"
+           sleep ($delay_ms * 1ms)
+       }
+
+       try {
+           $result = do $block
+           $success = true
+
+           if $current_attempt > 1 {
+               log $"$operation succeeded on attempt $current_attempt" "INFO"
+           }
+       } catch {|err|
+           if $current_attempt == $attempts {
+               log $"$operation failed after $attempts attempts: $err" "ERROR"
+               return { success: false, error: $err, result: null }
+           }
+
+           log $"Attempt $current_attempt failed: $err" "DEBUG"
+           $current_attempt += 1
+       }
+   }
+
+   return { success: true, error: null, result: $result }
+}
+
+def show-banner [message: string] {
+   let width = ($message | str length) + 4
+   let border = ('*' | str repeat $width)
+
+   print $"\n$border\n* $message *\n$border\n"
+}
+
+# Main function
+def main [
+   ${7:--param(-p)}: ${8:string} # ${9:Parameter description}
+   ${10:--verbose(-v)}: bool # Enable verbose output
+] {
+   # Prepare environment
+   if $${10:verbose} { $DEBUG = true }
+
+   # Clear or initialize log file
+   "" | save $LOG_FILE
+
+   log "Script started"
+   show-banner "${11:$1 v1.0.0}"
+
+   # Main execution with timing
+   let execution_time = (time-operation "Main Script" {
+       ${0:# Your main script implementation}
+   })
+
+   # Finish up
+   log $"Script completed successfully in $execution_time"
+}
+# Scripting Snippets:2 ends here

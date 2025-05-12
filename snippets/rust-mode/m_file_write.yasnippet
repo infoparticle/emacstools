@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# name: Rust Write File
+# key: m_file_write
+# group: Rust File IO
+# type: snippet
+# --
+use std::fs::File;
+use std::io::{self, Write};
+
+fn ${1:write_file}(${2:path}: &str, ${3:content}: &str) -> io::Result<()> {
+   let mut ${4:file} = File::create($2)?;
+   $4.write_all($3.as_bytes())?;
+   Ok(())
+}${0:}

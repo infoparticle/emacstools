@@ -1,0 +1,22 @@
+# [[file:../../all-snippets.org::*Executor Framework Snippets][Executor Framework Snippets:3]]
+# -*- mode: snippet -*-
+# name: Java Cached Thread Pool
+# key: m_executor_cached
+# group: Java Executors
+# type: snippet
+# --
+ExecutorService ${1:executor} = Executors.newCachedThreadPool();
+try {
+   for (int i = 0; i < ${2:tasks.size()}; i++) {
+       final int taskId = i;
+       $1.submit(() -> {
+           ${3:// Task code using taskId}
+       });
+   }
+} finally {
+   $1.shutdown();
+   if (!$1.awaitTermination(${4:5}, TimeUnit.${5:SECONDS})) {
+       $1.shutdownNow();
+   }
+}${0:}
+# Executor Framework Snippets:3 ends here

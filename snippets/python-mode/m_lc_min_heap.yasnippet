@@ -1,0 +1,25 @@
+# -*- mode: snippet -*-
+# name: Python Min Heap
+# key: m_lc_min_heap
+# group: LeetCode Data Structures
+# type: snippet
+# --
+import heapq
+
+# Create a min heap
+min_heap = []
+
+# Add elements (push)
+heapq.heappush(min_heap, ${1:item})
+
+# Remove and return smallest element (pop)
+smallest = heapq.heappop(min_heap)
+
+# Convert a list into a heap in-place (heapify)
+items = [${2:5, 3, 8, 1, 2}]
+heapq.heapify(items)
+
+# Access smallest element without removing
+if items:
+   smallest = items[0]
+${0:}

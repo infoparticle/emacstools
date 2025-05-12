@@ -1,0 +1,29 @@
+# [[file:all-snippets.org::*m_main][m_main:1]]
+   # -*- mode: snippet -*-
+   # name: main execution block (__name__ == "__main__")
+   # key: m_main
+   # group: execution
+   # --
+   if __name__ == "__main__":
+       ${0:# Your code here}
+       pass
+# m_main:1 ends here
+
+# [[file:all-snippets.org::*m_main][m_main:1]]
+   # -*- mode: snippet -*-
+   # name: main method class structure (public static void main)
+   # key: m_main
+   # group: execution
+   # --
+   package ${1:com.example};
+
+   public class ${2:Main} {
+       /**
+        * Main method.
+        * @param args Command line arguments.
+        */
+       public static void main(String[] args) {
+           ${0:// Your code here}
+       }
+   }
+# m_main:1 ends here

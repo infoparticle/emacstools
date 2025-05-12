@@ -1,0 +1,17 @@
+# [[file:../../all-snippets.org::*Scripting Snippets][Scripting Snippets:1]]
+# -*- mode: snippet -*-
+# name: PowerShell Script Parameters
+# key: m_script_param
+# group: PowerShell Scripting
+# type: snippet
+# --
+param (
+   [Parameter(Mandatory = $$true)]
+   [string]$${1:RequiredParam},
+
+   [Parameter(Mandatory = $$false)]
+   [string]$${2:OptionalParam} = "${3:DefaultValue}"
+)
+
+${0:# Script body}
+# Scripting Snippets:1 ends here

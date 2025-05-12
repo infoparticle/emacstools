@@ -1,0 +1,17 @@
+# -*- mode: snippet -*-
+# name: Rust Match Expression
+# key: m_match
+# group: Rust Conditionals
+# type: snippet
+# --
+match ${1:expression} {
+   ${2:pattern1} => ${3:{
+       // Code for pattern1
+   }},
+   ${4:pattern2} => ${5:{
+       // Code for pattern2
+   }},
+   ${6:_} => ${0:{
+       // Default case
+   }},
+}

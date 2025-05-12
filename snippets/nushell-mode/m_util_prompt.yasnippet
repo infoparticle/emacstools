@@ -1,0 +1,18 @@
+# [[file:../../all-snippets.org::*Utility Snippets][Utility Snippets:5]]
+# -*- mode: snippet -*-
+# name: Nushell User Input
+# key: m_util_prompt
+# group: Nushell Utilities
+# type: snippet
+# --
+# Get user input
+let ${1:user_input} = (input $"${2:Enter your value}: ")
+
+# Validate input
+if ($1 | is-empty) {
+   echo "Input cannot be empty"
+   return
+}
+
+${0:# Process user input}
+# Utility Snippets:5 ends here

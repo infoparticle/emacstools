@@ -1,0 +1,46 @@
+# -*- mode: snippet -*-
+# name: Python BFS (Breadth-First Search)
+# key: m_lc_bfs
+# group: LeetCode Graph Algorithms
+# type: snippet
+# --
+from collections import deque
+
+def bfs(graph, start):
+   """
+   Perform Breadth-First Search on a graph starting from node 'start'.
+   Returns visited nodes in BFS order.
+
+   Args:
+       graph: Dictionary mapping nodes to lists of neighbors
+       start: Starting node
+   """
+   visited = set([start])
+   queue = deque([start])
+   result = []
+
+   while queue:
+       node = queue.popleft()
+       result.append(node)
+
+       # Process all neighbors
+       for neighbor in graph[node]:
+           if neighbor not in visited:
+               visited.add(neighbor)
+               queue.append(neighbor)
+
+   return result
+
+# Example usage for graph as adjacency list
+graph = {
+   ${1:0}: [${2:1, 2}],
+   ${3:1}: [${4:0, 3, 4}],
+   ${5:2}: [${6:0, 5}],
+   ${7:3}: [${8:1}],
+   ${9:4}: [${10:1}],
+   ${11:5}: [${12:2}]
+}
+
+# BFS from node 0
+result = bfs(graph, ${13:0})
+${0:}

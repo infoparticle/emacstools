@@ -1,0 +1,70 @@
+# -*- mode: snippet -*-
+# name: Java State Pattern
+# key: m_pattern_state
+# group: Java Design Patterns (Behavioral)
+# type: snippet
+# --
+// State Pattern
+//
+// Allows an object to alter its behavior when its internal state changes.
+// The object will appear to change its class.
+
+// State interface
+interface ${1:State} {
+   void ${2:handle}(${3:Context} ${4:context});
+}
+
+// Concrete State A
+class ${5:ConcreteStateA} implements $1 {
+   @Override
+   public void $2($3 $4) {
+       System.out.println("${6:Handling in State A, transitioning to State B}");
+       $4.${7:setState}(new ${8:ConcreteStateB}());
+   }
+}
+
+// Concrete State B
+class $8 implements $1 {
+   @Override
+   public void $2($3 $4) {
+       System.out.println("${9:Handling in State B, transitioning to State C}");
+       $4.$7(new ${10:ConcreteStateC}());
+   }
+}
+
+// Concrete State C
+class $10 implements $1 {
+   @Override
+   public void $2($3 $4) {
+       System.out.println("${11:Handling in State C, transitioning back to State A}");
+       $4.$7(new $5());
+   }
+}
+
+// Context class
+class $3 {
+   private $1 ${12:state};
+
+   public $3() {
+       // Default initial state
+       $12 = new $5();
+   }
+
+   public void $7($1 $12) {
+       this.$12 = $12;
+   }
+
+   public void ${13:request}() {
+       $12.$2(this);
+   }
+}
+
+${0:// Usage example:
+// $3 context = new $3();
+//
+// // Trigger state transitions
+// context.$13();  // A -> B
+// context.$13();  // B -> C
+// context.$13();  // C -> A
+// context.$13();  // A -> B
+}

@@ -1,0 +1,28 @@
+# [[file:../../all-snippets.org::*Utility Snippets][Utility Snippets:7]]
+# -*- mode: snippet -*-
+# name: Nushell Progress Bar
+# key: m_util_progress
+# group: Nushell Utilities
+# type: snippet
+# --
+# Simple progress indicator
+def show_progress [current: int, total: int] {
+   let percentage = ($current | into float) / ($total | into float) * 100.0
+   let bar_width = 40
+   let filled_width = ($percentage / 100.0 * $bar_width | math floor)
+   let empty_width = $bar_width - $filled_width
+
+   let bar = ('=' | str repeat $filled_width) + ('·' | str repeat $empty_width)
+
+   print $"\r[$bar] ($percentage | math round -p 1)% ($current/$total)"
+}
+
+# Usage example
+let ${1:total} = ${2:20}
+${1:total} | seq 1 | each {|${3:i}|
+   show_progress $3 $1
+   sleep ${4:100ms}
+   ${0:# Your processing code}
+}
+print "\nDone!\n"
+# Utility Snippets:7 ends here

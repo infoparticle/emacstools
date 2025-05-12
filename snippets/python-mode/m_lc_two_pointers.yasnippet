@@ -1,0 +1,83 @@
+# -*- mode: snippet -*-
+# name: Python Two Pointers Technique
+# key: m_lc_two_pointers
+# group: LeetCode Famous Algorithms
+# type: snippet
+# --
+def two_sum_sorted(nums, target):
+   """
+   Find indices of two numbers that add up to target.
+   Assumes input array is sorted.
+
+   Args:
+       nums: Sorted list of integers
+       target: Target sum
+
+   Returns:
+       Indices of the two numbers (0-indexed)
+   """
+   left, right = 0, len(nums) - 1
+
+   while left < right:
+       current_sum = nums[left] + nums[right]
+
+       if current_sum == target:
+           return [left, right]
+       elif current_sum < target:
+           left += 1
+       else:
+           right -= 1
+
+   return []  # No solution found
+
+def three_sum(nums):
+   """
+   Find all unique triplets that sum to zero.
+
+   Args:
+       nums: List of integers
+
+   Returns:
+       List of triplets [a, b, c] such that a + b + c = 0
+   """
+   result = []
+   nums.sort()  # Sort the array for two pointers to work
+
+   for i in range(len(nums) - 2):
+       # Skip duplicates for first element
+       if i > 0 and nums[i] == nums[i - 1]:
+           continue
+
+       left, right = i + 1, len(nums) - 1
+
+       while left < right:
+           total = nums[i] + nums[left] + nums[right]
+
+           if total < 0:
+               left += 1
+           elif total > 0:
+               right -= 1
+           else:
+               # Found a triplet
+               result.append([nums[i], nums[left], nums[right]])
+
+               # Skip duplicates for second and third elements
+               while left < right and nums[left] == nums[left + 1]:
+                   left += 1
+               while left < right and nums[right] == nums[right - 1]:
+                   right -= 1
+
+               left += 1
+               right -= 1
+
+   return result
+
+# Example for two sum
+sorted_nums = [${1:2, 7, 11, 15}]
+target = ${2:9}
+indices = two_sum_sorted(sorted_nums, target)
+
+# Example for three sum
+nums = [${3:-1, 0, 1, 2, -1, -4}]
+triplets = three_sum(nums)
+${0:}

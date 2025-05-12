@@ -1,0 +1,38 @@
+# [[file:../../all-snippets.org::*Utility Snippets][Utility Snippets:2]]
+# -*- mode: snippet -*-
+# name: PowerShell Logging
+# key: m_util_logging
+# group: PowerShell Utilities
+# type: snippet
+# --
+function Write-Log {
+   [CmdletBinding()]
+   param (
+       [Parameter(Mandatory = $true, ValueFromPipeline = $true)]
+       [string]$Message,
+
+       [Parameter(Mandatory = $false)]
+       [ValidateSet('Info', 'Warning', 'Error')]
+       [string]$Level = 'Info',
+
+       [Parameter(Mandatory = $false)]
+       [string]$LogPath = "${1:$env:TEMP\Script.log}"
+   )
+
+   $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
+   $logMessage = "[$timestamp] [$Level] $Message"
+
+   # Write to console with appropriate color
+   switch ($Level) {
+       'Info'    { Write-Host $logMessage }
+       'Warning' { Write-Host $logMessage -ForegroundColor Yellow }
+       'Error'   { Write-Host $logMessage -ForegroundColor Red }
+   }
+
+   # Append to log file
+   $logMessage | Out-File -FilePath $LogPath -Append
+}
+
+# Usage
+Write-Log -Message "${2:Script started}" -Level Info${0:}
+# Utility Snippets:2 ends here

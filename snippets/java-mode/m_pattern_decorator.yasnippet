@@ -1,0 +1,88 @@
+# -*- mode: snippet -*-
+# name: Java Decorator Pattern
+# key: m_pattern_decorator
+# group: Java Design Patterns (Structural)
+# type: snippet
+# --
+// Decorator Pattern
+//
+// Attaches additional responsibilities to objects dynamically.
+// Provides a flexible alternative to subclassing for extending functionality.
+
+// Component interface
+interface ${1:Component} {
+   ${2:String} ${3:operation}();
+}
+
+// Concrete Component
+class ${4:ConcreteComponent} implements $1 {
+   @Override
+   public $2 $3() {
+       return "${5:ConcreteComponent result}";
+   }
+}
+
+// Base Decorator class
+abstract class ${6:Decorator} implements $1 {
+   protected $1 ${7:component};
+
+   public $6($1 $7) {
+       this.$7 = $7;
+   }
+
+   @Override
+   public $2 $3() {
+       return $7.$3();
+   }
+}
+
+// Concrete Decorator A
+class ${8:ConcreteDecoratorA} extends $6 {
+   public $8($1 $7) {
+       super($7);
+   }
+
+   @Override
+   public $2 $3() {
+       return "DecoratorA(" + super.$3() + ")";
+   }
+
+   // Additional methods specific to this decorator
+   public $2 ${9:additionalOperationA}() {
+       return "${10:ConcreteDecoratorA additional operation}";
+   }
+}
+
+// Concrete Decorator B
+class ${11:ConcreteDecoratorB} extends $6 {
+   public $11($1 $7) {
+       super($7);
+   }
+
+   @Override
+   public $2 $3() {
+       return "DecoratorB(" + super.$3() + ")";
+   }
+
+   // Additional behavior
+   private $2 ${12:additionalBehavior}() {
+       return "${13:Additional behavior from ConcreteDecoratorB}";
+   }
+}
+
+${0:// Usage example:
+// $1 component = new $4();
+// System.out.println("Plain component: " + component.$3());
+//
+// // Wrap component with Decorator A
+// $1 decoratorA = new $8(component);
+// System.out.println("Decorated with A: " + decoratorA.$3());
+//
+// // Wrap with Decorator B
+// $1 decoratorB = new $11(decoratorA);
+// System.out.println("Decorated with B (which decorates A): " + decoratorB.$3());
+//
+// // Direct decoration with multiple decorators
+// $1 decoratedComponent = new $11(new $8(new $4()));
+// System.out.println("With multiple decorators: " + decoratedComponent.$3());
+}

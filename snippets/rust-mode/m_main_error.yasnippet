@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: Rust Main with Result
+# key: m_main_error
+# group: Rust Program Structure
+# type: snippet
+# --
+fn main() -> Result<(), ${1:Box<dyn std::error::Error>}> {
+   ${0:// Program entry point}
+   Ok(())
+}

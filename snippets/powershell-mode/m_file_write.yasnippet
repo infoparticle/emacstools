@@ -1,0 +1,11 @@
+# [[file:../../all-snippets.org::*File Operations Snippets][File Operations Snippets:2]]
+# -*- mode: snippet -*-
+# name: PowerShell Write to File
+# key: m_file_write
+# group: PowerShell File Operations
+# type: snippet
+# --
+$${1:content} = "${2:Content to write}"
+$$1 | Out-File -FilePath "${3:C:\path\to\output.txt}" ${4:-Append}
+${0:# Additional code}
+# File Operations Snippets:2 ends here

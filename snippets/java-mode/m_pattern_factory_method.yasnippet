@@ -1,0 +1,61 @@
+# -*- mode: snippet -*-
+# name: Java Factory Method Pattern
+# key: m_pattern_factory_method
+# group: Java Design Patterns (Creational)
+# type: snippet
+# --
+// Factory Method Design Pattern
+
+// Product interface
+interface ${1:Product} {
+   void ${2:operation}();
+}
+
+// Concrete Products
+class ${3:ConcreteProduct1} implements $1 {
+   @Override
+   public void $2() {
+       ${4:// Implementation for product 1}
+   }
+}
+
+class ${5:ConcreteProduct2} implements $1 {
+   @Override
+   public void $2() {
+       ${6:// Implementation for product 2}
+   }
+}
+
+// Creator
+abstract class ${7:Creator} {
+   // Factory method that creates a Product
+   public abstract $1 create${8:Product}();
+
+   // Template method that uses the factory method
+   public void someOperation() {
+       // Call the factory method to create a product
+       $1 product = create$8();
+       // Then use the product
+       product.$2();
+   }
+}
+
+// Concrete Creators
+class ${9:ConcreteCreator1} extends $7 {
+   @Override
+   public $1 create$8() {
+       return new $3();
+   }
+}
+
+class ${10:ConcreteCreator2} extends $7 {
+   @Override
+   public $1 create$8() {
+       return new $5();
+   }
+}
+
+${0:// Client code example:
+// $7 creator = new $9();
+// creator.someOperation();
+}

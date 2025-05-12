@@ -1,0 +1,24 @@
+# -*- mode: snippet -*-
+# name: Rust Error with Thiserror
+# key: m_thiserror
+# group: Rust Error Handling
+# type: snippet
+# --
+use thiserror::Error;
+
+#[derive(Error, Debug)]
+pub enum ${1:AppError} {
+   #[error("IO error: {0}")]
+   IoError(#[from] std::io::Error),
+
+   #[error("Parse error: {0}")]
+   ParseError(#[from] std::num::ParseIntError),
+
+   #[error("Configuration error: {0}")]
+   ConfigError(String),
+
+   #[error("Resource {resource} not found")]
+   NotFound { resource: String },
+
+   ${0:// Additional error variants}
+}

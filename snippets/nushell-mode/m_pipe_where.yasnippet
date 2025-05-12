@@ -1,0 +1,9 @@
+# [[file:../../all-snippets.org::*Pipeline Snippets][Pipeline Snippets:1]]
+# -*- mode: snippet -*-
+# name: Nushell Where Pipeline
+# key: m_pipe_where
+# group: Nushell Pipelines
+# type: snippet
+# --
+${1:ls} | where ${2:name} =~ ${3:"pattern"} | ${0:to-md}
+# Pipeline Snippets:1 ends here

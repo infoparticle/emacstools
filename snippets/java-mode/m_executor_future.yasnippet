@@ -1,0 +1,30 @@
+# [[file:../../all-snippets.org::*Executor Framework Snippets][Executor Framework Snippets:5]]
+# -*- mode: snippet -*-
+# name: Java Future Task
+# key: m_executor_future
+# group: Java Executors
+# type: snippet
+# --
+ExecutorService ${1:executor} = Executors.newSingleThreadExecutor();
+try {
+   Future<${2:String}> ${3:future} = $1.submit(() -> {
+       ${4:// Computation code}
+       return ${5:"Result"};
+   });
+
+   try {
+       $2 ${6:result} = $3.get(${7:5}, TimeUnit.${8:SECONDS});
+       ${9:// Process result}
+   } catch (InterruptedException e) {
+       Thread.currentThread().interrupt();
+       ${10:// Handle interruption}
+   } catch (ExecutionException e) {
+       ${11:// Handle computation exception}
+   } catch (TimeoutException e) {
+       $3.cancel(true);
+       ${12:// Handle timeout}
+   }
+} finally {
+   $1.shutdown();
+}${0:}
+# Executor Framework Snippets:5 ends here

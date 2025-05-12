@@ -1,0 +1,10 @@
+# [[file:../../all-snippets.org::*Utility Snippets][Utility Snippets:2]]
+# -*- mode: snippet -*-
+# name: Nushell HTTP Request
+# key: m_util_fetch
+# group: Nushell Utilities
+# type: snippet
+# --
+let ${1:response} = (fetch ${2:"https://api.example.com"} ${3:| get ${4:data}})
+${0:# Process response}
+# Utility Snippets:2 ends here

@@ -1,0 +1,60 @@
+# -*- mode: snippet -*-
+# name: Python DP - 0/1 Knapsack
+# key: m_lc_dp_knapsack
+# group: LeetCode DP Patterns
+# type: snippet
+# --
+def knapsack_01(values, weights, capacity):
+   """
+   0/1 Knapsack problem: maximize value while keeping weight <= capacity.
+   Each item can be taken (1) or not taken (0).
+
+   Args:
+       values: List of item values
+       weights: List of item weights
+       capacity: Maximum weight capacity of knapsack
+
+   Returns:
+       Maximum possible value
+   """
+   n = len(values)
+
+   # Initialize DP table
+   dp = [[0 for _ in range(capacity + 1)] for _ in range(n + 1)]
+
+   # Fill the table bottom-up
+   for i in range(1, n + 1):
+       for w in range(capacity + 1):
+           # If current item is too heavy, skip it
+           if weights[i - 1] > w:
+               dp[i][w] = dp[i - 1][w]
+           else:
+               # Max of (skip item, take item)
+               dp[i][w] = max(dp[i - 1][w],
+                              dp[i - 1][w - weights[i - 1]] + values[i - 1])
+
+   return dp[n][capacity]
+
+# Space-optimized version (1D array)
+def knapsack_01_optimized(values, weights, capacity):
+   n = len(values)
+
+   # Initialize 1D DP array
+   dp = [0] * (capacity + 1)
+
+   # Fill the array bottom-up
+   for i in range(n):
+       # Go backwards to avoid using item twice
+       for w in range(capacity, weights[i] - 1, -1):
+           dp[w] = max(dp[w], dp[w - weights[i]] + values[i])
+
+   return dp[capacity]
+
+# Example
+values = [${1:60, 100, 120}]
+weights = [${2:10, 20, 30}]
+capacity = ${3:50}
+
+max_value = knapsack_01(values, weights, capacity)
+max_value_optimized = knapsack_01_optimized(values, weights, capacity)
+${0:}

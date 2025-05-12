@@ -1,0 +1,83 @@
+# -*- mode: snippet -*-
+# name: Java Command Pattern
+# key: m_pattern_command
+# group: Java Design Patterns (Behavioral)
+# type: snippet
+# --
+// Command Pattern
+//
+// Encapsulates a request as an object, allowing parameterization of clients with different requests,
+// queue or log requests, and support undoable operations.
+
+// Command interface
+interface ${1:Command} {
+   void ${2:execute}();
+   void ${3:undo}();
+}
+
+// Receiver (knows how to perform the operations)
+class ${4:Receiver} {
+   public void ${5:action}() {
+       System.out.println("${6:Receiver is performing an action}");
+   }
+
+   public void ${7:undoAction}() {
+       System.out.println("${8:Receiver is undoing the action}");
+   }
+}
+
+// Concrete Command
+class ${9:ConcreteCommand} implements $1 {
+   private final $4 ${10:receiver};
+   private final ${11:String} ${12:parameter};
+
+   public $9($4 $10, $11 $12) {
+       this.$10 = $10;
+       this.$12 = $12;
+   }
+
+   @Override
+   public void $2() {
+       System.out.println("${13:Executing command with parameter: }" + $12);
+       $10.${5}();
+   }
+
+   @Override
+   public void $3() {
+       System.out.println("${14:Undoing command with parameter: }" + $12);
+       $10.${7}();
+   }
+}
+
+// Invoker
+class ${15:Invoker} {
+   private $1 ${16:command};
+
+   public void ${17:setCommand}($1 $16) {
+       this.$16 = $16;
+   }
+
+   public void ${18:executeCommand}() {
+       $16.$2();
+   }
+
+   public void ${19:undoCommand}() {
+       $16.$3();
+   }
+}
+
+${0:// Usage example:
+// // Create the receiver
+// $4 receiver = new $4();
+//
+// // Create commands
+// $1 command = new $9(receiver, "Command Parameter");
+//
+// // Create invoker and associate with command
+// $15 invoker = new $15();
+// invoker.$17(command);
+//
+// // Execute and undo
+// invoker.$18();
+// invoker.$19();
+}

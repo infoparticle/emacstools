@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# name: Rust Match for Option
+# key: m_match_option
+# group: Rust Conditionals
+# type: snippet
+# --
+match ${1:option_value} {
+   Some(${2:value}) => {
+       ${3:// Code using value}
+   },
+   None => {
+       ${0:// Handle None case}
+   },
+}

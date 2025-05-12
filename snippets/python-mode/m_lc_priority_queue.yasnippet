@@ -1,0 +1,31 @@
+# -*- mode: snippet -*-
+# name: Python Priority Queue with Custom Objects
+# key: m_lc_priority_queue
+# group: LeetCode Data Structures
+# type: snippet
+# --
+import heapq
+
+# Priority queue with (priority, value) tuples
+priority_queue = []
+
+# Push items with priority
+heapq.heappush(priority_queue, (${1:priority}, ${2:value}))
+
+# Pop lowest priority item
+priority, value = heapq.heappop(priority_queue)
+
+# Custom class with priority
+class PrioritizedItem:
+   def __init__(self, priority, value):
+       self.priority = priority
+       self.value = value
+
+   def __lt__(self, other):
+       # Define comparison for heap operations
+       return self.priority < other.priority
+
+# Using the custom class
+custom_pq = []
+heapq.heappush(custom_pq, PrioritizedItem(${3:1}, ${4:"task1"}))
+${0:}

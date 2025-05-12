@@ -1,0 +1,14 @@
+# [[file:../../all-snippets.org::*Combined Stream and Generics Snippets][Combined Stream and Generics Snippets:1]]
+# -*- mode: snippet -*-
+# name: Java Generic Stream Filter with Type Parameter
+# key: m_stream_generic_filter
+# group: Java Streams Generics Combined
+# type: snippet
+# --
+public <T> List<T> filter${1:Elements}(List<T> ${2:list}, Predicate<T> ${3:condition}) {
+   return $2.stream()
+           .filter($3)
+           .collect(Collectors.toList());
+}
+${0:}
+# Combined Stream and Generics Snippets:1 ends here

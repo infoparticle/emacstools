@@ -1,0 +1,38 @@
+# -*- mode: snippet -*-
+# name: Rust Error Handling Boilerplate
+# key: m_boilerplate_error
+# group: Rust Program Structure
+# type: snippet
+# --
+//! ${1:Program description}
+
+use std::error::Error;
+use std::fmt;
+
+#[derive(Debug)]
+enum ${2:AppError} {
+   ${3:IoError(std::io::Error)},
+   ${4:InvalidInput(String)},
+}
+
+impl fmt::Display for $2 {
+   fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+       match self {
+           $2::$3(err) => write!(f, "IO error: {}", err),
+           $2::$4(msg) => write!(f, "Invalid input: {}", msg),
+       }
+   }
+}
+
+impl Error for $2 {}
+
+impl From<std::io::Error> for $2 {
+   fn from(err: std::io::Error) -> Self {
+       $2::$3(err)
+   }
+}
+
+fn main() -> Result<(), Box<dyn Error>> {
+   ${0:// Program implementation}
+   Ok(())
+}

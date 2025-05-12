@@ -1,0 +1,96 @@
+# -*- mode: snippet -*-
+# name: Java Observer Pattern
+# key: m_pattern_observer
+# group: Java Design Patterns (Behavioral)
+# type: snippet
+# --
+// Observer Pattern
+//
+// Defines a one-to-many dependency between objects so that when one object changes state,
+// all its dependents are notified and updated automatically.
+import java.util.ArrayList;
+import java.util.List;
+
+// Observer interface
+interface ${1:Observer} {
+   void ${2:update}(${3:String} ${4:message});
+}
+
+// Subject (Observable)
+class ${5:Subject} {
+   private final List<$1> ${6:observers} = new ArrayList<>();
+   private ${7:String} ${8:state};
+
+   public void ${9:attach}($1 ${10:observer}) {
+       $6.add($10);
+   }
+
+   public void ${11:detach}($1 ${12:observer}) {
+       $6.remove($12);
+   }
+
+   public $7 ${13:getState}() {
+       return $8;
+   }
+
+   public void ${14:setState}($7 $8) {
+       this.$8 = $8;
+       ${15:notifyObservers}();
+   }
+
+   private void $15() {
+       for ($1 observer : $6) {
+           observer.$2("${16:State changed to: }" + $8);
+       }
+   }
+}
+
+// Concrete Observer A
+class ${17:ConcreteObserverA} implements $1 {
+   private final ${18:String} ${19:name};
+
+   public $17($18 $19) {
+       this.$19 = $19;
+   }
+
+   @Override
+   public void $2($3 $4) {
+       System.out.println("${20:Observer }" + $19 + "${21: received update: }" + $4);
+   }
+}
+
+// Concrete Observer B
+class ${22:ConcreteObserverB} implements $1 {
+   private final ${23:String} ${24:id};
+
+   public $22($23 $24) {
+       this.$24 = $24;
+   }
+
+   @Override
+   public void $2($3 $4) {
+       System.out.println("${25:Observer with ID }" + $24 + "${26: was notified: }" + $4);
+   }
+}
+
+${0:// Usage example:
+// // Create subject
+// $5 subject = new $5();
+//
+// // Create observers
+// $1 observerA = new $17("Observer A");
+// $1 observerB = new $22("B-1234");
+//
+// // Register observers
+// subject.$9(observerA);
+// subject.$9(observerB);
+//
+// // Change state - triggers notifications
+// subject.$14("New State");
+//
+// // Detach an observer
+// subject.$11(observerA);
+//
+// // Change state again - only observerB is notified
+// subject.$14("Another State");
+}

@@ -1,0 +1,23 @@
+# [[file:../../all-snippets.org::*Utility Snippets][Utility Snippets:4]]
+# -*- mode: snippet -*-
+# name: Nushell Config File
+# key: m_util_config
+# group: Nushell Utilities
+# type: snippet
+# --
+# Configuration
+def load_config [] {
+   # Try to load config, or create default
+   if (ls ${1:"config.json"} | is-empty) {
+       {
+           ${2:setting1}: ${3:"default1"}
+           ${4:setting2}: ${5:"default2"}
+       } | save $1 --json
+   }
+
+   open $1
+}
+
+let ${6:config} = (load_config)
+${0:# Use config values like $config.setting1}
+# Utility Snippets:4 ends here

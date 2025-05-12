@@ -1,0 +1,1390 @@
+
+* Rust Yasnippets Collection with Namespace Convention
+Let's create a comprehensive collection of Rust snippets using our consistent namespace convention, focusing on the core language features to help you become fluent in Rust.
+
+** Basic Control Flow Snippets
+#+begin_src snippet :tangle ./snippets/rust-mode/m_loop_basic.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Basic Loop
+# key: m_loop_basic
+# group: Rust Loops
+# type: snippet
+# --
+loop {
+   ${1:// Loop body}
+
+   if ${2:condition} {
+       break;
+   }
+}${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_loop_while.yasnippet
+# -*- mode: snippet -*-
+# name: Rust While Loop
+# key: m_loop_while
+# group: Rust Loops
+# type: snippet
+# --
+while ${1:condition} {
+   ${0:// Loop body}
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_loop_for.yasnippet
+# -*- mode: snippet -*-
+# name: Rust For Loop
+# key: m_loop_for
+# group: Rust Loops
+# type: snippet
+# --
+for ${1:item} in ${2:collection} {
+   ${0:// Loop body}
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_loop_for_range.yasnippet
+# -*- mode: snippet -*-
+# name: Rust For Loop with Range
+# key: m_loop_for_range
+# group: Rust Loops
+# type: snippet
+# --
+for ${1:i} in ${2:0}..${3:10} {
+   ${0:// Loop body}
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_loop_for_range_inclusive.yasnippet
+# -*- mode: snippet -*-
+# name: Rust For Loop with Inclusive Range
+# key: m_loop_for_range_inclusive
+# group: Rust Loops
+# type: snippet
+# --
+for ${1:i} in ${2:0}..=${3:10} {
+   ${0:// Loop body}
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_loop_for_iter.yasnippet
+# -*- mode: snippet -*-
+# name: Rust For Loop with Iterator Methods
+# key: m_loop_for_iter
+# group: Rust Loops
+# type: snippet
+# --
+for (${1:index}, ${2:value}) in ${3:collection}.iter().enumerate() {
+   ${0:// Loop body using index and value}
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_loop_labeled.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Labeled Loop
+# key: m_loop_labeled
+# group: Rust Loops
+# type: snippet
+# --
+'${1:outer}: loop {
+   ${2:// Outer loop body}
+
+   loop {
+       ${3:// Inner loop body}
+
+       if ${4:condition} {
+           break '$1;
+       }
+   }
+}${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_loop_while_let.yasnippet
+# -*- mode: snippet -*-
+# name: Rust While Let Loop
+# key: m_loop_while_let
+# group: Rust Loops
+# type: snippet
+# --
+while let ${1:Some(value)} = ${2:iterator.next()} {
+   ${0:// Loop body using value}
+}
+#+end_src
+
+** Conditional Snippets
+#+begin_src snippet :tangle ./snippets/rust-mode/m_if.yasnippet
+# -*- mode: snippet -*-
+# name: Rust If Statement
+# key: m_if
+# group: Rust Conditionals
+# type: snippet
+# --
+if ${1:condition} {
+   ${0:// Code block}
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_if_else.yasnippet
+# -*- mode: snippet -*-
+# name: Rust If-Else Statement
+# key: m_if_else
+# group: Rust Conditionals
+# type: snippet
+# --
+if ${1:condition} {
+   ${2:// True branch}
+} else {
+   ${0:// False branch}
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_if_else_if.yasnippet
+# -*- mode: snippet -*-
+# name: Rust If-Else If-Else Statement
+# key: m_if_else_if
+# group: Rust Conditionals
+# type: snippet
+# --
+if ${1:condition1} {
+   ${2:// Branch 1}
+} else if ${3:condition2} {
+   ${4:// Branch 2}
+} else {
+   ${0:// Default branch}
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_if_let.yasnippet
+# -*- mode: snippet -*-
+# name: Rust If Let Statement
+# key: m_if_let
+# group: Rust Conditionals
+# type: snippet
+# --
+if let ${1:Some(value)} = ${2:option_value} {
+   ${0:// Code using value}
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_if_let_else.yasnippet
+# -*- mode: snippet -*-
+# name: Rust If Let with Else
+# key: m_if_let_else
+# group: Rust Conditionals
+# type: snippet
+# --
+if let ${1:Some(value)} = ${2:option_value} {
+   ${3:// Code using value}
+} else {
+   ${0:// Alternative code}
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_match.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Match Expression
+# key: m_match
+# group: Rust Conditionals
+# type: snippet
+# --
+match ${1:expression} {
+   ${2:pattern1} => ${3:{
+       // Code for pattern1
+   }},
+   ${4:pattern2} => ${5:{
+       // Code for pattern2
+   }},
+   ${6:_} => ${0:{
+       // Default case
+   }},
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_match_option.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Match for Option
+# key: m_match_option
+# group: Rust Conditionals
+# type: snippet
+# --
+match ${1:option_value} {
+   Some(${2:value}) => {
+       ${3:// Code using value}
+   },
+   None => {
+       ${0:// Handle None case}
+   },
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_match_result.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Match for Result
+# key: m_match_result
+# group: Rust Conditionals
+# type: snippet
+# --
+match ${1:result_value} {
+   Ok(${2:value}) => {
+       ${3:// Code using value}
+   },
+   Err(${4:err}) => {
+       ${0:// Handle error}
+   },
+}
+#+end_src
+
+** Struct and Enum Snippets
+#+begin_src snippet :tangle ./snippets/rust-mode/m_struct_basic.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Basic Struct
+# key: m_struct_basic
+# group: Rust Struct
+# type: snippet
+# --
+/// ${3:Struct description}
+struct ${1:StructName} {
+   ${2:field_name}: ${0:type},
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_struct_derive.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Struct with Derive
+# key: m_struct_derive
+# group: Rust Struct
+# type: snippet
+# --
+/// ${4:Struct description}
+#[derive(${1:Debug, Clone})]
+struct ${2:StructName} {
+   ${3:field_name}: ${0:type},
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_struct_impl.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Struct with Implementation
+# key: m_struct_impl
+# group: Rust Struct
+# type: snippet
+# --
+/// ${3:Struct description}
+struct ${1:StructName} {
+   ${2:field_name}: ${3:type},
+}
+
+impl $1 {
+   /// Create a new instance
+   fn new(${4:args}) -> Self {
+       Self {
+           $2: ${5:value},
+       }
+   }
+
+   ${0:// Additional methods}
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_struct_tuple.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Tuple Struct
+# key: m_struct_tuple
+# group: Rust Struct
+# type: snippet
+# --
+/// ${3:Tuple struct description}
+struct ${1:TupleStruct}(${2:type});${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_struct_unit.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Unit Struct
+# key: m_struct_unit
+# group: Rust Struct
+# type: snippet
+# --
+/// ${2:Unit struct description}
+struct ${1:UnitStruct};${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_enum_basic.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Basic Enum
+# key: m_enum_basic
+# group: Rust Enum
+# type: snippet
+# --
+/// ${3:Enum description}
+enum ${1:EnumName} {
+   ${2:Variant1},
+   ${0:Variant2},
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_enum_derive.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Enum with Derive
+# key: m_enum_derive
+# group: Rust Enum
+# type: snippet
+# --
+/// ${4:Enum description}
+#[derive(${1:Debug, Clone})]
+enum ${2:EnumName} {
+   ${3:Variant1},
+   ${0:Variant2},
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_enum_data.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Enum with Data
+# key: m_enum_data
+# group: Rust Enum
+# type: snippet
+# --
+/// ${5:Enum description}
+#[derive(${1:Debug, Clone})]
+enum ${2:EnumName} {
+   ${3:Variant1},
+   ${4:Variant2}(${5:type}),
+   ${0:Variant3 { field: type }},
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_enum_impl.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Enum with Implementation
+# key: m_enum_impl
+# group: Rust Enum
+# type: snippet
+# --
+/// ${4:Enum description}
+#[derive(${1:Debug, Clone})]
+enum ${2:EnumName} {
+   ${3:Variant1},
+   ${4:Variant2(type)},
+}
+
+impl $2 {
+   /// Create a new instance
+   fn new(${5:args}) -> Self {
+       ${6:// Implementation}
+   }
+
+   ${0:// Additional methods}
+}
+#+end_src
+
+** Function and Method Snippets
+#+begin_src snippet :tangle ./snippets/rust-mode/m_fn_basic.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Basic Function
+# key: m_fn_basic
+# group: Rust Functions
+# type: snippet
+# --
+/// ${4:Function description}
+fn ${1:function_name}(${2:args}) ${3:-> ReturnType }{
+   ${0:// Function body}
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_fn_args.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Function with Arguments
+# key: m_fn_args
+# group: Rust Functions
+# type: snippet
+# --
+/// ${5:Function description}
+///
+/// # Arguments
+///
+/// * `${2:arg1}` - ${6:Argument description}
+fn ${1:function_name}(${2:arg1}: ${3:Type}) ${4:-> ReturnType }{
+   ${0:// Function body}
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_fn_impl.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Implementation Method
+# key: m_fn_impl
+# group: Rust Functions
+# type: snippet
+# --
+/// ${5:Method description}
+fn ${1:method_name}(&${2:mut }self, ${3:args}) ${4:-> ReturnType }{
+   ${0:// Method body}
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_fn_impl_static.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Static Method
+# key: m_fn_impl_static
+# group: Rust Functions
+# type: snippet
+# --
+/// ${4:Static method description}
+fn ${1:method_name}(${2:args}) ${3:-> ReturnType }{
+   ${0:// Method body}
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_fn_generic.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Generic Function
+# key: m_fn_generic
+# group: Rust Functions
+# type: snippet
+# --
+/// ${6:Function description}
+fn ${1:function_name}<${2:T}>(${3:arg}: ${4:&$2}) ${5:-> $2 }{
+   ${0:// Function body}
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_fn_where.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Function with Where Clause
+# key: m_fn_where
+# group: Rust Functions
+# type: snippet
+# --
+/// ${7:Function description}
+fn ${1:function_name}<${2:T}>(${3:arg}: ${4:&$2}) ${5:-> $2 }
+where
+   ${6:T: Display + Clone},
+{
+   ${0:// Function body}
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_impl_trait.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Implement Trait
+# key: m_impl_trait
+# group: Rust Traits
+# type: snippet
+# --
+impl ${1:Trait} for ${2:Type} {
+   ${0:// Required method implementations}
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_trait_basic.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Basic Trait
+# key: m_trait_basic
+# group: Rust Traits
+# type: snippet
+# --
+/// ${3:Trait description}
+trait ${1:TraitName} {
+   /// ${4:Method description}
+   fn ${2:method_name}(&self) ${5:-> ReturnType};
+
+   ${0:// Additional required methods}
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_trait_default.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Trait with Default Method
+# key: m_trait_default
+# group: Rust Traits
+# type: snippet
+# --
+/// ${4:Trait description}
+trait ${1:TraitName} {
+   /// ${5:Required method description}
+   fn ${2:required_method}(&self) ${6:-> ReturnType};
+
+   /// ${7:Default method description}
+   fn ${3:default_method}(&self) ${8:-> ReturnType} {
+       ${0:// Default implementation}
+   }
+}
+#+end_src
+
+** Error Handling Snippets
+#+begin_src snippet :tangle ./snippets/rust-mode/m_result.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Result Return Type
+# key: m_result
+# group: Rust Error Handling
+# type: snippet
+# --
+Result<${1:SuccessType}, ${0:ErrorType}>
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_result_return.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Return Result
+# key: m_result_return
+# group: Rust Error Handling
+# type: snippet
+# --
+fn ${1:function_name}(${2:args}) -> Result<${3:SuccessType}, ${4:ErrorType}> {
+   ${0:// Function body}
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_question_op.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Question Mark Operator
+# key: m_question_op
+# group: Rust Error Handling
+# type: snippet
+# --
+let ${1:value} = ${2:expression}?;${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_try_block.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Error Handling Block
+# key: m_try_block
+# group: Rust Error Handling
+# type: snippet
+# --
+fn ${1:function_name}(${2:args}) -> Result<${3:SuccessType}, ${4:ErrorType}> {
+   ${5:// Setup code}
+
+   let ${6:result} = ${7:expression}?;
+
+   ${8:// More code using result}
+
+   Ok(${0:return_value})
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_custom_error.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Custom Error Type
+# key: m_custom_error
+# group: Rust Error Handling
+# type: snippet
+# --
+#[derive(Debug)]
+pub enum ${1:AppError} {
+   ${2:IoError(std::io::Error)},
+   ${3:ParseError(std::num::ParseIntError)},
+   ${4:Custom(String)},
+}
+
+impl std::fmt::Display for $1 {
+   fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+       match self {
+           $1::$2(err) => write!(f, "IO error: {}", err),
+           $1::$3(err) => write!(f, "Parse error: {}", err),
+           $1::$4(msg) => write!(f, "Error: {}", msg),
+       }
+   }
+}
+
+impl std::error::Error for $1 {}
+
+impl From<std::io::Error> for $1 {
+   fn from(err: std::io::Error) -> Self {
+       $1::$2(err)
+   }
+}
+
+impl From<std::num::ParseIntError> for $1 {
+   fn from(err: std::num::ParseIntError) -> Self {
+       $1::$3(err)
+   }
+}
+
+${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_thiserror.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Error with Thiserror
+# key: m_thiserror
+# group: Rust Error Handling
+# type: snippet
+# --
+use thiserror::Error;
+
+#[derive(Error, Debug)]
+pub enum ${1:AppError} {
+   #[error("IO error: {0}")]
+   IoError(#[from] std::io::Error),
+
+   #[error("Parse error: {0}")]
+   ParseError(#[from] std::num::ParseIntError),
+
+   #[error("Configuration error: {0}")]
+   ConfigError(String),
+
+   #[error("Resource {resource} not found")]
+   NotFound { resource: String },
+
+   ${0:// Additional error variants}
+}
+#+end_src
+
+** Collection and Iterator Snippets
+#+begin_src snippet :tangle ./snippets/rust-mode/m_vec_new.yasnippet
+# -*- mode: snippet -*-
+# name: Rust New Vector
+# key: m_vec_new
+# group: Rust Collections
+# type: snippet
+# --
+let ${1:vec} = Vec::<${2:i32}>::new();${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_vec_with_capacity.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Vector with Capacity
+# key: m_vec_with_capacity
+# group: Rust Collections
+# type: snippet
+# --
+let ${1:vec} = Vec::with_capacity(${2:10});${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_vec_macro.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Vec Macro
+# key: m_vec_macro
+# group: Rust Collections
+# type: snippet
+# --
+let ${1:vec} = vec![${2:1, 2, 3, 4, 5}];${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_hashmap.yasnippet
+# -*- mode: snippet -*-
+# name: Rust HashMap
+# key: m_hashmap
+# group: Rust Collections
+# type: snippet
+# --
+use std::collections::HashMap;
+
+let mut ${1:map} = HashMap::<${2:String}, ${3:i32}>::new();
+$1.insert(${4:"key"}.to_string(), ${5:42});${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_hashset.yasnippet
+# -*- mode: snippet -*-
+# name: Rust HashSet
+# key: m_hashset
+# group: Rust Collections
+# type: snippet
+# --
+use std::collections::HashSet;
+
+let mut ${1:set} = HashSet::<${2:String}>::new();
+$1.insert(${3:"value"}.to_string());${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_iter_map.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Iterator Map
+# key: m_iter_map
+# group: Rust Iterators
+# type: snippet
+# --
+let ${1:result} = ${2:collection}.iter().map(|${3:item}| {
+   ${0:// Transformation code}
+});
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_iter_filter.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Iterator Filter
+# key: m_iter_filter
+# group: Rust Iterators
+# type: snippet
+# --
+let ${1:filtered} = ${2:collection}.iter().filter(|${3:item}| {
+   ${0:// Predicate code}
+});
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_iter_collect.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Iterator Collect
+# key: m_iter_collect
+# group: Rust Iterators
+# type: snippet
+# --
+let ${1:result}: ${2:Vec<_>} = ${3:collection}.iter()
+   .map(|${4:item}| ${5:// Transform})
+   .collect();${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_iter_fold.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Iterator Fold
+# key: m_iter_fold
+# group: Rust Iterators
+# type: snippet
+# --
+let ${1:result} = ${2:collection}.iter().fold(${3:0}, |${4:acc}, ${5:item}| {
+   ${0:// Accumulation logic}
+});
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_iter_chain.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Iterator Chain
+# key: m_iter_chain
+# group: Rust Iterators
+# type: snippet
+# --
+let ${1:result}: ${2:Vec<_>} = ${3:collection}.iter()
+   .filter(|${4:item}| ${5:// Filter condition})
+   .map(|${6:item}| ${7:// Transform})
+   .take(${8:10})
+   .collect();${0:}
+#+end_src
+
+** Memory Management Snippets
+#+begin_src snippet :tangle ./snippets/rust-mode/m_box.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Box Allocation
+# key: m_box
+# group: Rust Memory
+# type: snippet
+# --
+let ${1:heap_value} = Box::new(${2:value});${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_rc.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Rc (Reference Counted)
+# key: m_rc
+# group: Rust Memory
+# type: snippet
+# --
+use std::rc::Rc;
+
+let ${1:shared} = Rc::new(${2:value});
+let ${3:clone} = Rc::clone(&$1);${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_refcell.yasnippet
+# -*- mode: snippet -*-
+# name: Rust RefCell
+# key: m_refcell
+# group: Rust Memory
+# type: snippet
+# --
+use std::cell::RefCell;
+
+let ${1:value} = RefCell::new(${2:42});
+
+// Borrow mutably
+{
+   let mut ${3:mut_borrow} = $1.borrow_mut();
+   *$3 += 1;
+}
+
+// Borrow immutably
+{
+   let ${4:borrow} = $1.borrow();
+   println!("{}", *$4);
+}${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_arc.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Arc (Atomic Reference Counted)
+# key: m_arc
+# group: Rust Memory
+# type: snippet
+# --
+use std::sync::Arc;
+
+let ${1:shared} = Arc::new(${2:value});
+let ${3:clone} = Arc::clone(&$1);${0:}
+#+end_src
+
+** Testing Snippets
+#+begin_src snippet :tangle ./snippets/rust-mode/m_test_fn.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Test Function
+# key: m_test_fn
+# group: Rust Testing
+# type: snippet
+# --
+#[test]
+fn ${1:test_name}() {
+   ${0:// Test code}
+   assert_eq!(${2:expected}, ${3:actual});
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_test_mod.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Test Module
+# key: m_test_mod
+# group: Rust Testing
+# type: snippet
+# --
+#[cfg(test)]
+mod tests {
+   use super::*;
+
+   #[test]
+   fn ${1:test_name}() {
+       ${0:// Test code}
+       assert_eq!(${2:expected}, ${3:actual});
+   }
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_assert_eq.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Assert Equal
+# key: m_assert_eq
+# group: Rust Testing
+# type: snippet
+# --
+assert_eq!(${1:expected}, ${2:actual}${3:, "${4:Values should be equal}"});${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_assert_ne.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Assert Not Equal
+# key: m_assert_ne
+# group: Rust Testing
+# type: snippet
+# --
+assert_ne!(${1:not_expected}, ${2:actual}${3:, "${4:Values should not be equal}"});${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_panic.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Panic Test
+# key: m_panic
+# group: Rust Testing
+# type: snippet
+# --
+#[test]
+#[should_panic(expected = "${1:panic message}")]
+fn ${2:test_panics}() {
+   ${0:// Code that should panic}
+}
+#+end_src
+
+** Rust Module System Snippets
+#+begin_src snippet :tangle ./snippets/rust-mode/m_mod_decl.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Module Declaration
+# key: m_mod_decl
+# group: Rust Modules
+# type: snippet
+# --
+mod ${1:module_name};${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_mod_inline.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Inline Module
+# key: m_mod_inline
+# group: Rust Modules
+# type: snippet
+# --
+mod ${1:module_name} {
+   ${0:// Module contents}
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_mod_use.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Use Statement
+# key: m_mod_use
+# group: Rust Modules
+# type: snippet
+# --
+use ${1:crate}::${2:module};${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_mod_use_multiple.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Use Multiple Items
+# key: m_mod_use_multiple
+# group: Rust Modules
+# type: snippet
+# --
+use ${1:std}::{${2:collections::HashMap}, ${3:io}};${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_mod_pub.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Public Item
+# key: m_mod_pub
+# group: Rust Modules
+# type: snippet
+# --
+pub ${1:fn} ${2:name}(${3:args}) ${4:-> ReturnType }{
+   ${0:// Implementation}
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_mod_pub_use.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Re-export
+# key: m_mod_pub_use
+# group: Rust Modules
+# type: snippet
+# --
+pub use ${1:self}::${2:module_name}::${3:item};${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_crate_lib.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Library Crate
+# key: m_crate_lib
+# group: Rust Modules
+# type: snippet
+# --
+//! ${1:Crate description}
+
+${0:// Library code}
+#+end_src
+
+** File I/O and String Handling Snippets
+#+begin_src snippet :tangle ./snippets/rust-mode/m_file_read.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Read File
+# key: m_file_read
+# group: Rust File IO
+# type: snippet
+# --
+use std::fs::File;
+use std::io::{self, Read};
+
+fn ${1:read_file}(${2:path}: &str) -> io::Result<String> {
+   let mut ${3:file} = File::open($2)?;
+   let mut ${4:contents} = String::new();
+   $3.read_to_string(&mut $4)?;
+   Ok($4)
+}${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_file_write.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Write File
+# key: m_file_write
+# group: Rust File IO
+# type: snippet
+# --
+use std::fs::File;
+use std::io::{self, Write};
+
+fn ${1:write_file}(${2:path}: &str, ${3:content}: &str) -> io::Result<()> {
+   let mut ${4:file} = File::create($2)?;
+   $4.write_all($3.as_bytes())?;
+   Ok(())
+}${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_file_read_all.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Read File (fs::read_to_string)
+# key: m_file_read_all
+# group: Rust File IO
+# type: snippet
+# --
+use std::fs;
+use std::io;
+
+fn ${1:read_file}(${2:path}: &str) -> io::Result<String> {
+   fs::read_to_string($2)
+}${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_file_write_all.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Write File (fs::write)
+# key: m_file_write_all
+# group: Rust File IO
+# type: snippet
+# --
+use std::fs;
+use std::io;
+
+fn ${1:write_file}(${2:path}: &str, ${3:content}: &str) -> io::Result<()> {
+   fs::write($2, $3)
+}${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_string_new.yasnippet
+# -*- mode: snippet -*-
+# name: Rust New String
+# key: m_string_new
+# group: Rust Strings
+# type: snippet
+# --
+let ${1:s} = String::new();${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_string_from.yasnippet
+# -*- mode: snippet -*-
+# name: Rust String from String Literal
+# key: m_string_from
+# group: Rust Strings
+# type: snippet
+# --
+let ${1:s} = String::from("${2:text}");${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_string_to.yasnippet
+# -*- mode: snippet -*-
+# name: Rust String using to_string()
+# key: m_string_to
+# group: Rust Strings
+# type: snippet
+# --
+let ${1:s} = "${2:text}".to_string();${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_string_format.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Format Macro
+# key: m_string_format
+# group: Rust Strings
+# type: snippet
+# --
+let ${1:s} = format!("${2:{}}", ${3:value});${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_string_concat.yasnippet
+# -*- mode: snippet -*-
+# name: Rust String Concatenation
+# key: m_string_concat
+# group: Rust Strings
+# type: snippet
+# --
+let ${1:combined} = format!("{}{}", ${2:first_string}, ${3:second_string});${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_string_chars.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Iterate String Chars
+# key: m_string_chars
+# group: Rust Strings
+# type: snippet
+# --
+for ${1:c} in ${2:string}.chars() {
+   ${0:// Process each character}
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_string_parse.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Parse String to Type
+# key: m_string_parse
+# group: Rust Strings
+# type: snippet
+# --
+let ${1:parsed}: ${2:i32} = ${3:string}.parse()
+   .expect("${4:Could not parse as $2}");${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_string_parse_result.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Parse String with Result
+# key: m_string_parse_result
+# group: Rust Strings
+# type: snippet
+# --
+match ${1:string}.parse::<${2:i32}>() {
+   Ok(${3:value}) => {
+       ${4:// Use parsed value}
+   },
+   Err(${5:e}) => {
+       ${0:// Handle parsing error}
+   }
+}
+#+end_src
+
+** Lifetime and Borrow Checker Snippets
+#+begin_src snippet :tangle ./snippets/rust-mode/m_lifetime_basic.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Basic Lifetime
+# key: m_lifetime_basic
+# group: Rust Lifetimes
+# type: snippet
+# --
+fn ${1:function_name}<'${2:a}>(${3:param}: &'$2 ${4:str}) -> &'$2 $4 {
+   ${0:// Function body}
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_lifetime_multi.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Multiple Lifetimes
+# key: m_lifetime_multi
+# group: Rust Lifetimes
+# type: snippet
+# --
+fn ${1:function_name}<'${2:a}, '${3:b}>(${4:first}: &'$2 ${5:str}, ${6:second}: &'$3 ${7:str}) -> &'$2 $5 {
+   ${0:// Function body}
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_lifetime_struct.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Struct with Lifetime
+# key: m_lifetime_struct
+# group: Rust Lifetimes
+# type: snippet
+# --
+struct ${1:StructName}<'${2:a}> {
+   ${3:field}: &'$2 ${4:str},
+}
+
+impl<'$2> $1<'$2> {
+   fn ${5:method}(&self) -> &'$2 $4 {
+       ${0:// Method body}
+   }
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_borrow_ref.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Immutable Reference
+# key: m_borrow_ref
+# group: Rust Borrowing
+# type: snippet
+# --
+let ${1:reference} = &${2:value};${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_borrow_mut.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Mutable Reference
+# key: m_borrow_mut
+# group: Rust Borrowing
+# type: snippet
+# --
+let ${1:mut_ref} = &mut ${2:value};${0:}
+#+end_src
+
+** Documentation and Comment Snippets
+#+begin_src snippet :tangle ./snippets/rust-mode/m_doc_fn.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Function Documentation
+# key: m_doc_fn
+# group: Rust Documentation
+# type: snippet
+# --
+/// ${1:Brief description of the function}
+///
+/// ${2:More detailed explanation of what the function does}
+///
+/// # Examples
+///
+/// ```
+/// ${3:// Example code}
+/// ```${4:
+///
+/// # Arguments
+///
+/// * `${5:param_name}` - ${6:Description of the parameter}}${7:
+///
+/// # Returns
+///
+/// ${8:Description of the return value}}${9:
+///
+/// # Errors
+///
+/// ${10:Description of possible errors}}
+fn ${11:function_name}(${12:args}) ${13:-> ReturnType }{
+   ${0:// Function body}
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_doc_struct.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Struct Documentation
+# key: m_doc_struct
+# group: Rust Documentation
+# type: snippet
+# --
+/// ${1:Brief description of the struct}
+///
+/// ${2:More detailed explanation of the struct and its purpose}
+///
+/// # Examples
+///
+/// ```
+/// ${3:// Example code}
+/// ```
+struct ${4:StructName} {
+   ${0:// Fields}
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_doc_crate.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Crate Documentation
+# key: m_doc_crate
+# group: Rust Documentation
+# type: snippet
+# --
+//! ${1:Brief description of the crate}
+//!
+//! ${2:More detailed explanation of the crate and its purpose}
+//!
+//! # Examples
+//!
+//! ```
+//! ${3:// Example code}
+//! ```${4:
+//!
+//! # Organization
+//!
+//! ${5:Description of the crate organization}}
+${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_todo.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Todo Macro
+# key: m_todo
+# group: Rust Comments
+# type: snippet
+# --
+todo!("${1:Implement this feature}");${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_unimplemented.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Unimplemented Macro
+# key: m_unimplemented
+# group: Rust Comments
+# type: snippet
+# --
+unimplemented!("${1:Not yet implemented}");${0:}
+#+end_src
+
+** Main Program Structure Snippets
+#+begin_src snippet :tangle ./snippets/rust-mode/m_main.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Main Function
+# key: m_main
+# group: Rust Program Structure
+# type: snippet
+# --
+fn main() {
+   ${0:// Program entry point}
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_main_error.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Main with Result
+# key: m_main_error
+# group: Rust Program Structure
+# type: snippet
+# --
+fn main() -> Result<(), ${1:Box<dyn std::error::Error>}> {
+   ${0:// Program entry point}
+   Ok(())
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_boilerplate.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Basic Program Boilerplate
+# key: m_boilerplate
+# group: Rust Program Structure
+# type: snippet
+# --
+//! ${1:Program description}
+
+fn main() {
+   println!("${2:Hello, world!}");
+
+   ${0:// Program code}
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_boilerplate_cli.yasnippet
+# -*- mode: snippet -*-
+# name: Rust CLI Program Boilerplate
+# key: m_boilerplate_cli
+# group: Rust Program Structure
+# type: snippet
+# --
+//! ${1:CLI program description}
+
+use std::env;
+use std::process;
+
+fn main() {
+   let args: Vec<String> = env::args().collect();
+
+   if args.len() < ${2:2} {
+       eprintln!("Usage: {} ${3:<required_arg>}", args[0]);
+       process::exit(1);
+   }
+
+   match run(&args) {
+       Ok(_) => println!("${4:Operation completed successfully}"),
+       Err(err) => {
+           eprintln!("Error: {}", err);
+           process::exit(1);
+       }
+   }
+}
+
+fn run(args: &[String]) -> Result<(), ${5:Box<dyn std::error::Error>}> {
+   ${0:// Program implementation}
+   Ok(())
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/rust-mode/m_boilerplate_error.yasnippet
+# -*- mode: snippet -*-
+# name: Rust Error Handling Boilerplate
+# key: m_boilerplate_error
+# group: Rust Program Structure
+# type: snippet
+# --
+//! ${1:Program description}
+
+use std::error::Error;
+use std::fmt;
+
+#[derive(Debug)]
+enum ${2:AppError} {
+   ${3:IoError(std::io::Error)},
+   ${4:InvalidInput(String)},
+}
+
+impl fmt::Display for $2 {
+   fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+       match self {
+           $2::$3(err) => write!(f, "IO error: {}", err),
+           $2::$4(msg) => write!(f, "Invalid input: {}", msg),
+       }
+   }
+}
+
+impl Error for $2 {}
+
+impl From<std::io::Error> for $2 {
+   fn from(err: std::io::Error) -> Self {
+       $2::$3(err)
+   }
+}
+
+fn main() -> Result<(), Box<dyn Error>> {
+   ${0:// Program implementation}
+   Ok(())
+}
+#+end_src

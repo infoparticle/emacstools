@@ -1,0 +1,14 @@
+# [[file:../../all-snippets.org::*Error Handling Snippets][Error Handling Snippets:1]]
+# -*- mode: snippet -*-
+# name: PowerShell Try-Catch
+# key: m_trycatch
+# group: PowerShell Error Handling
+# type: snippet
+# --
+try {
+   ${1:# Your code that might throw an exception}
+} catch {
+   Write-Error "An error occurred: $$_"
+   ${0:# Error handling code}
+}
+# Error Handling Snippets:1 ends here

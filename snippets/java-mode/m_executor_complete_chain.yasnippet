@@ -1,0 +1,38 @@
+# [[file:../../all-snippets.org::*Executor Framework Snippets][Executor Framework Snippets:10]]
+# -*- mode: snippet -*-
+# name: Java CompletableFuture Chain
+# key: m_executor_complete_chain
+# group: Java Executors
+# type: snippet
+# --
+CompletableFuture<${1:String}> ${2:future} = CompletableFuture.supplyAsync(() -> {
+   ${3:// First stage}
+   return ${4:"First result"};
+})
+.thenApply(result -> {
+   ${5:// Transform result}
+   return ${6:result + " transformed"};
+})
+.thenCompose(result -> CompletableFuture.supplyAsync(() -> {
+   ${7:// Dependent async operation}
+   return ${8:result + " with async addition"};
+}))
+.thenCombine(CompletableFuture.supplyAsync(() -> {
+   ${9:// Parallel operation}
+   return ${10:"Parallel result"};
+}), (result1, result2) -> {
+   ${11:// Combine results}
+   return ${12:result1 + " combined with " + result2};
+});
+
+$2.whenComplete((result, ex) -> {
+   if (ex != null) {
+       ${13:// Handle exception}
+   } else {
+       ${14:// Process final result}
+   }
+});
+
+// Optionally wait for completion
+// $2.join();${0:}
+# Executor Framework Snippets:10 ends here

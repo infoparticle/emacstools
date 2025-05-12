@@ -1,0 +1,12 @@
+# [[file:../../all-snippets.org::*Combined Stream and Generics Snippets][Combined Stream and Generics Snippets:3]]
+# -*- mode: snippet -*-
+# name: Java Generic Custom Collector
+# key: m_stream_generic_collector
+# group: Java Streams Generics Combined
+# type: snippet
+# --
+public <T> Collector<T, ?, ${1:Map}<${2:String}, ${3:List}<T>>> ${4:customGroupingBy}(Function<T, $2> ${5:keyExtractor}) {
+   return Collectors.groupingBy($5);
+}
+${0:}
+# Combined Stream and Generics Snippets:3 ends here

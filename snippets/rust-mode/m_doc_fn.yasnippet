@@ -1,0 +1,30 @@
+# -*- mode: snippet -*-
+# name: Rust Function Documentation
+# key: m_doc_fn
+# group: Rust Documentation
+# type: snippet
+# --
+/// ${1:Brief description of the function}
+///
+/// ${2:More detailed explanation of what the function does}
+///
+/// # Examples
+///
+/// ```
+/// ${3:// Example code}
+/// ```${4:
+///
+/// # Arguments
+///
+/// * `${5:param_name}` - ${6:Description of the parameter}}${7:
+///
+/// # Returns
+///
+/// ${8:Description of the return value}}${9:
+///
+/// # Errors
+///
+/// ${10:Description of possible errors}}
+fn ${11:function_name}(${12:args}) ${13:-> ReturnType }{
+   ${0:// Function body}
+}

@@ -1,0 +1,59 @@
+# -*- mode: snippet -*-
+# name: Python Maximum Clique (Bron-Kerbosch)
+# key: m_lc_maximum_clique
+# group: LeetCode Famous Algorithms
+# type: snippet
+# --
+def maximum_clique(graph):
+   """
+   Find the maximum clique in an undirected graph using Bron-Kerbosch algorithm.
+   A clique is a subset of vertices such that every two vertices are adjacent.
+
+   Args:
+       graph: Dictionary mapping each vertex to its neighbors
+
+   Returns:
+       The largest clique as a set of vertices
+   """
+   def bron_kerbosch(r, p, x, max_clique):
+       if not p and not x:
+           if len(r) > len(max_clique[0]):
+               max_clique[0] = r.copy()
+           return
+
+       # Choose pivot vertex
+       pivot = next(iter(p.union(x))) if p.union(x) else None
+       pivot_neighbors = graph[pivot] if pivot else set()
+
+       # Process vertices not connected to pivot
+       for v in p.difference(pivot_neighbors):
+           bron_kerbosch(
+               r.union({v}),
+               p.intersection(graph[v]),
+               x.intersection(graph[v]),
+               max_clique
+           )
+           p.remove(v)
+           x.add(v)
+
+   # Store the maximum clique found
+   max_clique = [set()]
+
+   # Start with an empty clique, all vertices as potential additions, and no excluded vertices
+   all_vertices = set(graph.keys())
+   bron_kerbosch(set(), all_vertices, set(), max_clique)
+
+   return max_clique[0]
+
+# Example
+graph = {
+   ${1:0}: {${2:1, 2, 5}},
+   ${3:1}: {${4:0, 2}},
+   ${5:2}: {${6:0, 1}},
+   ${7:3}: {${8:4, 5}},
+   ${9:4}: {${10:3, 5}},
+   ${11:5}: {${12:0, 3, 4}}
+}
+
+max_clique = maximum_clique(graph)
+${0:}

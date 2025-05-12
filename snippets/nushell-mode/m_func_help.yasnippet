@@ -1,0 +1,15 @@
+# [[file:../../all-snippets.org::*Function Snippets][Function Snippets:4]]
+# -*- mode: snippet -*-
+# name: Nushell Function with Help
+# key: m_func_help
+# group: Nushell Functions
+# type: snippet
+# --
+# ${1:Function description}
+def ${2:function_name} [
+   ${3:param1}: ${4:string} # ${5:Parameter description}
+   --${6:flag}: ${7:bool} # ${8:Flag description}
+] {
+   ${0:# Function body}
+}
+# Function Snippets:4 ends here

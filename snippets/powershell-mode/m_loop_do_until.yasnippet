@@ -1,0 +1,30 @@
+# [[file:../../all-snippets.org::*Basic Loop Snippets][Basic Loop Snippets:1]]
+# -*- mode: snippet -*-
+# name: PowerShell Do-Until Loop
+# key: m_loop_do_until
+# group: PowerShell Loops
+# type: snippet
+# --
+$${1:counter} = ${2:0}
+$${3:maxAttempts} = ${4:5}
+$${5:conditionMet} = $$false
+do {
+   Write-Host "Performing action (Attempt $$($$1 + 1))..."
+
+   ${0:# Your code here}
+   # Set condition to true when met
+   # $$5 = $$true
+
+   $$1++
+
+   if (-not $$5 -and $$1 -lt $$3) {
+       Start-Sleep -Seconds ${6:1}
+   }
+} until ($$5 -or $$1 -ge $$3)
+
+if ($$5) {
+   Write-Host "Condition met successfully."
+} else {
+   Write-Warning "Condition not met after $$3 attempts."
+}
+# Basic Loop Snippets:1 ends here

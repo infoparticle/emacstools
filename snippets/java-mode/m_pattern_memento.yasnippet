@@ -1,0 +1,77 @@
+# -*- mode: snippet -*-
+# name: Java Memento Pattern
+# key: m_pattern_memento
+# group: Java Design Patterns (Behavioral)
+# type: snippet
+# --
+// Memento Pattern
+//
+// Captures and externalizes an object's internal state without violating encapsulation,
+// so the object can be restored to this state later.
+
+// Memento - stores the internal state of the Originator
+class ${1:Memento} {
+   private final ${2:String} ${3:state};
+
+   public $1($2 $3) {
+       this.$3 = $3;
+   }
+
+   // Only accessible to the originator
+   protected $2 ${4:getState}() {
+       return $3;
+   }
+}
+
+// Originator - creates a memento containing a snapshot of its current state
+class ${5:Originator} {
+   private $2 ${6:state};
+
+   public void ${7:setState}($2 $6) {
+       this.$6 = $6;
+       System.out.println("${8:Setting state to: }" + $6);
+   }
+
+   public $1 ${9:saveToMemento}() {
+       System.out.println("${10:Saving to Memento: }" + $6);
+       return new $1($6);
+   }
+
+   public void ${11:restoreFromMemento}($1 ${12:memento}) {
+       $6 = $12.$4();
+       System.out.println("${13:State restored from Memento: }" + $6);
+   }
+}
+
+// Caretaker - responsible for keeping track of the mementos
+class ${14:Caretaker} {
+   private final List<$1> ${15:mementoList} = new ArrayList<>();
+
+   public void ${16:add}($1 ${17:state}) {
+       $15.add($17);
+   }
+
+   public $1 ${18:get}(int ${19:index}) {
+       return $15.get($19);
+   }
+}
+
+${0:// Usage example:
+// $5 originator = new $5();
+// $14 caretaker = new $14();
+//
+// // Set state and save
+// originator.$7("State 1");
+// caretaker.$16(originator.$9());
+//
+// // Change state and save again
+// originator.$7("State 2");
+// caretaker.$16(originator.$9());
+//
+// // Change state again
+// originator.$7("State 3");
+//
+// // Restore to earlier states
+// originator.$11(caretaker.$18(1)); // State 2
+// originator.$11(caretaker.$18(0)); // State 1
+}

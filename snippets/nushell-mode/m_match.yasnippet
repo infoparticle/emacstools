@@ -1,0 +1,19 @@
+# [[file:../../all-snippets.org::*Conditional Snippets][Conditional Snippets:4]]
+# -*- mode: snippet -*-
+# name: Nushell Match Statement
+# key: m_match
+# group: Nushell Conditionals
+# type: snippet
+# --
+match ${1:value} {
+   ${2:pattern1} => {
+       ${3:# Pattern 1 code}
+   }
+   ${4:pattern2} => {
+       ${5:# Pattern 2 code}
+   }
+   _ => {
+       ${0:# Default code}
+   }
+}
+# Conditional Snippets:4 ends here

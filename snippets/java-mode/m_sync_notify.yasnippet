@@ -1,0 +1,14 @@
+# [[file:../../all-snippets.org::*Synchronization Snippets][Synchronization Snippets:6]]
+# -*- mode: snippet -*-
+# name: Java Object Notify
+# key: m_sync_notify
+# group: Java Synchronization
+# type: snippet
+# --
+synchronized (${1:lockObject}) {
+   ${2:// Change state that affects waiting threads}
+   $1.notify(); // Notify a single waiting thread
+   // or
+   // $1.notifyAll(); // Notify all waiting threads
+}${0:}
+# Synchronization Snippets:6 ends here

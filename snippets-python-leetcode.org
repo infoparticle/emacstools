@@ -1,0 +1,2496 @@
+* Python LeetCode Yasnippets Collection
+Let's create a comprehensive collection of Python snippets for LeetCode problem-solving using our namespace convention. I'll use `m_lc_*` as the primary namespace to make these easily discoverable.
+
+** Basic Data Structures
+#+begin_src snippet :tangle ./snippets/python-mode/m_lc_list_node.yasnippet
+# -*- mode: snippet -*-
+# name: Python ListNode Definition
+# key: m_lc_list_node
+# group: LeetCode Data Structures
+# type: snippet
+# --
+# Definition for singly-linked list node
+class ListNode:
+   def __init__(self, val=0, next=None):
+       self.val = val
+       self.next = next
+${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/python-mode/m_lc_tree_node.yasnippet
+# -*- mode: snippet -*-
+# name: Python TreeNode Definition
+# key: m_lc_tree_node
+# group: LeetCode Data Structures
+# type: snippet
+# --
+# Definition for a binary tree node
+class TreeNode:
+   def __init__(self, val=0, left=None, right=None):
+       self.val = val
+       self.left = left
+       self.right = right
+${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/python-mode/m_lc_graph_node.yasnippet
+# -*- mode: snippet -*-
+# name: Python GraphNode Definition
+# key: m_lc_graph_node
+# group: LeetCode Data Structures
+# type: snippet
+# --
+# Definition for a graph node
+class Node:
+   def __init__(self, val=0, neighbors=None):
+       self.val = val
+       self.neighbors = neighbors if neighbors is not None else []
+${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/python-mode/m_lc_n_ary_tree_node.yasnippet
+# -*- mode: snippet -*-
+# name: Python N-ary TreeNode Definition
+# key: m_lc_n_ary_tree_node
+# group: LeetCode Data Structures
+# type: snippet
+# --
+# Definition for a N-ary tree node
+class Node:
+   def __init__(self, val=None, children=None):
+       self.val = val
+       self.children = children if children is not None else []
+${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/python-mode/m_lc_interval.yasnippet
+# -*- mode: snippet -*-
+# name: Python Interval Definition
+# key: m_lc_interval
+# group: LeetCode Data Structures
+# type: snippet
+# --
+# Definition for an interval
+class Interval:
+   def __init__(self, start=0, end=0):
+       self.start = start
+       self.end = end
+${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/python-mode/m_lc_trie_node.yasnippet
+# -*- mode: snippet -*-
+# name: Python TrieNode Definition
+# key: m_lc_trie_node
+# group: LeetCode Data Structures
+# type: snippet
+# --
+# Definition for a Trie Node
+class TrieNode:
+   def __init__(self):
+       self.children = {}  # Dictionary to store child nodes
+       self.is_end_of_word = False  # Flag to mark the end of a word
+${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/python-mode/m_lc_union_find.yasnippet
+# -*- mode: snippet -*-
+# name: Python Union Find (Disjoint Set)
+# key: m_lc_union_find
+# group: LeetCode Data Structures
+# type: snippet
+# --
+class UnionFind:
+   def __init__(self, n):
+       self.parent = list(range(n))
+       self.rank = [0] * n
+       self.count = n  # Number of connected components
+
+   def find(self, x):
+       if self.parent[x] != x:
+           self.parent[x] = self.find(self.parent[x])  # Path compression
+       return self.parent[x]
+
+   def union(self, x, y):
+       root_x = self.find(x)
+       root_y = self.find(y)
+
+       if root_x == root_y:
+           return False
+
+       # Union by rank
+       if self.rank[root_x] < self.rank[root_y]:
+           self.parent[root_x] = root_y
+       elif self.rank[root_x] > self.rank[root_y]:
+           self.parent[root_y] = root_x
+       else:
+           self.parent[root_y] = root_x
+           self.rank[root_x] += 1
+
+       self.count -= 1
+       return True
+
+   def connected(self, x, y):
+       return self.find(x) == self.find(y)
+${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/python-mode/m_lc_min_heap.yasnippet
+# -*- mode: snippet -*-
+# name: Python Min Heap
+# key: m_lc_min_heap
+# group: LeetCode Data Structures
+# type: snippet
+# --
+import heapq
+
+# Create a min heap
+min_heap = []
+
+# Add elements (push)
+heapq.heappush(min_heap, ${1:item})
+
+# Remove and return smallest element (pop)
+smallest = heapq.heappop(min_heap)
+
+# Convert a list into a heap in-place (heapify)
+items = [${2:5, 3, 8, 1, 2}]
+heapq.heapify(items)
+
+# Access smallest element without removing
+if items:
+   smallest = items[0]
+${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/python-mode/m_lc_max_heap.yasnippet
+# -*- mode: snippet -*-
+# name: Python Max Heap
+# key: m_lc_max_heap
+# group: LeetCode Data Structures
+# type: snippet
+# --
+import heapq
+
+# Create a max heap (using negation trick)
+max_heap = []
+
+# Add elements (push) - negate the value to simulate max heap
+heapq.heappush(max_heap, -${1:item})
+
+# Remove and return largest element (pop)
+largest = -heapq.heappop(max_heap)
+
+# Convert a list into a max heap in-place
+items = [${2:5, 3, 8, 1, 2}]
+items = [-item for item in items]
+heapq.heapify(items)
+
+# Access largest element without removing
+if items:
+   largest = -items[0]
+${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/python-mode/m_lc_priority_queue.yasnippet
+# -*- mode: snippet -*-
+# name: Python Priority Queue with Custom Objects
+# key: m_lc_priority_queue
+# group: LeetCode Data Structures
+# type: snippet
+# --
+import heapq
+
+# Priority queue with (priority, value) tuples
+priority_queue = []
+
+# Push items with priority
+heapq.heappush(priority_queue, (${1:priority}, ${2:value}))
+
+# Pop lowest priority item
+priority, value = heapq.heappop(priority_queue)
+
+# Custom class with priority
+class PrioritizedItem:
+   def __init__(self, priority, value):
+       self.priority = priority
+       self.value = value
+
+   def __lt__(self, other):
+       # Define comparison for heap operations
+       return self.priority < other.priority
+
+# Using the custom class
+custom_pq = []
+heapq.heappush(custom_pq, PrioritizedItem(${3:1}, ${4:"task1"}))
+${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/python-mode/m_lc_stack.yasnippet
+# -*- mode: snippet -*-
+# name: Python Stack Implementation
+# key: m_lc_stack
+# group: LeetCode Data Structures
+# type: snippet
+# --
+# Stack implementation using list
+class Stack:
+   def __init__(self):
+       self.stack = []
+
+   def push(self, item):
+       self.stack.append(item)
+
+   def pop(self):
+       if not self.is_empty():
+           return self.stack.pop()
+       return None
+
+   def peek(self):
+       if not self.is_empty():
+           return self.stack[-1]
+       return None
+
+   def is_empty(self):
+       return len(self.stack) == 0
+
+   def size(self):
+       return len(self.stack)
+
+# Simple usage with list
+stack = []
+stack.append(${1:item})  # Push
+if stack:
+   top = stack[-1]  # Peek
+   item = stack.pop()  # Pop
+${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/python-mode/m_lc_queue.yasnippet
+# -*- mode: snippet -*-
+# name: Python Queue Implementation
+# key: m_lc_queue
+# group: LeetCode Data Structures
+# type: snippet
+# --
+from collections import deque
+
+# Queue implementation using deque
+class Queue:
+   def __init__(self):
+       self.queue = deque()
+
+   def enqueue(self, item):
+       self.queue.append(item)
+
+   def dequeue(self):
+       if not self.is_empty():
+           return self.queue.popleft()
+       return None
+
+   def peek(self):
+       if not self.is_empty():
+           return self.queue[0]
+       return None
+
+   def is_empty(self):
+       return len(self.queue) == 0
+
+   def size(self):
+       return len(self.queue)
+
+# Simple usage with deque
+queue = deque()
+queue.append(${1:item})  # Enqueue
+if queue:
+   front = queue[0]  # Peek
+   item = queue.popleft()  # Dequeue
+${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/python-mode/m_lc_lru_cache.yasnippet
+# -*- mode: snippet -*-
+# name: Python LRU Cache Implementation
+# key: m_lc_lru_cache
+# group: LeetCode Data Structures
+# type: snippet
+# --
+from collections import OrderedDict
+
+class LRUCache:
+   def __init__(self, capacity):
+       self.capacity = capacity
+       self.cache = OrderedDict()
+
+   def get(self, key):
+       if key not in self.cache:
+           return -1
+
+       # Move accessed item to end (most recently used)
+       value = self.cache.pop(key)
+       self.cache[key] = value
+       return value
+
+   def put(self, key, value):
+       # Remove if key exists
+       if key in self.cache:
+           self.cache.pop(key)
+       # If at capacity, remove least recently used (first item)
+       elif len(self.cache) >= self.capacity:
+           self.cache.popitem(last=False)
+
+       # Add new item to the end (most recently used)
+       self.cache[key] = value
+
+# Usage
+cache = LRUCache(${1:2})
+cache.put(${2:1}, ${3:1})
+value = cache.get(${4:1})
+${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/python-mode/m_lc_trie.yasnippet
+# -*- mode: snippet -*-
+# name: Python Trie Implementation
+# key: m_lc_trie
+# group: LeetCode Data Structures
+# type: snippet
+# --
+class Trie:
+   def __init__(self):
+       self.root = {}
+       self.end_symbol = "*"
+
+   def insert(self, word):
+       node = self.root
+       for char in word:
+           if char not in node:
+               node[char] = {}
+           node = node[char]
+       node[self.end_symbol] = True
+
+   def search(self, word):
+       node = self.root
+       for char in word:
+           if char not in node:
+               return False
+           node = node[char]
+       return self.end_symbol in node
+
+   def starts_with(self, prefix):
+       node = self.root
+       for char in prefix:
+           if char not in node:
+               return False
+           node = node[char]
+       return True
+
+# Usage
+trie = Trie()
+trie.insert("${1:apple}")
+exists = trie.search("${2:apple}")
+starts = trie.starts_with("${3:app}")
+${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/python-mode/m_lc_segment_tree.yasnippet
+# -*- mode: snippet -*-
+# name: Python Segment Tree Implementation
+# key: m_lc_segment_tree
+# group: LeetCode Data Structures
+# type: snippet
+# --
+class SegmentTree:
+   def __init__(self, arr):
+       self.n = len(arr)
+       # Size of segment tree array
+       self.size = 4 * self.n
+       self.tree = [0] * self.size
+       if self.n > 0:
+           self._build(arr, 0, 0, self.n - 1)
+
+   def _build(self, arr, node, start, end):
+       # Leaf node
+       if start == end:
+           self.tree[node] = arr[start]
+           return
+
+       mid = (start + end) // 2
+       # Build left and right children
+       self._build(arr, 2 * node + 1, start, mid)
+       self._build(arr, 2 * node + 2, mid + 1, end)
+
+       # Update current node based on children
+       self.tree[node] = self.tree[2 * node + 1] + self.tree[2 * node + 2]
+
+   def update(self, index, value):
+       if index < 0 or index >= self.n:
+           return
+       self._update(0, 0, self.n - 1, index, value)
+
+   def _update(self, node, start, end, index, value):
+       # Leaf node with the target index
+       if start == end:
+           self.tree[node] = value
+           return
+
+       mid = (start + end) // 2
+       if index <= mid:
+           # Update left subtree
+           self._update(2 * node + 1, start, mid, index, value)
+       else:
+           # Update right subtree
+           self._update(2 * node + 2, mid + 1, end, index, value)
+
+       # Update current node based on children
+       self.tree[node] = self.tree[2 * node + 1] + self.tree[2 * node + 2]
+
+   def query(self, left, right):
+       if left < 0 or right >= self.n or left > right:
+           return 0
+       return self._query(0, 0, self.n - 1, left, right)
+
+   def _query(self, node, start, end, left, right):
+       # No overlap
+       if start > right or end < left:
+           return 0
+
+       # Complete overlap
+       if start >= left and end <= right:
+           return self.tree[node]
+
+       # Partial overlap - query both children
+       mid = (start + end) // 2
+       left_sum = self._query(2 * node + 1, start, mid, left, right)
+       right_sum = self._query(2 * node + 2, mid + 1, end, left, right)
+
+       return left_sum + right_sum
+
+# Usage
+arr = [${1:1, 3, 5, 7, 9, 11}]
+seg_tree = SegmentTree(arr)
+total = seg_tree.query(${2:1}, ${3:3})  # Sum of range [1, 3]
+seg_tree.update(${4:1}, ${5:10})  # Update value at index 1
+${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/python-mode/m_lc_fenwick_tree.yasnippet
+# -*- mode: snippet -*-
+# name: Python Fenwick Tree (Binary Indexed Tree)
+# key: m_lc_fenwick_tree
+# group: LeetCode Data Structures
+# type: snippet
+# --
+class FenwickTree:
+   def __init__(self, n):
+       self.n = n
+       self.bit = [0] * (n + 1)  # 1-indexed
+
+   def update(self, i, delta):
+       """Add delta to element at index i"""
+       while i <= self.n:
+           self.bit[i] += delta
+           i += i & -i  # Add least significant bit
+
+   def prefix_sum(self, i):
+       """Get sum of elements from 1 to i"""
+       res = 0
+       while i > 0:
+           res += self.bit[i]
+           i -= i & -i  # Remove least significant bit
+       return res
+
+   def range_sum(self, left, right):
+       """Get sum of elements from left to right (inclusive)"""
+       return self.prefix_sum(right) - self.prefix_sum(left - 1)
+
+   def build(self, arr):
+       """Initialize the tree with an array (0-indexed)"""
+       for i, val in enumerate(arr, 1):  # Convert to 1-indexed
+           self.update(i, val)
+
+# Usage
+nums = [${1:1, 3, 5, 7, 9, 11}]
+n = len(nums)
+bit = FenwickTree(n)
+bit.build(nums)
+total = bit.range_sum(${2:1}, ${3:3})  # Sum of range [1, 3]
+bit.update(${4:1}, ${5:10})  # Add 10 to element at index 1
+${0:}
+#+end_src
+
+** Graph Algorithms
+#+begin_src snippet :tangle ./snippets/python-mode/m_lc_bfs.yasnippet
+# -*- mode: snippet -*-
+# name: Python BFS (Breadth-First Search)
+# key: m_lc_bfs
+# group: LeetCode Graph Algorithms
+# type: snippet
+# --
+from collections import deque
+
+def bfs(graph, start):
+   """
+   Perform Breadth-First Search on a graph starting from node 'start'.
+   Returns visited nodes in BFS order.
+
+   Args:
+       graph: Dictionary mapping nodes to lists of neighbors
+       start: Starting node
+   """
+   visited = set([start])
+   queue = deque([start])
+   result = []
+
+   while queue:
+       node = queue.popleft()
+       result.append(node)
+
+       # Process all neighbors
+       for neighbor in graph[node]:
+           if neighbor not in visited:
+               visited.add(neighbor)
+               queue.append(neighbor)
+
+   return result
+
+# Example usage for graph as adjacency list
+graph = {
+   ${1:0}: [${2:1, 2}],
+   ${3:1}: [${4:0, 3, 4}],
+   ${5:2}: [${6:0, 5}],
+   ${7:3}: [${8:1}],
+   ${9:4}: [${10:1}],
+   ${11:5}: [${12:2}]
+}
+
+# BFS from node 0
+result = bfs(graph, ${13:0})
+${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/python-mode/m_lc_bfs_matrix.yasnippet
+# -*- mode: snippet -*-
+# name: Python BFS for Matrix/Grid
+# key: m_lc_bfs_matrix
+# group: LeetCode Graph Algorithms
+# type: snippet
+# --
+from collections import deque
+
+def bfs_matrix(matrix, start_row, start_col):
+   """
+   BFS traversal on a 2D matrix/grid.
+
+   Args:
+       matrix: 2D list representing the grid
+       start_row, start_col: Starting coordinates
+   """
+   if not matrix or not matrix[0]:
+       return []
+
+   rows, cols = len(matrix), len(matrix[0])
+   visited = set([(start_row, start_col)])
+   queue = deque([(start_row, start_col)])
+   result = []
+
+   # Four directions: up, right, down, left
+   directions = [(-1, 0), (0, 1), (1, 0), (0, -1)]
+
+   while queue:
+       row, col = queue.popleft()
+       result.append((row, col))
+
+       # Explore all four directions
+       for dr, dc in directions:
+           new_row, new_col = row + dr, col + dc
+
+           # Check if in bounds and not visited
+           if (0 <= new_row < rows and 0 <= new_col < cols and
+               (new_row, new_col) not in visited and
+               matrix[new_row][new_col] ${1:!= 0}):  # Condition to traverse (e.g., not a wall)
+
+               visited.add((new_row, new_col))
+               queue.append((new_row, new_col))
+
+   return result
+
+# Example usage
+matrix = [
+   [${2:1, 1, 0, 1}],
+   [${3:1, 1, 1, 0}],
+   [${4:0, 0, 1, 1}],
+   [${5:1, 0, 1, 1}]
+]
+
+path = bfs_matrix(matrix, ${6:0}, ${7:0})
+${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/python-mode/m_lc_dfs.yasnippet
+# -*- mode: snippet -*-
+# name: Python DFS (Depth-First Search)
+# key: m_lc_dfs
+# group: LeetCode Graph Algorithms
+# type: snippet
+# --
+def dfs(graph, start, visited=None):
+   """
+   Recursive Depth-First Search on a graph starting from node 'start'.
+   Returns visited nodes in DFS order.
+
+   Args:
+       graph: Dictionary mapping nodes to lists of neighbors
+       start: Starting node
+       visited: Set of visited nodes (for recursion)
+   """
+   if visited is None:
+       visited = set()
+
+   visited.add(start)
+   result = [start]
+
+   for neighbor in graph[start]:
+       if neighbor not in visited:
+           result.extend(dfs(graph, neighbor, visited))
+
+   return result
+
+def dfs_iterative(graph, start):
+   """
+   Iterative Depth-First Search using a stack.
+
+   Args:
+       graph: Dictionary mapping nodes to lists of neighbors
+       start: Starting node
+   """
+   visited = set()
+   stack = [start]
+   result = []
+
+   while stack:
+       node = stack.pop()
+       if node not in visited:
+           visited.add(node)
+           result.append(node)
+
+           # Add neighbors in reverse order for same visit order as recursive
+           for neighbor in reversed(graph[node]):
+               if neighbor not in visited:
+                   stack.append(neighbor)
+
+   return result
+
+# Example usage for graph as adjacency list
+graph = {
+   ${1:0}: [${2:1, 2}],
+   ${3:1}: [${4:0, 3, 4}],
+   ${5:2}: [${6:0, 5}],
+   ${7:3}: [${8:1}],
+   ${9:4}: [${10:1}],
+   ${11:5}: [${12:2}]
+}
+
+# DFS from node 0
+result_recursive = dfs(graph, ${13:0})
+result_iterative = dfs_iterative(graph, ${13:0})
+${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/python-mode/m_lc_dfs_matrix.yasnippet
+# -*- mode: snippet -*-
+# name: Python DFS for Matrix/Grid
+# key: m_lc_dfs_matrix
+# group: LeetCode Graph Algorithms
+# type: snippet
+# --
+def dfs_matrix(matrix, row, col, visited=None):
+   """
+   Recursive DFS traversal on a 2D matrix/grid.
+
+   Args:
+       matrix: 2D list representing the grid
+       row, col: Current coordinates
+       visited: Set of visited coordinates (for recursion)
+   """
+   if not matrix or not matrix[0]:
+       return []
+
+   rows, cols = len(matrix), len(matrix[0])
+
+   # Initialize visited set if not provided
+   if visited is None:
+       visited = set()
+
+   # Base case: out of bounds or already visited or invalid cell
+   if (row < 0 or row >= rows or col < 0 or col >= cols or
+       (row, col) in visited or matrix[row][col] ${1:== 0}):  # Condition to avoid (e.g., a wall)
+       return []
+
+   # Mark as visited and add to result
+   visited.add((row, col))
+   result = [(row, col)]
+
+   # Four directions: up, right, down, left
+   directions = [(-1, 0), (0, 1), (1, 0), (0, -1)]
+
+   # Recursive calls for all four directions
+   for dr, dc in directions:
+       new_row, new_col = row + dr, col + dc
+       result.extend(dfs_matrix(matrix, new_row, new_col, visited))
+
+   return result
+
+def dfs_matrix_iterative(matrix, start_row, start_col):
+   """
+   Iterative DFS traversal on a 2D matrix/grid using a stack.
+
+   Args:
+       matrix: 2D list representing the grid
+       start_row, start_col: Starting coordinates
+   """
+   if not matrix or not matrix[0]:
+       return []
+
+   rows, cols = len(matrix), len(matrix[0])
+   visited = set()
+   stack = [(start_row, start_col)]
+   result = []
+
+   # Four directions: up, right, down, left
+   directions = [(-1, 0), (0, 1), (1, 0), (0, -1)]
+
+   while stack:
+       row, col = stack.pop()
+
+       # Skip if already visited or invalid
+       if (row < 0 or row >= rows or col < 0 or col >= cols or
+           (row, col) in visited or matrix[row][col] ${1:== 0}):
+           continue
+
+       visited.add((row, col))
+       result.append((row, col))
+
+       # Add all valid neighbors to stack
+       for dr, dc in directions:
+           new_row, new_col = row + dr, col + dc
+           stack.append((new_row, new_col))
+
+   return result
+
+# Example usage
+matrix = [
+   [${2:1, 1, 0, 1}],
+   [${3:1, 1, 1, 0}],
+   [${4:0, 0, 1, 1}],
+   [${5:1, 0, 1, 1}]
+]
+
+path_recursive = dfs_matrix(matrix, ${6:0}, ${7:0})
+path_iterative = dfs_matrix_iterative(matrix, ${6:0}, ${7:0})
+${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/python-mode/m_lc_dijkstra.yasnippet
+# -*- mode: snippet -*-
+# name: Python Dijkstra's Algorithm
+# key: m_lc_dijkstra
+# group: LeetCode Graph Algorithms
+# type: snippet
+# --
+import heapq
+
+def dijkstra(graph, start):
+   """
+   Dijkstra's algorithm for finding shortest paths from start node
+   to all other nodes in a weighted graph.
+
+   Args:
+       graph: Dictionary mapping nodes to lists of (neighbor, weight) tuples
+       start: Starting node
+
+   Returns:
+       Dictionary mapping each node to its shortest distance from start
+   """
+   # Initialize distances dictionary
+   distances = {node: float('infinity') for node in graph}
+   distances[start] = 0
+
+   # Priority queue ordered by distance
+   priority_queue = [(0, start)]
+
+   while priority_queue:
+       current_distance, current_node = heapq.heappop(priority_queue)
+
+       # If we've already found a better path, skip
+       if current_distance > distances[current_node]:
+           continue
+
+       # Check all neighbors
+       for neighbor, weight in graph[current_node]:
+           distance = current_distance + weight
+
+           # If we found a better path, update and add to queue
+           if distance < distances[neighbor]:
+               distances[neighbor] = distance
+               heapq.heappush(priority_queue, (distance, neighbor))
+
+   return distances
+
+# Example usage for weighted graph as adjacency list with weights
+weighted_graph = {
+   ${1:'A'}: [(${2:'B'}, ${3:1}), (${4:'C'}, ${5:4})],
+   ${6:'B'}: [(${7:'A'}, ${8:1}), (${9:'C'}, ${10:2}), (${11:'D'}, ${12:5})],
+   ${13:'C'}: [(${14:'A'}, ${15:4}), (${16:'B'}, ${17:2}), (${18:'D'}, ${19:1})],
+   ${20:'D'}: [(${21:'B'}, ${22:5}), (${23:'C'}, ${24:1})]
+}
+
+# Find shortest paths from 'A'
+shortest_distances = dijkstra(weighted_graph, ${25:'A'})
+${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/python-mode/m_lc_bellman_ford.yasnippet
+# -*- mode: snippet -*-
+# name: Python Bellman-Ford Algorithm
+# key: m_lc_bellman_ford
+# group: LeetCode Graph Algorithms
+# type: snippet
+# --
+def bellman_ford(graph, start, num_vertices):
+   """
+   Bellman-Ford algorithm for finding shortest paths from start node
+   to all other nodes in a weighted graph. Can handle negative weights.
+
+   Args:
+       graph: List of edges represented as (u, v, w) where u is source,
+              v is destination, and w is weight
+       start: Starting node
+       num_vertices: Number of vertices in the graph
+
+   Returns:
+       Dictionary mapping each node to its shortest distance from start,
+       None if negative cycle exists
+   """
+   # Initialize distances dictionary
+   distances = {node: float('infinity') for node in range(num_vertices)}
+   distances[start] = 0
+
+   # Relax all edges |V| - 1 times
+   for _ in range(num_vertices - 1):
+       for u, v, w in graph:
+           if distances[u] != float('infinity') and distances[u] + w < distances[v]:
+               distances[v] = distances[u] + w
+
+   # Check for negative-weight cycles
+   for u, v, w in graph:
+       if distances[u] != float('infinity') and distances[u] + w < distances[v]:
+           # Negative cycle exists
+           return None
+
+   return distances
+
+# Example usage for weighted graph as edge list
+edges = [
+   (${1:0}, ${2:1}, ${3:-1}),  # Edge from 0 to 1 with weight -1
+   (${4:0}, ${5:2}, ${6:4}),
+   (${7:1}, ${8:2}, ${9:3}),
+   (${10:1}, ${11:3}, ${12:2}),
+   (${13:1}, ${14:4}, ${15:2}),
+   (${16:3}, ${17:2}, ${18:5}),
+   (${19:3}, ${20:1}, ${21:1}),
+   (${22:4}, ${23:3}, ${24:-3})
+]
+
+# Number of vertices (0 to 4)
+num_vertices = ${25:5}
+
+# Find shortest paths from 0
+shortest_distances = bellman_ford(edges, ${26:0}, num_vertices)
+${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/python-mode/m_lc_floyd_warshall.yasnippet
+# -*- mode: snippet -*-
+# name: Python Floyd-Warshall Algorithm
+# key: m_lc_floyd_warshall
+# group: LeetCode Graph Algorithms
+# type: snippet
+# --
+def floyd_warshall(graph):
+   """
+   Floyd-Warshall algorithm for finding shortest paths between
+   all pairs of vertices in a weighted graph.
+
+   Args:
+       graph: 2D matrix where graph[i][j] is the weight from i to j,
+              or float('infinity') if no direct edge exists
+
+   Returns:
+       2D matrix of shortest distances between all pairs of vertices
+   """
+   n = len(graph)
+
+   # Initialize distances matrix as a copy of the graph
+   dist = [row[:] for row in graph]
+
+   # Consider each vertex as an intermediate
+   for k in range(n):
+       # Consider all pairs of vertices (i, j)
+       for i in range(n):
+           for j in range(n):
+               # If going through k is shorter than direct path
+               if dist[i][j] > dist[i][k] + dist[k][j]:
+                   dist[i][j] = dist[i][k] + dist[k][j]
+
+   # Check for negative cycles
+   for i in range(n):
+       if dist[i][i] < 0:
+           # Negative cycle detected
+           return None
+
+   return dist
+
+# Example usage with adjacency matrix
+# Use float('infinity') for no edge, 0 for self-loops
+INF = float('infinity')
+graph = [
+   [${1:0, 3, INF, 5}],       # Edges from vertex 0
+   [${2:2, 0, INF, 4}],       # Edges from vertex 1
+   [${3:INF, 1, 0, INF}],     # Edges from vertex 2
+   [${4:INF, INF, 2, 0}]      # Edges from vertex 3
+]
+
+# Find all-pairs shortest paths
+all_pairs_shortest = floyd_warshall(graph)
+${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/python-mode/m_lc_kruskal.yasnippet
+# -*- mode: snippet -*-
+# name: Python Kruskal's Algorithm (MST)
+# key: m_lc_kruskal
+# group: LeetCode Graph Algorithms
+# type: snippet
+# --
+def find(parent, i):
+   """Find root parent of a vertex with path compression"""
+   if parent[i] != i:
+       parent[i] = find(parent, parent[i])
+   return parent[i]
+
+def union(parent, rank, x, y):
+   """Union two sets based on rank"""
+   root_x = find(parent, x)
+   root_y = find(parent, y)
+
+   if root_x == root_y:
+       return
+
+   # Attach smaller rank tree under root of higher rank tree
+   if rank[root_x] < rank[root_y]:
+       parent[root_x] = root_y
+   elif rank[root_x] > rank[root_y]:
+       parent[root_y] = root_x
+   else:
+       # If ranks are same, make one as root and increment its rank
+       parent[root_y] = root_x
+       rank[root_x] += 1
+
+def kruskal_mst(graph, num_vertices):
+   """
+   Kruskal's algorithm to find minimum spanning tree of an undirected graph.
+
+   Args:
+       graph: List of edges as (u, v, w) where u,v are vertices and w is weight
+       num_vertices: Number of vertices in the graph
+
+   Returns:
+       List of edges in the MST
+   """
+   result = []  # Stores the MST
+
+   # Sort edges by weight
+   graph.sort(key=lambda x: x[2])
+
+   # Initialize parent and rank arrays for Union-Find
+   parent = [i for i in range(num_vertices)]
+   rank = [0] * num_vertices
+
+   # Process edges one by one
+   for u, v, w in graph:
+       # If including this edge doesn't cause cycle, include it
+       if find(parent, u) != find(parent, v):
+           result.append((u, v, w))
+           union(parent, rank, u, v)
+
+   return result
+
+# Example usage
+edges = [
+   (${1:0}, ${2:1}, ${3:10}),
+   (${4:0}, ${5:2}, ${6:6}),
+   (${7:0}, ${8:3}, ${9:5}),
+   (${10:1}, ${11:3}, ${12:15}),
+   (${13:2}, ${14:3}, ${15:4})
+]
+
+num_vertices = ${16:4}
+mst_edges = kruskal_mst(edges, num_vertices)
+${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/python-mode/m_lc_prim.yasnippet
+# -*- mode: snippet -*-
+# name: Python Prim's Algorithm (MST)
+# key: m_lc_prim
+# group: LeetCode Graph Algorithms
+# type: snippet
+# --
+import heapq
+
+def prim_mst(graph, start):
+   """
+   Prim's algorithm to find minimum spanning tree of an undirected graph.
+
+   Args:
+       graph: Dictionary mapping vertices to lists of (neighbor, weight) tuples
+       start: Starting vertex
+
+   Returns:
+       List of edges in the MST
+   """
+   # Set to keep track of vertices in MST
+   mst_set = set([start])
+
+   # List to store edges in MST
+   mst_edges = []
+
+   # Priority queue of edges
+   edges = [(weight, start, neighbor) for neighbor, weight in graph[start]]
+   heapq.heapify(edges)
+
+   # Process until all vertices are in MST
+   while edges and len(mst_set) < len(graph):
+       weight, u, v = heapq.heappop(edges)
+
+       # Add vertex to MST if not already included
+       if v not in mst_set:
+           mst_set.add(v)
+           mst_edges.append((u, v, weight))
+
+           # Add all edges from the new vertex
+           for neighbor, edge_weight in graph[v]:
+               if neighbor not in mst_set:
+                   heapq.heappush(edges, (edge_weight, v, neighbor))
+
+   return mst_edges
+
+# Example usage with weighted adjacency list
+graph = {
+   ${1:0}: [(${2:1}, ${3:10}), (${4:2}, ${5:6}), (${6:3}, ${7:5})],
+   ${8:1}: [(${9:0}, ${10:10}), (${11:3}, ${12:15})],
+   ${13:2}: [(${14:0}, ${15:6}), (${16:3}, ${17:4})],
+   ${18:3}: [(${19:0}, ${20:5}), (${21:1}, ${22:15}), (${23:2}, ${24:4})]
+}
+
+mst_edges = prim_mst(graph, ${25:0})
+${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/python-mode/m_lc_topological_sort.yasnippet
+# -*- mode: snippet -*-
+# name: Python Topological Sort
+# key: m_lc_topological_sort
+# group: LeetCode Graph Algorithms
+# type: snippet
+# --
+from collections import defaultdict, deque
+
+def topological_sort(graph):
+   """
+   Kahn's algorithm for topological sorting of a directed acyclic graph (DAG).
+
+   Args:
+       graph: Dictionary mapping vertices to lists of neighbors
+
+   Returns:
+       Topologically sorted list of vertices, or None if graph has a cycle
+   """
+   # Count in-degrees
+   in_degree = defaultdict(int)
+   for node in graph:
+       for neighbor in graph[node]:
+           in_degree[neighbor] += 1
+
+   # Add all vertices with in-degree 0 to queue
+   queue = deque([node for node in graph if in_degree[node] == 0])
+
+   result = []
+
+   # Process until queue is empty
+   while queue:
+       node = queue.popleft()
+       result.append(node)
+
+       # Reduce in-degree of all neighbors
+       for neighbor in graph[node]:
+           in_degree[neighbor] -= 1
+           # If in-degree becomes 0, add to queue
+           if in_degree[neighbor] == 0:
+               queue.append(neighbor)
+
+   # If all vertices are in result, return the topological sort
+   if len(result) == len(graph):
+       return result
+   else:
+       # Graph has at least one cycle
+       return None
+
+def topological_sort_dfs(graph):
+   """
+   DFS-based topological sorting of a directed acyclic graph (DAG).
+
+   Args:
+       graph: Dictionary mapping vertices to lists of neighbors
+
+   Returns:
+       Topologically sorted list of vertices, or None if graph has a cycle
+   """
+   # States: 0=unvisited, 1=processing, 2=processed
+   visited = {node: 0 for node in graph}
+   result = []
+
+   def dfs(node):
+       # If node is currently being processed, we found a cycle
+       if visited[node] == 1:
+           return False
+
+       # If node is already processed, skip
+       if visited[node] == 2:
+           return True
+
+       # Mark as being processed
+       visited[node] = 1
+
+       # Visit all neighbors
+       for neighbor in graph[node]:
+           if not dfs(neighbor):
+               return False
+
+       # Mark as processed and add to result
+       visited[node] = 2
+       result.append(node)
+       return True
+
+   # Process all unvisited nodes
+   for node in graph:
+       if visited[node] == 0:
+           if not dfs(node):
+               # Cycle detected
+               return None
+
+   # Return in reverse order
+   return result[::-1]
+
+# Example usage for directed graph
+graph = {
+   ${1:0}: [${2:1, 2}],
+   ${3:1}: [${4:3}],
+   ${5:2}: [${6:3}],
+   ${7:3}: [${8:4}],
+   ${9:4}: [${10:[]}]
+}
+
+# Use Kahn's algorithm
+topo_order = topological_sort(graph)
+
+# Alternatively, use DFS-based algorithm
+topo_order_dfs = topological_sort_dfs(graph)
+${0:}
+#+end_src
+
+** Dynamic Programming Patterns
+#+begin_src snippet :tangle ./snippets/python-mode/m_lc_dp_memoization.yasnippet
+# -*- mode: snippet -*-
+# name: Python DP - Memoization (Top-Down)
+# key: m_lc_dp_memoization
+# group: LeetCode DP Patterns
+# type: snippet
+# --
+def solve_problem_memoization(input):
+   """
+   Dynamic Programming - Memoization (Top-Down) approach.
+
+   Args:
+       input: Problem input
+   """
+   # Initialize memoization cache
+   memo = {}
+
+   def dp(state):
+       # Return cached result if available
+       if state in memo:
+           return memo[state]
+
+       # Base case(s)
+       if ${1:base_case_condition}:
+           return ${2:base_case_value}
+
+       # Calculate result using recursion with memoization
+       result = ${3:recursive_formula}
+
+       # Cache and return the result
+       memo[state] = result
+       return result
+
+   # Start recursion from initial state
+   return dp(${4:initial_state})
+
+# Example: Fibonacci sequence
+def fibonacci(n):
+   memo = {}
+
+   def dp(i):
+       if i in memo:
+           return memo[i]
+
+       if i <= 1:
+           return i
+
+       memo[i] = dp(i - 1) + dp(i - 2)
+       return memo[i]
+
+   return dp(n)
+
+result = fibonacci(${5:10})
+${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/python-mode/m_lc_dp_tabulation.yasnippet
+# -*- mode: snippet -*-
+# name: Python DP - Tabulation (Bottom-Up)
+# key: m_lc_dp_tabulation
+# group: LeetCode DP Patterns
+# type: snippet
+# --
+def solve_problem_tabulation(input):
+   """
+   Dynamic Programming - Tabulation (Bottom-Up) approach.
+
+   Args:
+       input: Problem input
+   """
+   # Initialize DP table
+   n = ${1:table_size}
+   dp = [${2:initial_value} for _ in range(n)]
+
+   # Base case(s)
+   dp[0] = ${3:base_case_value}
+
+   # Fill the table bottom-up
+   for i in range(1, n):
+       dp[i] = ${4:dp_formula}
+
+   # Return the final answer
+   return dp[${5:n - 1}]
+
+# Example: Fibonacci sequence
+def fibonacci(n):
+   if n <= 1:
+       return n
+
+   # Initialize table
+   dp = [0] * (n + 1)
+   dp[1] = 1
+
+   # Fill table bottom-up
+   for i in range(2, n + 1):
+       dp[i] = dp[i - 1] + dp[i - 2]
+
+   return dp[n]
+
+result = fibonacci(${6:10})
+${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/python-mode/m_lc_dp_2d.yasnippet
+# -*- mode: snippet -*-
+# name: Python DP - 2D Table
+# key: m_lc_dp_2d
+# group: LeetCode DP Patterns
+# type: snippet
+# --
+def solve_problem_2d(input1, input2):
+   """
+   Dynamic Programming with 2D table.
+
+   Args:
+       input1, input2: Problem inputs determining table dimensions
+   """
+   # Get dimensions
+   m, n = ${1:len(input1)}, ${2:len(input2)}
+
+   # Initialize 2D DP table
+   dp = [[${3:initial_value} for _ in range(n + 1)] for _ in range(m + 1)]
+
+   # Base case(s)
+   for i in range(m + 1):
+       dp[i][0] = ${4:base_case_i}
+   for j in range(n + 1):
+       dp[0][j] = ${5:base_case_j}
+
+   # Fill the table
+   for i in range(1, m + 1):
+       for j in range(1, n + 1):
+           dp[i][j] = ${6:dp_formula}
+
+   # Return the final answer
+   return dp[m][n]
+
+# Example: Longest Common Subsequence
+def longest_common_subsequence(text1, text2):
+   m, n = len(text1), len(text2)
+
+   # Initialize 2D DP table
+   dp = [[0 for _ in range(n + 1)] for _ in range(m + 1)]
+
+   # Fill the table
+   for i in range(1, m + 1):
+       for j in range(1, n + 1):
+           if text1[i - 1] == text2[j - 1]:
+               dp[i][j] = dp[i - 1][j - 1] + 1
+           else:
+               dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
+
+   return dp[m][n]
+
+result = longest_common_subsequence("${7:abcde}", "${8:ace}")
+${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/python-mode/m_lc_dp_space_optimization.yasnippet
+# -*- mode: snippet -*-
+# name: Python DP - Space Optimization
+# key: m_lc_dp_space_optimization
+# group: LeetCode DP Patterns
+# type: snippet
+# --
+def solve_problem_optimized(input):
+   """
+   Dynamic Programming with space optimization.
+   Often used when only recent results are needed.
+
+   Args:
+       input: Problem input
+   """
+   n = ${1:input_size}
+
+   # Initialize previous state variables
+   prev1 = ${2:initial_value_1}
+   prev2 = ${3:initial_value_2}
+
+   # Process each step
+   for i in range(2, n + 1):
+       # Compute current value based on previous values
+       current = ${4:formula(prev1, prev2)}
+
+       # Update previous values for next iteration
+       prev2 = prev1
+       prev1 = current
+
+   return prev1
+
+# Example: Fibonacci with O(1) space
+def fibonacci(n):
+   if n <= 1:
+       return n
+
+   prev2 = 0  # fib(0)
+   prev1 = 1  # fib(1)
+
+   for i in range(2, n + 1):
+       current = prev1 + prev2
+       prev2 = prev1
+       prev1 = current
+
+   return prev1
+
+result = fibonacci(${5:10})
+${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/python-mode/m_lc_dp_knapsack.yasnippet
+# -*- mode: snippet -*-
+# name: Python DP - 0/1 Knapsack
+# key: m_lc_dp_knapsack
+# group: LeetCode DP Patterns
+# type: snippet
+# --
+def knapsack_01(values, weights, capacity):
+   """
+   0/1 Knapsack problem: maximize value while keeping weight <= capacity.
+   Each item can be taken (1) or not taken (0).
+
+   Args:
+       values: List of item values
+       weights: List of item weights
+       capacity: Maximum weight capacity of knapsack
+
+   Returns:
+       Maximum possible value
+   """
+   n = len(values)
+
+   # Initialize DP table
+   dp = [[0 for _ in range(capacity + 1)] for _ in range(n + 1)]
+
+   # Fill the table bottom-up
+   for i in range(1, n + 1):
+       for w in range(capacity + 1):
+           # If current item is too heavy, skip it
+           if weights[i - 1] > w:
+               dp[i][w] = dp[i - 1][w]
+           else:
+               # Max of (skip item, take item)
+               dp[i][w] = max(dp[i - 1][w],
+                              dp[i - 1][w - weights[i - 1]] + values[i - 1])
+
+   return dp[n][capacity]
+
+# Space-optimized version (1D array)
+def knapsack_01_optimized(values, weights, capacity):
+   n = len(values)
+
+   # Initialize 1D DP array
+   dp = [0] * (capacity + 1)
+
+   # Fill the array bottom-up
+   for i in range(n):
+       # Go backwards to avoid using item twice
+       for w in range(capacity, weights[i] - 1, -1):
+           dp[w] = max(dp[w], dp[w - weights[i]] + values[i])
+
+   return dp[capacity]
+
+# Example
+values = [${1:60, 100, 120}]
+weights = [${2:10, 20, 30}]
+capacity = ${3:50}
+
+max_value = knapsack_01(values, weights, capacity)
+max_value_optimized = knapsack_01_optimized(values, weights, capacity)
+${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/python-mode/m_lc_dp_coin_change.yasnippet
+# -*- mode: snippet -*-
+# name: Python DP - Coin Change
+# key: m_lc_dp_coin_change
+# group: LeetCode DP Patterns
+# type: snippet
+# --
+def coin_change(coins, amount):
+   """
+   Coin Change problem: find minimum number of coins to make up amount.
+
+   Args:
+       coins: List of coin denominations
+       amount: Target amount
+
+   Returns:
+       Minimum number of coins needed, or -1 if impossible
+   """
+   # Initialize DP array, max_value acts as infinity
+   max_value = amount + 1
+   dp = [max_value] * (amount + 1)
+   dp[0] = 0  # Base case: 0 coins to make 0 amount
+
+   # Fill the array bottom-up
+   for coin in coins:
+       for x in range(coin, amount + 1):
+           dp[x] = min(dp[x], dp[x - coin] + 1)
+
+   # Return result, -1 if impossible
+   return dp[amount] if dp[amount] != max_value else -1
+
+# Example
+coins = [${1:1, 2, 5}]
+amount = ${2:11}
+min_coins = coin_change(coins, amount)
+
+# Variation: Count number of ways to make amount
+def coin_change_ways(coins, amount):
+   """
+   Count the number of different ways to make up the amount using coins.
+
+   Args:
+       coins: List of coin denominations
+       amount: Target amount
+
+   Returns:
+       Number of different combinations
+   """
+   # Initialize DP array
+   dp = [0] * (amount + 1)
+   dp[0] = 1  # Base case: 1 way to make 0 amount (use no coins)
+
+   # For each coin, update the ways for all possible amounts
+   for coin in coins:
+       for x in range(coin, amount + 1):
+           dp[x] += dp[x - coin]
+
+   return dp[amount]
+
+# Example
+ways = coin_change_ways(coins, amount)
+${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/python-mode/m_lc_dp_lis.yasnippet
+# -*- mode: snippet -*-
+# name: Python DP - Longest Increasing Subsequence
+# key: m_lc_dp_lis
+# group: LeetCode DP Patterns
+# type: snippet
+# --
+def longest_increasing_subsequence(nums):
+   """
+   Find the length of the longest strictly increasing subsequence.
+
+   Args:
+       nums: List of integers
+
+   Returns:
+       Length of longest increasing subsequence
+   """
+   if not nums:
+       return 0
+
+   n = len(nums)
+   # Initialize DP array, each element is at least a subsequence of length 1
+   dp = [1] * n
+
+   # Fill DP array
+   for i in range(1, n):
+       for j in range(i):
+           if nums[i] > nums[j]:
+               dp[i] = max(dp[i], dp[j] + 1)
+
+   # Return maximum value in dp array
+   return max(dp)
+
+# Binary search approach - O(n log n)
+def longest_increasing_subsequence_optimized(nums):
+   if not nums:
+       return 0
+
+   # tails[i] = smallest ending value of all LIS of length i+1
+   tails = []
+
+   for num in nums:
+       # Binary search to find position to insert/replace
+       idx = bisect_left(tails, num)
+
+       # If num is larger than any element in tails, append it
+       if idx == len(tails):
+           tails.append(num)
+       # Otherwise, replace the element at idx with num
+       else:
+           tails[idx] = num
+
+   # Length of tails is the length of LIS
+   return len(tails)
+
+from bisect import bisect_left
+
+# Example
+nums = [${1:10, 9, 2, 5, 3, 7, 101, 18}]
+lis_length = longest_increasing_subsequence(nums)
+lis_length_optimized = longest_increasing_subsequence_optimized(nums)
+${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/python-mode/m_lc_dp_lcs.yasnippet
+# -*- mode: snippet -*-
+# name: Python DP - Longest Common Subsequence
+# key: m_lc_dp_lcs
+# group: LeetCode DP Patterns
+# type: snippet
+# --
+def longest_common_subsequence(text1, text2):
+   """
+   Find the length of the longest common subsequence between two strings.
+
+   Args:
+       text1, text2: Input strings
+
+   Returns:
+       Length of longest common subsequence
+   """
+   m, n = len(text1), len(text2)
+
+   # Initialize 2D DP table
+   dp = [[0 for _ in range(n + 1)] for _ in range(m + 1)]
+
+   # Fill the table
+   for i in range(1, m + 1):
+       for j in range(1, n + 1):
+           if text1[i - 1] == text2[j - 1]:
+               dp[i][j] = dp[i - 1][j - 1] + 1
+           else:
+               dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
+
+   return dp[m][n]
+
+# Space-optimized version (using two rows)
+def longest_common_subsequence_optimized(text1, text2):
+   m, n = len(text1), len(text2)
+
+   # Ensure text1 is the shorter string for optimization
+   if m > n:
+       text1, text2 = text2, text1
+       m, n = n, m
+
+   # Only need two rows: current and previous
+   prev = [0] * (n + 1)
+   curr = [0] * (n + 1)
+
+   for i in range(1, m + 1):
+       for j in range(1, n + 1):
+           if text1[i - 1] == text2[j - 1]:
+               curr[j] = prev[j - 1] + 1
+           else:
+               curr[j] = max(prev[j], curr[j - 1])
+
+       # Swap rows for next iteration
+       prev, curr = curr, prev
+
+   return prev[n]
+
+# Example
+text1 = "${1:abcde}"
+text2 = "${2:ace}"
+lcs_length = longest_common_subsequence(text1, text2)
+lcs_length_optimized = longest_common_subsequence_optimized(text1, text2)
+${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/python-mode/m_lc_dp_edit_distance.yasnippet
+# -*- mode: snippet -*-
+# name: Python DP - Edit Distance
+# key: m_lc_dp_edit_distance
+# group: LeetCode DP Patterns
+# type: snippet
+# --
+def edit_distance(word1, word2):
+   """
+   Calculate the minimum number of operations to convert word1 to word2.
+   Operations: insert, delete, replace.
+
+   Args:
+       word1, word2: Input strings
+
+   Returns:
+       Minimum edit distance
+   """
+   m, n = len(word1), len(word2)
+
+   # Initialize DP table
+   dp = [[0 for _ in range(n + 1)] for _ in range(m + 1)]
+
+   # Base cases: empty string to string requires i insertions
+   for i in range(m + 1):
+       dp[i][0] = i
+   for j in range(n + 1):
+       dp[0][j] = j
+
+   # Fill the table
+   for i in range(1, m + 1):
+       for j in range(1, n + 1):
+           # If characters match, no operation needed
+           if word1[i - 1] == word2[j - 1]:
+               dp[i][j] = dp[i - 1][j - 1]
+           else:
+               # Minimum of three operations:
+               # 1. Replace: dp[i-1][j-1] + 1
+               # 2. Delete: dp[i-1][j] + 1
+               # 3. Insert: dp[i][j-1] + 1
+               dp[i][j] = 1 + min(dp[i - 1][j - 1], dp[i - 1][j], dp[i][j - 1])
+
+   return dp[m][n]
+
+# Space-optimized version (using two rows)
+def edit_distance_optimized(word1, word2):
+   m, n = len(word1), len(word2)
+
+   # Ensure word1 is the shorter string for optimization
+   if m > n:
+       word1, word2 = word2, word1
+       m, n = n, m
+
+   # Only need two rows: current and previous
+   prev = list(range(n + 1))
+   curr = [0] * (n + 1)
+
+   for i in range(1, m + 1):
+       curr[0] = i
+       for j in range(1, n + 1):
+           if word1[i - 1] == word2[j - 1]:
+               curr[j] = prev[j - 1]
+           else:
+               curr[j] = 1 + min(prev[j - 1], prev[j], curr[j - 1])
+
+       # Swap rows for next iteration
+       prev, curr = curr, prev
+
+   return prev[n]
+
+# Example
+word1 = "${1:horse}"
+word2 = "${2:ros}"
+distance = edit_distance(word1, word2)
+distance_optimized = edit_distance_optimized(word1, word2)
+${0:}
+#+end_src
+
+** Famous Algorithms
+#+begin_src snippet :tangle ./snippets/python-mode/m_lc_kadane.yasnippet
+# -*- mode: snippet -*-
+# name: Python Kadane's Algorithm
+# key: m_lc_kadane
+# group: LeetCode Famous Algorithms
+# type: snippet
+# --
+def kadane(nums):
+   """
+   Kadane's algorithm for finding maximum subarray sum.
+
+   Args:
+       nums: List of integers
+
+   Returns:
+       Maximum subarray sum
+   """
+   # Initialize variables
+   max_so_far = float('-inf')  # Global maximum
+   max_ending_here = 0         # Maximum ending at current position
+
+   for num in nums:
+       # Add current element to max_ending_here
+       max_ending_here = max(num, max_ending_here + num)
+
+       # Update max_so_far if needed
+       max_so_far = max(max_so_far, max_ending_here)
+
+   return max_so_far
+
+# Kadane's algorithm with subarray tracking
+def kadane_with_indices(nums):
+   """
+   Kadane's algorithm that also returns the subarray indices.
+
+   Args:
+       nums: List of integers
+
+   Returns:
+       Tuple of (maximum sum, start index, end index)
+   """
+   if not nums:
+       return (0, -1, -1)
+
+   max_so_far = nums[0]
+   max_ending_here = nums[0]
+
+   start = 0
+   end = 0
+   s = 0  # Potential start index
+
+   for i in range(1, len(nums)):
+       # If starting a new subarray is better
+       if nums[i] > max_ending_here + nums[i]:
+           max_ending_here = nums[i]
+           s = i
+       else:
+           max_ending_here += nums[i]
+
+       # Update max_so_far if needed
+       if max_ending_here > max_so_far:
+           max_so_far = max_ending_here
+           start = s
+           end = i
+
+   return (max_so_far, start, end)
+
+# Example
+nums = [${1:-2, 1, -3, 4, -1, 2, 1, -5, 4}]
+max_sum = kadane(nums)
+max_sum_with_indices = kadane_with_indices(nums)
+${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/python-mode/m_lc_binary_search.yasnippet
+# -*- mode: snippet -*-
+# name: Python Binary Search
+# key: m_lc_binary_search
+# group: LeetCode Famous Algorithms
+# type: snippet
+# --
+def binary_search(nums, target):
+   """
+   Standard binary search for sorted array.
+
+   Args:
+       nums: Sorted list of integers
+       target: Value to find
+
+   Returns:
+       Index of target if found, -1 otherwise
+   """
+   left, right = 0, len(nums) - 1
+
+   while left <= right:
+       mid = left + (right - left) // 2
+
+       if nums[mid] == target:
+           return mid
+       elif nums[mid] < target:
+           left = mid + 1
+       else:
+           right = mid - 1
+
+   return -1
+
+# Binary search to find the leftmost occurrence
+def binary_search_leftmost(nums, target):
+   """
+   Binary search that finds the leftmost occurrence of target.
+
+   Args:
+       nums: Sorted list of integers
+       target: Value to find
+
+   Returns:
+       Index of leftmost occurrence of target, or insertion position if not found
+   """
+   left, right = 0, len(nums)
+
+   while left < right:
+       mid = left + (right - left) // 2
+
+       if nums[mid] < target:
+           left = mid + 1
+       else:
+           right = mid
+
+   # left is the insertion point or index of target
+   return left if left < len(nums) and nums[left] == target else -1
+
+# Binary search to find the rightmost occurrence
+def binary_search_rightmost(nums, target):
+   """
+   Binary search that finds the rightmost occurrence of target.
+
+   Args:
+       nums: Sorted list of integers
+       target: Value to find
+
+   Returns:
+       Index of rightmost occurrence of target, or -1 if not found
+   """
+   left, right = 0, len(nums)
+
+   while left < right:
+       mid = left + (right - left) // 2
+
+       if nums[mid] <= target:
+           left = mid + 1
+       else:
+           right = mid
+
+   # left - 1 is the rightmost occurrence of target
+   return left - 1 if left > 0 and nums[left - 1] == target else -1
+
+# Example
+nums = [${1:1, 2, 3, 4, 5, 5, 5, 6, 7}]
+target = ${2:5}
+index = binary_search(nums, target)
+left_index = binary_search_leftmost(nums, target)
+right_index = binary_search_rightmost(nums, target)
+${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/python-mode/m_lc_quick_select.yasnippet
+# -*- mode: snippet -*-
+# name: Python Quick Select (Kth Smallest)
+# key: m_lc_quick_select
+# group: LeetCode Famous Algorithms
+# type: snippet
+# --
+def quick_select(nums, k):
+   """
+   Find the kth smallest element in an unsorted array.
+   Based on the partition method from quicksort.
+
+   Args:
+       nums: List of integers
+       k: Position (1-based) of the element to find
+
+   Returns:
+       The kth smallest element
+   """
+   # Convert to 0-based index
+   k = k - 1
+
+   def partition(left, right, pivot_index):
+       pivot = nums[pivot_index]
+       # Move pivot to end
+       nums[pivot_index], nums[right] = nums[right], nums[pivot_index]
+
+       # Move all elements smaller than pivot to the left
+       store_index = left
+       for i in range(left, right):
+           if nums[i] < pivot:
+               nums[store_index], nums[i] = nums[i], nums[store_index]
+               store_index += 1
+
+       # Move pivot to its final place
+       nums[right], nums[store_index] = nums[store_index], nums[right]
+
+       return store_index
+
+   def select(left, right):
+       # If list contains only one element, return it
+       if left == right:
+           return nums[left]
+
+       # Select random pivot
+       import random
+       pivot_index = random.randint(left, right)
+
+       # Partition and get position of pivot
+       pivot_index = partition(left, right, pivot_index)
+
+       # If position matches k, return the value
+       if k == pivot_index:
+           return nums[k]
+       # If k is less, search in left subarray
+       elif k < pivot_index:
+           return select(left, pivot_index - 1)
+       # If k is greater, search in right subarray
+       else:
+           return select(pivot_index + 1, right)
+
+   return select(0, len(nums) - 1)
+
+# Example
+nums = [${1:3, 2, 1, 5, 6, 4}]
+k = ${2:2}  # Find the 2nd smallest element
+kth_smallest = quick_select(nums, k)
+${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/python-mode/m_lc_two_pointers.yasnippet
+# -*- mode: snippet -*-
+# name: Python Two Pointers Technique
+# key: m_lc_two_pointers
+# group: LeetCode Famous Algorithms
+# type: snippet
+# --
+def two_sum_sorted(nums, target):
+   """
+   Find indices of two numbers that add up to target.
+   Assumes input array is sorted.
+
+   Args:
+       nums: Sorted list of integers
+       target: Target sum
+
+   Returns:
+       Indices of the two numbers (0-indexed)
+   """
+   left, right = 0, len(nums) - 1
+
+   while left < right:
+       current_sum = nums[left] + nums[right]
+
+       if current_sum == target:
+           return [left, right]
+       elif current_sum < target:
+           left += 1
+       else:
+           right -= 1
+
+   return []  # No solution found
+
+def three_sum(nums):
+   """
+   Find all unique triplets that sum to zero.
+
+   Args:
+       nums: List of integers
+
+   Returns:
+       List of triplets [a, b, c] such that a + b + c = 0
+   """
+   result = []
+   nums.sort()  # Sort the array for two pointers to work
+
+   for i in range(len(nums) - 2):
+       # Skip duplicates for first element
+       if i > 0 and nums[i] == nums[i - 1]:
+           continue
+
+       left, right = i + 1, len(nums) - 1
+
+       while left < right:
+           total = nums[i] + nums[left] + nums[right]
+
+           if total < 0:
+               left += 1
+           elif total > 0:
+               right -= 1
+           else:
+               # Found a triplet
+               result.append([nums[i], nums[left], nums[right]])
+
+               # Skip duplicates for second and third elements
+               while left < right and nums[left] == nums[left + 1]:
+                   left += 1
+               while left < right and nums[right] == nums[right - 1]:
+                   right -= 1
+
+               left += 1
+               right -= 1
+
+   return result
+
+# Example for two sum
+sorted_nums = [${1:2, 7, 11, 15}]
+target = ${2:9}
+indices = two_sum_sorted(sorted_nums, target)
+
+# Example for three sum
+nums = [${3:-1, 0, 1, 2, -1, -4}]
+triplets = three_sum(nums)
+${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/python-mode/m_lc_sliding_window.yasnippet
+# -*- mode: snippet -*-
+# name: Python Sliding Window Technique
+# key: m_lc_sliding_window
+# group: LeetCode Famous Algorithms
+# type: snippet
+# --
+def sliding_window_fixed(nums, k):
+   """
+   Fixed-size sliding window technique.
+   Example: Find maximum sum of a subarray of size k.
+
+   Args:
+       nums: List of integers
+       k: Window size
+
+   Returns:
+       Maximum sum of a subarray of size k
+   """
+   if not nums or k <= 0 or k > len(nums):
+       return 0
+
+   # Initial window sum
+   window_sum = sum(nums[:k])
+   max_sum = window_sum
+
+   # Slide the window
+   for i in range(k, len(nums)):
+       # Add next element and remove first element of previous window
+       window_sum = window_sum + nums[i] - nums[i - k]
+       max_sum = max(max_sum, window_sum)
+
+   return max_sum
+
+def sliding_window_variable(s, target_chars):
+   """
+   Variable-size sliding window technique.
+   Example: Find the minimum length substring containing all characters in target_chars.
+
+   Args:
+       s: Input string
+       target_chars: Target characters to include
+
+   Returns:
+       Minimum length substring containing all target characters, or empty string if not found
+   """
+   if not s or not target_chars:
+       return ""
+
+   # Frequency counter for target characters
+   target_count = {}
+   for char in target_chars:
+       target_count[char] = target_count.get(char, 0) + 1
+
+   # Number of unique characters to match
+   required_count = len(target_count)
+
+   # Tracking variables
+   left = 0
+   formed = 0  # Number of target characters matched in current window
+   window_counts = {}
+
+   # For result
+   min_len = float('inf')
+   result_indices = (0, 0)
+
+   for right in range(len(s)):
+       # Add current character to window counts
+       char = s[right]
+       window_counts[char] = window_counts.get(char, 0) + 1
+
+       # If we matched a target character, increment formed
+       if char in target_count and window_counts[char] == target_count[char]:
+           formed += 1
+
+       # Try to shrink the window while maintaining all target characters
+       while left <= right and formed == required_count:
+           char = s[left]
+
+           # Update result if current window is smaller
+           if right - left + 1 < min_len:
+               min_len = right - left + 1
+               result_indices = (left, right)
+
+           # Remove leftmost character from window
+           window_counts[char] -= 1
+
+           # If we removed a target character, decrement formed
+           if char in target_count and window_counts[char] < target_count[char]:
+               formed -= 1
+
+           left += 1
+
+   return "" if min_len == float('inf') else s[result_indices[0]:result_indices[1] + 1]
+
+# Example for fixed window
+nums = [${1:1, 3, -1, -3, 5, 3, 6, 7}]
+k = ${2:3}
+max_sum = sliding_window_fixed(nums, k)
+
+# Example for variable window
+s = "${3:ADOBECODEBANC}"
+target_chars = "${4:ABC}"
+min_substring = sliding_window_variable(s, target_chars)
+${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/python-mode/m_lc_maximum_clique.yasnippet
+# -*- mode: snippet -*-
+# name: Python Maximum Clique (Bron-Kerbosch)
+# key: m_lc_maximum_clique
+# group: LeetCode Famous Algorithms
+# type: snippet
+# --
+def maximum_clique(graph):
+   """
+   Find the maximum clique in an undirected graph using Bron-Kerbosch algorithm.
+   A clique is a subset of vertices such that every two vertices are adjacent.
+
+   Args:
+       graph: Dictionary mapping each vertex to its neighbors
+
+   Returns:
+       The largest clique as a set of vertices
+   """
+   def bron_kerbosch(r, p, x, max_clique):
+       if not p and not x:
+           if len(r) > len(max_clique[0]):
+               max_clique[0] = r.copy()
+           return
+
+       # Choose pivot vertex
+       pivot = next(iter(p.union(x))) if p.union(x) else None
+       pivot_neighbors = graph[pivot] if pivot else set()
+
+       # Process vertices not connected to pivot
+       for v in p.difference(pivot_neighbors):
+           bron_kerbosch(
+               r.union({v}),
+               p.intersection(graph[v]),
+               x.intersection(graph[v]),
+               max_clique
+           )
+           p.remove(v)
+           x.add(v)
+
+   # Store the maximum clique found
+   max_clique = [set()]
+
+   # Start with an empty clique, all vertices as potential additions, and no excluded vertices
+   all_vertices = set(graph.keys())
+   bron_kerbosch(set(), all_vertices, set(), max_clique)
+
+   return max_clique[0]
+
+# Example
+graph = {
+   ${1:0}: {${2:1, 2, 5}},
+   ${3:1}: {${4:0, 2}},
+   ${5:2}: {${6:0, 1}},
+   ${7:3}: {${8:4, 5}},
+   ${9:4}: {${10:3, 5}},
+   ${11:5}: {${12:0, 3, 4}}
+}
+
+max_clique = maximum_clique(graph)
+${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/python-mode/m_lc_rabin_karp.yasnippet
+# -*- mode: snippet -*-
+# name: Python Rabin-Karp String Matching
+# key: m_lc_rabin_karp
+# group: LeetCode Famous Algorithms
+# type: snippet
+# --
+def rabin_karp(text, pattern):
+   """
+   Rabin-Karp algorithm for string pattern matching.
+
+   Args:
+       text: The text to search in
+       pattern: The pattern to search for
+
+   Returns:
+       List of starting indices of pattern matches
+   """
+   if not pattern or not text or len(pattern) > len(text):
+       return []
+
+   # Constants
+   d = 256  # Number of characters in input alphabet
+   q = 101  # A prime number for hash calculation
+
+   m, n = len(pattern), len(text)
+   pattern_hash = 0  # Hash value for pattern
+   text_hash = 0     # Hash value for current text window
+   h = 1             # Value of d^(m-1) % q
+
+   # Calculate the value of h
+   for i in range(m - 1):
+       h = (h * d) % q
+
+   # Calculate initial hash values
+   for i in range(m):
+       pattern_hash = (d * pattern_hash + ord(pattern[i])) % q
+       text_hash = (d * text_hash + ord(text[i])) % q
+
+   result = []
+
+   # Slide the pattern over text one by one
+   for i in range(n - m + 1):
+       # Check if hash values match
+       if pattern_hash == text_hash:
+           # Verify character by character
+           match = True
+           for j in range(m):
+               if text[i + j] != pattern[j]:
+                   match = False
+                   break
+
+           if match:
+               result.append(i)
+
+       # Calculate hash for next window
+       if i < n - m:
+           text_hash = (d * (text_hash - ord(text[i]) * h) + ord(text[i + m])) % q
+
+           # Handle negative hash values
+           if text_hash < 0:
+               text_hash += q
+
+   return result
+
+# Example
+text = "${1:ABABDABACDABABCABAB}"
+pattern = "${2:ABABCABAB}"
+matches = rabin_karp(text, pattern)
+${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/python-mode/m_lc_topological_sort_khan.yasnippet
+# -*- mode: snippet -*-
+# name: Python Topological Sort (Khan's)
+# key: m_lc_topological_sort_khan
+# group: LeetCode Famous Algorithms
+# type: snippet
+# --
+from collections import defaultdict, deque
+
+def topological_sort(num_nodes, edges):
+   """
+   Kahn's algorithm for topological sorting of a directed acyclic graph (DAG).
+
+   Args:
+       num_nodes: Number of nodes in the graph (0 to num_nodes-1)
+       edges: List of (from, to) directed edges
+
+   Returns:
+       Topologically sorted list of nodes, or None if graph has a cycle
+   """
+   # Build adjacency list and in-degree count
+   graph = defaultdict(list)
+   in_degree = [0] * num_nodes
+
+   for src, dst in edges:
+       graph[src].append(dst)
+       in_degree[dst] += 1
+
+   # Queue of nodes with no incoming edges
+   queue = deque()
+   for i in range(num_nodes):
+       if in_degree[i] == 0:
+           queue.append(i)
+
+   result = []
+
+   # Process until queue is empty
+   while queue:
+       node = queue.popleft()
+       result.append(node)
+
+       # Reduce in-degree of all neighbors
+       for neighbor in graph[node]:
+           in_degree[neighbor] -= 1
+           # If in-degree becomes 0, add to queue
+           if in_degree[neighbor] == 0:
+               queue.append(neighbor)
+
+   # If all nodes are in result, return the topological sort
+   if len(result) == num_nodes:
+       return result
+   else:
+       # Graph has at least one cycle
+       return None
+
+# Example
+num_nodes = ${1:6}
+edges = [
+   (${2:5}, ${3:2}),
+   (${4:5}, ${5:0}),
+   (${6:4}, ${7:0}),
+   (${8:4}, ${9:1}),
+   (${10:2}, ${11:3}),
+   (${12:3}, ${13:1})
+]
+topo_order = topological_sort(num_nodes, edges)
+${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/python-mode/m_lc_backtracking_template.yasnippet
+# -*- mode: snippet -*-
+# name: Python Backtracking Template
+# key: m_lc_backtracking_template
+# group: LeetCode Famous Algorithms
+# type: snippet
+# --
+def backtracking_template(input_data):
+   """
+   Backtracking algorithm template.
+
+   Args:
+       input_data: Input for the problem
+
+   Returns:
+       Solution based on problem requirements
+   """
+   result = []
+
+   def backtrack(current_state, candidates, path):
+       # Base case: if we found a valid solution
+       if ${1:is_valid_solution(current_state)}:
+           result.append(path.copy())  # Make a copy of the current path
+           return
+
+       # Base case: if we reached an invalid state
+       if ${2:is_invalid_state(current_state)}:
+           return
+
+       # Try all possible candidates
+       for candidate in candidates:
+           # Skip if candidate cannot be part of solution
+           if ${3:not_valid_candidate(candidate, current_state)}:
+               continue
+
+           # Make a choice
+           ${4:path.append(candidate)}
+           ${5:update_state(current_state, candidate)}
+
+           # Recursive call with updated state
+           backtrack(current_state, ${6:get_next_candidates(candidates, candidate)}, path)
+
+           # Undo the choice (backtrack)
+           ${7:path.pop()}
+           ${8:revert_state(current_state, candidate)}
+
+   # Start backtracking from initial state
+   initial_state = ${9:get_initial_state(input_data)}
+   initial_candidates = ${10:get_initial_candidates(input_data)}
+   backtrack(initial_state, initial_candidates, [])
+
+   return result
+
+# Example: Generate all permutations of an array
+def permutations(nums):
+   result = []
+
+   def backtrack(remaining, path):
+       # If no elements remain, we found a permutation
+       if not remaining:
+           result.append(path.copy())
+           return
+
+       # Try each remaining element
+       for i in range(len(remaining)):
+           # Choose element
+           current = remaining[i]
+           path.append(current)
+
+           # Explore with remaining elements
+           new_remaining = remaining[:i] + remaining[i+1:]
+           backtrack(new_remaining, path)
+
+           # Unchoose element
+           path.pop()
+
+   backtrack(nums, [])
+   return result
+
+# Example: Generate all combinations of k elements from 1 to n
+def combinations(n, k):
+   result = []
+
+   def backtrack(start, path):
+       # If we selected k elements, we found a combination
+       if len(path) == k:
+           result.append(path.copy())
+           return
+
+       # Try each possible number
+       for i in range(start, n + 1):
+           # Choose element
+           path.append(i)
+
+           # Explore with next elements
+           backtrack(i + 1, path)
+
+           # Unchoose element
+           path.pop()
+
+   backtrack(1, [])
+   return result
+
+# Example usage
+perm_example = permutations([${11:1, 2, 3}])
+comb_example = combinations(${12:4}, ${13:2})
+${0:}
+#+end_src

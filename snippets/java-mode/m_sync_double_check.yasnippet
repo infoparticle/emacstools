@@ -1,0 +1,29 @@
+# [[file:../../all-snippets.org::*Synchronization Snippets][Synchronization Snippets:8]]
+# -*- mode: snippet -*-
+# name: Java Double-Checked Locking
+# key: m_sync_double_check
+# group: Java Synchronization
+# type: snippet
+# --
+// Singleton with double-checked locking
+public class ${1:Singleton} {
+   private static volatile $1 instance;
+
+   private $1() {
+       // Private constructor
+   }
+
+   public static $1 getInstance() {
+       if (instance == null) {
+           synchronized ($1.class) {
+               if (instance == null) {
+                   instance = new $1();
+               }
+           }
+       }
+       return instance;
+   }
+
+   ${0:// Methods and fields}
+}
+# Synchronization Snippets:8 ends here

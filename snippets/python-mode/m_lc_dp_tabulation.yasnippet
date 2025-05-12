@@ -1,0 +1,44 @@
+# -*- mode: snippet -*-
+# name: Python DP - Tabulation (Bottom-Up)
+# key: m_lc_dp_tabulation
+# group: LeetCode DP Patterns
+# type: snippet
+# --
+def solve_problem_tabulation(input):
+   """
+   Dynamic Programming - Tabulation (Bottom-Up) approach.
+
+   Args:
+       input: Problem input
+   """
+   # Initialize DP table
+   n = ${1:table_size}
+   dp = [${2:initial_value} for _ in range(n)]
+
+   # Base case(s)
+   dp[0] = ${3:base_case_value}
+
+   # Fill the table bottom-up
+   for i in range(1, n):
+       dp[i] = ${4:dp_formula}
+
+   # Return the final answer
+   return dp[${5:n - 1}]
+
+# Example: Fibonacci sequence
+def fibonacci(n):
+   if n <= 1:
+       return n
+
+   # Initialize table
+   dp = [0] * (n + 1)
+   dp[1] = 1
+
+   # Fill table bottom-up
+   for i in range(2, n + 1):
+       dp[i] = dp[i - 1] + dp[i - 2]
+
+   return dp[n]
+
+result = fibonacci(${6:10})
+${0:}

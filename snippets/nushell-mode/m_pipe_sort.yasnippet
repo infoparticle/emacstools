@@ -1,0 +1,9 @@
+# [[file:../../all-snippets.org::*Pipeline Snippets][Pipeline Snippets:4]]
+# -*- mode: snippet -*-
+# name: Nushell Sort Pipeline
+# key: m_pipe_sort
+# group: Nushell Pipelines
+# type: snippet
+# --
+${1:ls} | sort-by ${2:-r} ${3:size} | ${0:first 5}
+# Pipeline Snippets:4 ends here

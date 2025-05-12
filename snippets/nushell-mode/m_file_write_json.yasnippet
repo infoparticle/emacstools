@@ -1,0 +1,10 @@
+# [[file:../../all-snippets.org::*File Operations Snippets][File Operations Snippets:4]]
+# -*- mode: snippet -*-
+# name: Nushell Write JSON File
+# key: m_file_write_json
+# group: Nushell File Operations
+# type: snippet
+# --
+${1:{name: "value"}} | to json | save ${2:"output.json"}
+${0:# Additional code}
+# File Operations Snippets:4 ends here

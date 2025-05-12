@@ -1,0 +1,109 @@
+# -*- mode: snippet -*-
+# name: Python Topological Sort
+# key: m_lc_topological_sort
+# group: LeetCode Graph Algorithms
+# type: snippet
+# --
+from collections import defaultdict, deque
+
+def topological_sort(graph):
+   """
+   Kahn's algorithm for topological sorting of a directed acyclic graph (DAG).
+
+   Args:
+       graph: Dictionary mapping vertices to lists of neighbors
+
+   Returns:
+       Topologically sorted list of vertices, or None if graph has a cycle
+   """
+   # Count in-degrees
+   in_degree = defaultdict(int)
+   for node in graph:
+       for neighbor in graph[node]:
+           in_degree[neighbor] += 1
+
+   # Add all vertices with in-degree 0 to queue
+   queue = deque([node for node in graph if in_degree[node] == 0])
+
+   result = []
+
+   # Process until queue is empty
+   while queue:
+       node = queue.popleft()
+       result.append(node)
+
+       # Reduce in-degree of all neighbors
+       for neighbor in graph[node]:
+           in_degree[neighbor] -= 1
+           # If in-degree becomes 0, add to queue
+           if in_degree[neighbor] == 0:
+               queue.append(neighbor)
+
+   # If all vertices are in result, return the topological sort
+   if len(result) == len(graph):
+       return result
+   else:
+       # Graph has at least one cycle
+       return None
+
+def topological_sort_dfs(graph):
+   """
+   DFS-based topological sorting of a directed acyclic graph (DAG).
+
+   Args:
+       graph: Dictionary mapping vertices to lists of neighbors
+
+   Returns:
+       Topologically sorted list of vertices, or None if graph has a cycle
+   """
+   # States: 0=unvisited, 1=processing, 2=processed
+   visited = {node: 0 for node in graph}
+   result = []
+
+   def dfs(node):
+       # If node is currently being processed, we found a cycle
+       if visited[node] == 1:
+           return False
+
+       # If node is already processed, skip
+       if visited[node] == 2:
+           return True
+
+       # Mark as being processed
+       visited[node] = 1
+
+       # Visit all neighbors
+       for neighbor in graph[node]:
+           if not dfs(neighbor):
+               return False
+
+       # Mark as processed and add to result
+       visited[node] = 2
+       result.append(node)
+       return True
+
+   # Process all unvisited nodes
+   for node in graph:
+       if visited[node] == 0:
+           if not dfs(node):
+               # Cycle detected
+               return None
+
+   # Return in reverse order
+   return result[::-1]
+
+# Example usage for directed graph
+graph = {
+   ${1:0}: [${2:1, 2}],
+   ${3:1}: [${4:3}],
+   ${5:2}: [${6:3}],
+   ${7:3}: [${8:4}],
+   ${9:4}: [${10:[]}]
+}
+
+# Use Kahn's algorithm
+topo_order = topological_sort(graph)
+
+# Alternatively, use DFS-based algorithm
+topo_order_dfs = topological_sort_dfs(graph)
+${0:}

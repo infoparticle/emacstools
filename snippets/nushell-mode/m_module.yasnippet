@@ -1,0 +1,19 @@
+# [[file:../../all-snippets.org::*Module Development Snippets][Module Development Snippets:1]]
+# -*- mode: snippet -*-
+# name: Nushell Module
+# key: m_module
+# group: Nushell Modules
+# type: snippet
+# --
+# ${1:Module description}
+# Create this in a file named ${2:module_name}.nu and use 'use ${2:module_name}' to import
+
+export def ${3:function_name} [${4:param}: ${5:string}] {
+   ${6:# Function body}
+}
+
+# Private function
+def ${7:private_function} [] {
+   ${0:# Function implementation}
+}
+# Module Development Snippets:1 ends here

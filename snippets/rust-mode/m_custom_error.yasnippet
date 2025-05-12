@@ -1,0 +1,38 @@
+# -*- mode: snippet -*-
+# name: Rust Custom Error Type
+# key: m_custom_error
+# group: Rust Error Handling
+# type: snippet
+# --
+#[derive(Debug)]
+pub enum ${1:AppError} {
+   ${2:IoError(std::io::Error)},
+   ${3:ParseError(std::num::ParseIntError)},
+   ${4:Custom(String)},
+}
+
+impl std::fmt::Display for $1 {
+   fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+       match self {
+           $1::$2(err) => write!(f, "IO error: {}", err),
+           $1::$3(err) => write!(f, "Parse error: {}", err),
+           $1::$4(msg) => write!(f, "Error: {}", msg),
+       }
+   }
+}
+
+impl std::error::Error for $1 {}
+
+impl From<std::io::Error> for $1 {
+   fn from(err: std::io::Error) -> Self {
+       $1::$2(err)
+   }
+}
+
+impl From<std::num::ParseIntError> for $1 {
+   fn from(err: std::num::ParseIntError) -> Self {
+       $1::$3(err)
+   }
+}
+
+${0:}

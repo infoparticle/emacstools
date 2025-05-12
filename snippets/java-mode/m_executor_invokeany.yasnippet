@@ -1,0 +1,35 @@
+# [[file:../../all-snippets.org::*Executor Framework Snippets][Executor Framework Snippets:8]]
+# -*- mode: snippet -*-
+# name: Java Invoke Any Task
+# key: m_executor_invokeany
+# group: Java Executors
+# type: snippet
+# --
+List<Callable<${1:String}>> ${2:tasks} = new ArrayList<>();
+for (int i = 0; i < ${3:5}; i++) {
+   final int taskId = i;
+   $2.add(() -> {
+       ${4:// Task code}
+       if (${5:Math.random() > 0.8}) { // Simulate some tasks failing
+           throw new Exception("Task " + taskId + " failed");
+       }
+       return ${6:"Result-" + taskId};
+   });
+}
+
+ExecutorService ${7:executor} = Executors.newFixedThreadPool(${8:Runtime.getRuntime().availableProcessors()});
+try {
+   // Execute tasks and get first successful result
+   $1 ${9:firstResult} = $7.invokeAny($2, ${10:30}, TimeUnit.${11:SECONDS});
+   ${12:// Process the first successful result}
+} catch (InterruptedException e) {
+   Thread.currentThread().interrupt();
+   ${13:// Handle interruption}
+} catch (ExecutionException e) {
+   ${14:// Handle case when all tasks failed}
+} catch (TimeoutException e) {
+   ${15:// Handle timeout}
+} finally {
+   $7.shutdown();
+}${0:}
+# Executor Framework Snippets:8 ends here

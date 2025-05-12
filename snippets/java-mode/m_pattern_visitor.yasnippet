@@ -1,0 +1,112 @@
+# -*- mode: snippet -*-
+# name: Java Visitor Pattern
+# key: m_pattern_visitor
+# group: Java Design Patterns (Behavioral)
+# type: snippet
+# --
+// Visitor Pattern
+//
+// Represents an operation to be performed on the elements of an object structure.
+// Visitor lets you define a new operation without changing the classes of the elements on which it operates.
+
+// Visitor interface
+interface ${1:Visitor} {
+   void ${2:visit}(${3:ConcreteElementA} ${4:elementA});
+   void ${5:visit}(${6:ConcreteElementB} ${7:elementB});
+}
+
+// Element interface
+interface ${8:Element} {
+   void ${9:accept}($1 ${10:visitor});
+}
+
+// Concrete Element A
+class $3 implements $8 {
+   private ${11:String} ${12:propertyA} = "${13:Property A Value}";
+
+   @Override
+   public void $9($1 $10) {
+       $10.$2(this);
+   }
+
+   public $11 get${12^}() {
+       return $12;
+   }
+}
+
+// Concrete Element B
+class $6 implements $8 {
+   private ${14:int} ${15:propertyB} = ${16:42};
+
+   @Override
+   public void $9($1 $10) {
+       $10.$5(this);
+   }
+
+   public $14 get${15^}() {
+       return $15;
+   }
+}
+
+// Concrete Visitor 1
+class ${17:ConcreteVisitor1} implements $1 {
+   @Override
+   public void $2($3 $4) {
+       System.out.println("${18:Visitor 1: Processing Element A with property: }" + $4.get$12());
+   }
+
+   @Override
+   public void $5($6 $7) {
+       System.out.println("${19:Visitor 1: Processing Element B with property: }" + $7.get$15());
+   }
+}
+
+// Concrete Visitor 2
+class ${20:ConcreteVisitor2} implements $1 {
+   @Override
+   public void $2($3 $4) {
+       System.out.println("${21:Visitor 2: Different processing of Element A: }" + $4.get$12().toUpperCase());
+   }
+
+   @Override
+   public void $5($6 $7) {
+       System.out.println("${22:Visitor 2: Different processing of Element B: }" + ($7.get$15() * 2));
+   }
+}
+
+// Object Structure
+class ${23:ObjectStructure} {
+   private final List<$8> ${24:elements} = new ArrayList<>();
+
+   public void ${25:attach}($8 ${26:element}) {
+       $24.add($26);
+   }
+
+   public void ${27:detach}($8 ${28:element}) {
+       $24.remove($28);
+   }
+
+   public void ${29:accept}($1 ${30:visitor}) {
+       for ($8 element : $24) {
+           element.$9($30);
+       }
+   }
+}
+
+${0:// Usage example:
+// // Create object structure with elements
+// $23 objectStructure = new $23();
+// objectStructure.$25(new $3());
+// objectStructure.$25(new $6());
+//
+// // Create visitors
+// $1 visitor1 = new $17();
+// $1 visitor2 = new $20();
+//
+// // Apply visitors to structure
+// System.out.println("Visitor 1 operations:");
+// objectStructure.$29(visitor1);
+//
+// System.out.println("\nVisitor 2 operations:");
+// objectStructure.$29(visitor2);
+}

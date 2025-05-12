@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: Rust Rc (Reference Counted)
+# key: m_rc
+# group: Rust Memory
+# type: snippet
+# --
+use std::rc::Rc;
+
+let ${1:shared} = Rc::new(${2:value});
+let ${3:clone} = Rc::clone(&$1);${0:}

@@ -1,0 +1,10 @@
+# [[file:../../all-snippets.org::*File Operations Snippets][File Operations Snippets:1]]
+# -*- mode: snippet -*-
+# name: PowerShell Read File
+# key: m_file_read
+# group: PowerShell File Operations
+# type: snippet
+# --
+$${1:content} = Get-Content -Path "${2:C:\path\to\file.txt}" ${3:-Raw}
+${0:# Process content}
+# File Operations Snippets:1 ends here

@@ -1,0 +1,68 @@
+# -*- mode: snippet -*-
+# name: Java Prototype Pattern
+# key: m_pattern_prototype
+# group: Java Design Patterns (Creational)
+# type: snippet
+# --
+// Prototype Design Pattern
+import java.util.HashMap;
+import java.util.Map;
+
+// Prototype interface
+interface ${1:Prototype} extends Cloneable {
+   $1 clone();
+   ${2:// Additional methods}
+}
+
+// Concrete Prototype
+class ${3:ConcretePrototype} implements $1 {
+   private ${4:String} ${5:field};
+
+   public $3($4 $5) {
+       this.$5 = $5;
+   }
+
+   // Copy constructor
+   public $3($3 source) {
+       this.$5 = source.$5;
+   }
+
+   @Override
+   public $1 clone() {
+       return new $3(this);
+   }
+
+   // Getters and setters
+   public $4 get${5^}() {
+       return $5;
+   }
+
+   public void set${5^}($4 $5) {
+       this.$5 = $5;
+   }
+
+   ${6:// Additional methods implementation}
+}
+
+// Prototype registry
+class ${7:PrototypeRegistry} {
+   private Map<${8:String}, $1> ${9:prototypes} = new HashMap<>();
+
+   public void add$1($8 key, $1 prototype) {
+       $9.put(key, prototype);
+   }
+
+   public $1 get$1($8 key) {
+       return $9.get(key).clone();
+   }
+}
+
+${0:// Usage example:
+// $3 original = new $3("original-value");
+// $3 clone = ($3) original.clone();
+// clone.set${5^}("modified-value");
+//
+// $7 registry = new $7();
+// registry.add$1("prototype1", original);
+// $1 prototypeFromRegistry = registry.get$1("prototype1");
+}

@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: Rust HashSet
+# key: m_hashset
+# group: Rust Collections
+# type: snippet
+# --
+use std::collections::HashSet;
+
+let mut ${1:set} = HashSet::<${2:String}>::new();
+$1.insert(${3:"value"}.to_string());${0:}

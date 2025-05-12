@@ -1,0 +1,61 @@
+# -*- mode: snippet -*-
+# name: Python DP - Coin Change
+# key: m_lc_dp_coin_change
+# group: LeetCode DP Patterns
+# type: snippet
+# --
+def coin_change(coins, amount):
+   """
+   Coin Change problem: find minimum number of coins to make up amount.
+
+   Args:
+       coins: List of coin denominations
+       amount: Target amount
+
+   Returns:
+       Minimum number of coins needed, or -1 if impossible
+   """
+   # Initialize DP array, max_value acts as infinity
+   max_value = amount + 1
+   dp = [max_value] * (amount + 1)
+   dp[0] = 0  # Base case: 0 coins to make 0 amount
+
+   # Fill the array bottom-up
+   for coin in coins:
+       for x in range(coin, amount + 1):
+           dp[x] = min(dp[x], dp[x - coin] + 1)
+
+   # Return result, -1 if impossible
+   return dp[amount] if dp[amount] != max_value else -1
+
+# Example
+coins = [${1:1, 2, 5}]
+amount = ${2:11}
+min_coins = coin_change(coins, amount)
+
+# Variation: Count number of ways to make amount
+def coin_change_ways(coins, amount):
+   """
+   Count the number of different ways to make up the amount using coins.
+
+   Args:
+       coins: List of coin denominations
+       amount: Target amount
+
+   Returns:
+       Number of different combinations
+   """
+   # Initialize DP array
+   dp = [0] * (amount + 1)
+   dp[0] = 1  # Base case: 1 way to make 0 amount (use no coins)
+
+   # For each coin, update the ways for all possible amounts
+   for coin in coins:
+       for x in range(coin, amount + 1):
+           dp[x] += dp[x - coin]
+
+   return dp[amount]
+
+# Example
+ways = coin_change_ways(coins, amount)
+${0:}

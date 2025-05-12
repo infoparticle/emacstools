@@ -1,0 +1,70 @@
+# -*- mode: snippet -*-
+# name: Java Bridge Pattern
+# key: m_pattern_bridge
+# group: Java Design Patterns (Structural)
+# type: snippet
+# --
+// Bridge Design Pattern
+//
+// Decouples an abstraction from its implementation
+// so the two can vary independently.
+
+// Implementation interface
+interface ${1:Implementation} {
+   void ${2:operationImpl}();
+}
+
+// Concrete Implementation A
+class ${3:ConcreteImplementationA} implements $1 {
+   @Override
+   public void $2() {
+       ${4:// Concrete implementation A}
+       System.out.println("Concrete Implementation A");
+   }
+}
+
+// Concrete Implementation B
+class ${5:ConcreteImplementationB} implements $1 {
+   @Override
+   public void $2() {
+       ${6:// Concrete implementation B}
+       System.out.println("Concrete Implementation B");
+   }
+}
+
+// Abstraction
+abstract class ${7:Abstraction} {
+   protected $1 ${8:implementation};
+
+   public $7($1 $8) {
+       this.$8 = $8;
+   }
+
+   // Operation that uses the implementation
+   public abstract void ${9:operation}();
+}
+
+// Refined Abstraction
+class ${10:RefinedAbstraction} extends $7 {
+   public $10($1 $8) {
+       super($8);
+   }
+
+   @Override
+   public void $9() {
+       System.out.println("Refined Abstraction operation");
+       $8.$2();
+       ${11:// Additional abstraction logic}
+   }
+}
+
+${0:// Usage example:
+// $1 implementationA = new $3();
+// $7 abstraction = new $10(implementationA);
+// abstraction.$9();
+//
+// // Switch implementation at runtime
+// $1 implementationB = new $5();
+// abstraction = new $10(implementationB);
+// abstraction.$9();
+}

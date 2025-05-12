@@ -1,0 +1,9 @@
+# [[file:../../all-snippets.org::*Pipeline Snippets][Pipeline Snippets:2]]
+# -*- mode: snippet -*-
+# name: Nushell Select Pipeline
+# key: m_pipe_select
+# group: Nushell Pipelines
+# type: snippet
+# --
+${1:ls} | select ${2:name size modified} | ${0:sort-by size}
+# Pipeline Snippets:2 ends here

@@ -1,0 +1,106 @@
+# -*- mode: snippet -*-
+# name: Python Backtracking Template
+# key: m_lc_backtracking_template
+# group: LeetCode Famous Algorithms
+# type: snippet
+# --
+def backtracking_template(input_data):
+   """
+   Backtracking algorithm template.
+
+   Args:
+       input_data: Input for the problem
+
+   Returns:
+       Solution based on problem requirements
+   """
+   result = []
+
+   def backtrack(current_state, candidates, path):
+       # Base case: if we found a valid solution
+       if ${1:is_valid_solution(current_state)}:
+           result.append(path.copy())  # Make a copy of the current path
+           return
+
+       # Base case: if we reached an invalid state
+       if ${2:is_invalid_state(current_state)}:
+           return
+
+       # Try all possible candidates
+       for candidate in candidates:
+           # Skip if candidate cannot be part of solution
+           if ${3:not_valid_candidate(candidate, current_state)}:
+               continue
+
+           # Make a choice
+           ${4:path.append(candidate)}
+           ${5:update_state(current_state, candidate)}
+
+           # Recursive call with updated state
+           backtrack(current_state, ${6:get_next_candidates(candidates, candidate)}, path)
+
+           # Undo the choice (backtrack)
+           ${7:path.pop()}
+           ${8:revert_state(current_state, candidate)}
+
+   # Start backtracking from initial state
+   initial_state = ${9:get_initial_state(input_data)}
+   initial_candidates = ${10:get_initial_candidates(input_data)}
+   backtrack(initial_state, initial_candidates, [])
+
+   return result
+
+# Example: Generate all permutations of an array
+def permutations(nums):
+   result = []
+
+   def backtrack(remaining, path):
+       # If no elements remain, we found a permutation
+       if not remaining:
+           result.append(path.copy())
+           return
+
+       # Try each remaining element
+       for i in range(len(remaining)):
+           # Choose element
+           current = remaining[i]
+           path.append(current)
+
+           # Explore with remaining elements
+           new_remaining = remaining[:i] + remaining[i+1:]
+           backtrack(new_remaining, path)
+
+           # Unchoose element
+           path.pop()
+
+   backtrack(nums, [])
+   return result
+
+# Example: Generate all combinations of k elements from 1 to n
+def combinations(n, k):
+   result = []
+
+   def backtrack(start, path):
+       # If we selected k elements, we found a combination
+       if len(path) == k:
+           result.append(path.copy())
+           return
+
+       # Try each possible number
+       for i in range(start, n + 1):
+           # Choose element
+           path.append(i)
+
+           # Explore with next elements
+           backtrack(i + 1, path)
+
+           # Unchoose element
+           path.pop()
+
+   backtrack(1, [])
+   return result
+
+# Example usage
+perm_example = permutations([${11:1, 2, 3}])
+comb_example = combinations(${12:4}, ${13:2})
+${0:}

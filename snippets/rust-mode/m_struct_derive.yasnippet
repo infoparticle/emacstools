@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: Rust Struct with Derive
+# key: m_struct_derive
+# group: Rust Struct
+# type: snippet
+# --
+/// ${4:Struct description}
+#[derive(${1:Debug, Clone})]
+struct ${2:StructName} {
+   ${3:field_name}: ${0:type},
+}

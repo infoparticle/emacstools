@@ -1,0 +1,9 @@
+# [[file:../../all-snippets.org::*Pipeline Snippets][Pipeline Snippets:2]]
+# -*- mode: snippet -*-
+# name: PowerShell Select-Object Pipeline
+# key: m_pipe_select
+# group: PowerShell Pipelines
+# type: snippet
+# --
+${1:Get-Process} | Select-Object -Property ${2:Name,ID,Path} | ${0:Format-Table}
+# Pipeline Snippets:2 ends here

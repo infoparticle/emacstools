@@ -1,0 +1,19 @@
+# [[file:../../all-snippets.org::*Conditional Snippets][Conditional Snippets:4]]
+# -*- mode: snippet -*-
+# name: PowerShell Switch Statement
+# key: m_switch
+# group: PowerShell Conditionals
+# type: snippet
+# --
+switch (${1:$value}) {
+   "${2:option1}" {
+       ${3:# Option 1 code}
+   }
+   "${4:option2}" {
+       ${5:# Option 2 code}
+   }
+   default {
+       ${0:# Default code}
+   }
+}
+# Conditional Snippets:4 ends here

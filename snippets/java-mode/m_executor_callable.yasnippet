@@ -1,0 +1,29 @@
+# [[file:../../all-snippets.org::*Executor Framework Snippets][Executor Framework Snippets:6]]
+# -*- mode: snippet -*-
+# name: Java Callable Task
+# key: m_executor_callable
+# group: Java Executors
+# type: snippet
+# --
+Callable<${1:String}> ${2:task} = () -> {
+   ${3:// Computation code}
+   if (${4:Thread.currentThread().isInterrupted()}) {
+       throw new InterruptedException("Task interrupted");
+   }
+   return ${5:"Result"};
+};
+
+ExecutorService ${6:executor} = Executors.newSingleThreadExecutor();
+try {
+   Future<$1> ${7:future} = $6.submit($2);
+
+   try {
+       $1 ${8:result} = $7.get();
+       ${9:// Process result}
+   } catch (InterruptedException | ExecutionException e) {
+       ${10:// Handle exceptions}
+   }
+} finally {
+   $6.shutdown();
+}${0:}
+# Executor Framework Snippets:6 ends here

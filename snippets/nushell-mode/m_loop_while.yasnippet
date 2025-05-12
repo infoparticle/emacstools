@@ -1,0 +1,14 @@
+# [[file:../../all-snippets.org::*Basic Loop Snippets][Basic Loop Snippets:2]]
+# -*- mode: snippet -*-
+# name: Nushell While Loop
+# key: m_loop_while
+# group: Nushell Loops
+# type: snippet
+# --
+mut ${1:counter} = ${2:0}
+while $$1 < ${3:5} {
+   echo $$1
+   ${0:# Your code here}
+   $$1 = $$1 + 1
+}
+# Basic Loop Snippets:2 ends here

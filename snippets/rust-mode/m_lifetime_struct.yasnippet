@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# name: Rust Struct with Lifetime
+# key: m_lifetime_struct
+# group: Rust Lifetimes
+# type: snippet
+# --
+struct ${1:StructName}<'${2:a}> {
+   ${3:field}: &'$2 ${4:str},
+}
+
+impl<'$2> $1<'$2> {
+   fn ${5:method}(&self) -> &'$2 $4 {
+       ${0:// Method body}
+   }
+}

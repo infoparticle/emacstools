@@ -1,0 +1,23 @@
+# [[file:../../all-snippets.org::*Executor Framework Snippets][Executor Framework Snippets:9]]
+# -*- mode: snippet -*-
+# name: Java CompletableFuture Basic
+# key: m_executor_complete
+# group: Java Executors
+# type: snippet
+# --
+CompletableFuture<${1:String}> ${2:future} = CompletableFuture.supplyAsync(() -> {
+   ${3:// Computation code}
+   return ${4:"Result"};
+}, ${5:Executors.newCachedThreadPool()});
+
+$2.thenAccept(result -> {
+   ${6:// Process result}
+})
+.exceptionally(ex -> {
+   ${7:// Handle exception}
+   return null;
+});
+
+// Optionally wait for completion
+// $2.join();${0:}
+# Executor Framework Snippets:9 ends here

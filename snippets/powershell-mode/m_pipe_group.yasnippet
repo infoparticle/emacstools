@@ -1,0 +1,9 @@
+# [[file:../../all-snippets.org::*Pipeline Snippets][Pipeline Snippets:3]]
+# -*- mode: snippet -*-
+# name: PowerShell Group-Object Pipeline
+# key: m_pipe_group
+# group: PowerShell Pipelines
+# type: snippet
+# --
+${1:Get-ChildItem} | Group-Object -Property ${2:Extension} | Sort-Object -Property ${3:Count} -${4:Descending} | ${0:Format-Table}
+# Pipeline Snippets:3 ends here

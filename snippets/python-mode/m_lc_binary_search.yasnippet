@@ -1,0 +1,88 @@
+# -*- mode: snippet -*-
+# name: Python Binary Search
+# key: m_lc_binary_search
+# group: LeetCode Famous Algorithms
+# type: snippet
+# --
+def binary_search(nums, target):
+   """
+   Standard binary search for sorted array.
+
+   Args:
+       nums: Sorted list of integers
+       target: Value to find
+
+   Returns:
+       Index of target if found, -1 otherwise
+   """
+   left, right = 0, len(nums) - 1
+
+   while left <= right:
+       mid = left + (right - left) // 2
+
+       if nums[mid] == target:
+           return mid
+       elif nums[mid] < target:
+           left = mid + 1
+       else:
+           right = mid - 1
+
+   return -1
+
+# Binary search to find the leftmost occurrence
+def binary_search_leftmost(nums, target):
+   """
+   Binary search that finds the leftmost occurrence of target.
+
+   Args:
+       nums: Sorted list of integers
+       target: Value to find
+
+   Returns:
+       Index of leftmost occurrence of target, or insertion position if not found
+   """
+   left, right = 0, len(nums)
+
+   while left < right:
+       mid = left + (right - left) // 2
+
+       if nums[mid] < target:
+           left = mid + 1
+       else:
+           right = mid
+
+   # left is the insertion point or index of target
+   return left if left < len(nums) and nums[left] == target else -1
+
+# Binary search to find the rightmost occurrence
+def binary_search_rightmost(nums, target):
+   """
+   Binary search that finds the rightmost occurrence of target.
+
+   Args:
+       nums: Sorted list of integers
+       target: Value to find
+
+   Returns:
+       Index of rightmost occurrence of target, or -1 if not found
+   """
+   left, right = 0, len(nums)
+
+   while left < right:
+       mid = left + (right - left) // 2
+
+       if nums[mid] <= target:
+           left = mid + 1
+       else:
+           right = mid
+
+   # left - 1 is the rightmost occurrence of target
+   return left - 1 if left > 0 and nums[left - 1] == target else -1
+
+# Example
+nums = [${1:1, 2, 3, 4, 5, 5, 5, 6, 7}]
+target = ${2:5}
+index = binary_search(nums, target)
+left_index = binary_search_leftmost(nums, target)
+right_index = binary_search_rightmost(nums, target)
+${0:}

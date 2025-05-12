@@ -1,0 +1,17 @@
+# [[file:../../all-snippets.org::*Basic Loop Snippets][Basic Loop Snippets:2]]
+# -*- mode: snippet -*-
+# name: PowerShell Do-While Loop
+# key: m_loop_do_while
+# group: PowerShell Loops
+# type: snippet
+# --
+$${1:counter} = ${2:0}
+$${3:limit} = ${4:5}
+
+do {
+   Write-Host "Current count: $$1"
+   ${0:# Your code here}
+
+   $$1++
+} while ($$1 -lt $$3) # Continue loop while this condition is true
+# Basic Loop Snippets:2 ends here

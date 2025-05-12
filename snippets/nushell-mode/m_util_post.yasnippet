@@ -1,0 +1,16 @@
+# [[file:../../all-snippets.org::*Utility Snippets][Utility Snippets:3]]
+# -*- mode: snippet -*-
+# name: Nushell HTTP POST Request
+# key: m_util_post
+# group: Nushell Utilities
+# type: snippet
+# --
+let ${1:payload} = ${2:{key: "value"}}
+let ${3:response} = (
+   fetch ${4:"https://api.example.com"}
+   --post
+   --content-type "application/json"
+   --data ($1 | to json)
+)
+${0:# Process response}
+# Utility Snippets:3 ends here

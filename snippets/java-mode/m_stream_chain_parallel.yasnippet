@@ -1,0 +1,12 @@
+# [[file:../../all-snippets.org::*Stream Chaining Snippets][Stream Chaining Snippets:3]]
+# -*- mode: snippet -*-
+# name: Java Parallel Stream Chain
+# key: m_stream_chain_parallel
+# group: Java Streams Chains
+# type: snippet
+# --
+${1:items}.parallelStream()
+   .filter(${2:item} -> ${3:$2.isValid()})
+   .map(${4:item} -> ${5:$4.transform()})
+   .collect(Collectors.toList())${0}
+# Stream Chaining Snippets:3 ends here

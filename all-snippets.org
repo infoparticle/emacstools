@@ -1,0 +1,3075 @@
+#+property: header-args :comments link :mkdirp yes :eval yes
+
+* Python Mode Snippets
+** m_main
+The standard Python script entry point check.
+
+#+begin_src snippet :tangle ./snippets/python-mode/m_main
+# -*- mode: snippet -*-
+# key: m_main
+# name: main method class structure (if __main__)
+# group: execution
+# --
+if __name__ == "__main__":
+        ${0:# Your code here}
+        pass
+#+end_src
+
+* Java Mode Snippets
+** m_main
+A basic Java class structure with a `main` method.
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_main
+# -*- mode: snippet -*-
+# name: main method class structure (public static void main)
+# key: m_main
+# group: execution
+# --
+package ${1:com.example};
+
+public class ${2:Main} {
+/**
+,* Main method.
+,* @param args Command line arguments.
+,*/
+        public static void main(String[] args) {
+                ${0:// Your code here}
+        }
+}
+#+end_src
+
+* PowerShell Yasnippets Collection with Namespace Convention
+Let's create a comprehensive collection of PowerShell snippets using a namespace convention for easy searchability.
+
+** Basic Loop Snippets
+#+begin_src snippet :tangle ./snippets/powershell-mode/m_loop_do_until.yasnippet
+# -*- mode: snippet -*-
+# name: PowerShell Do-Until Loop
+# key: m_loop_do_until
+# group: PowerShell Loops
+# type: snippet
+# --
+$${1:counter} = ${2:0}
+$${3:maxAttempts} = ${4:5}
+$${5:conditionMet} = $$false
+do {
+   Write-Host "Performing action (Attempt $$($$1 + 1))..."
+
+   ${0:# Your code here}
+   # Set condition to true when met
+   # $$5 = $$true
+
+   $$1++
+
+   if (-not $$5 -and $$1 -lt $$3) {
+       Start-Sleep -Seconds ${6:1}
+   }
+} until ($$5 -or $$1 -ge $$3)
+
+if ($$5) {
+   Write-Host "Condition met successfully."
+} else {
+   Write-Warning "Condition not met after $$3 attempts."
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/powershell-mode/m_loop_do_while.yasnippet
+# -*- mode: snippet -*-
+# name: PowerShell Do-While Loop
+# key: m_loop_do_while
+# group: PowerShell Loops
+# type: snippet
+# --
+$${1:counter} = ${2:0}
+$${3:limit} = ${4:5}
+
+do {
+   Write-Host "Current count: $$1"
+   ${0:# Your code here}
+
+   $$1++
+} while ($$1 -lt $$3) # Continue loop while this condition is true
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/powershell-mode/m_loop_for.yasnippet
+# -*- mode: snippet -*-
+# name: PowerShell For Loop
+# key: m_loop_for
+# group: PowerShell Loops
+# type: snippet
+# --
+for ($${1:i} = ${2:0}; $$1 -lt ${3:10}; $$1++) {
+   ${0:# Your code here}
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/powershell-mode/m_loop_foreach.yasnippet
+# -*- mode: snippet -*-
+# name: PowerShell ForEach Loop
+# key: m_loop_foreach
+# group: PowerShell Loops
+# type: snippet
+# --
+foreach ($${1:item} in ${2:$collection}) {
+   ${0:# Your code here}
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/powershell-mode/m_loop_foreach_object.yasnippet
+# -*- mode: snippet -*-
+# name: PowerShell ForEach-Object Pipeline
+# key: m_loop_foreach_object
+# group: PowerShell Loops
+# type: snippet
+# --
+${1:Get-ChildItem} | ForEach-Object {
+   ${0:# Your code here}
+   # $_ or $PSItem contains the current pipeline object
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/powershell-mode/m_loop_while.yasnippet
+# -*- mode: snippet -*-
+# name: PowerShell While Loop
+# key: m_loop_while
+# group: PowerShell Loops
+# type: snippet
+# --
+$${1:counter} = ${2:0}
+while ($$1 -lt ${3:5}) {
+   ${0:# Your code here}
+   $$1++
+}
+#+end_src
+
+** Error Handling Snippets
+#+begin_src snippet :tangle ./snippets/powershell-mode/m_trycatch.yasnippet
+# -*- mode: snippet -*-
+# name: PowerShell Try-Catch
+# key: m_trycatch
+# group: PowerShell Error Handling
+# type: snippet
+# --
+try {
+   ${1:# Your code that might throw an exception}
+} catch {
+   Write-Error "An error occurred: $$_"
+   ${0:# Error handling code}
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/powershell-mode/m_trycatch_finally.yasnippet
+# -*- mode: snippet -*-
+# name: PowerShell Try-Catch-Finally
+# key: m_trycatch_finally
+# group: PowerShell Error Handling
+# type: snippet
+# --
+try {
+   ${1:# Your code that might throw an exception}
+} catch {
+   Write-Error "An error occurred: $$_"
+   ${2:# Error handling code}
+} finally {
+   ${0:# Code that always runs, even if there was an exception or exit}
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/powershell-mode/m_trycatch_specific.yasnippet
+# -*- mode: snippet -*-
+# name: PowerShell Try-Catch with Specific Exception
+# key: m_trycatch_specific
+# group: PowerShell Error Handling
+# type: snippet
+# --
+try {
+   ${1:# Your code that might throw an exception}
+} catch [${2:System.IO.FileNotFoundException}] {
+   Write-Error "File not found: $$_"
+   ${3:# Specific error handling}
+} catch {
+   Write-Error "An unexpected error occurred: $$_"
+   ${0:# Generic error handling}
+}
+#+end_src
+
+** Function Snippets
+#+begin_src snippet :tangle ./snippets/powershell-mode/m_func_basic.yasnippet
+# -*- mode: snippet -*-
+# name: PowerShell Basic Function
+# key: m_func_basic
+# group: PowerShell Functions
+# type: snippet
+# --
+function ${1:Get-Something} {
+   ${0:# Function body}
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/powershell-mode/m_func_advanced.yasnippet
+# -*- mode: snippet -*-
+# name: PowerShell Advanced Function
+# key: m_func_advanced
+# group: PowerShell Functions
+# type: snippet
+# --
+function ${1:Get-Something} {
+   [CmdletBinding()]
+   param (
+       [Parameter(Mandatory = $$true, ValueFromPipeline = $$true)]
+       [${2:string}]
+       $${3:InputObject}
+   )
+
+   begin {
+       ${4:# Initialization code}
+   }
+
+   process {
+       ${5:# Main processing code}
+   }
+
+   end {
+       ${0:# Cleanup code}
+   }
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/powershell-mode/m_func_param.yasnippet
+# -*- mode: snippet -*-
+# name: PowerShell Function with Parameters
+# key: m_func_param
+# group: PowerShell Functions
+# type: snippet
+# --
+function ${1:Get-Something} {
+   param (
+       [${2:string}]$${3:Param1},
+
+       [${4:int}]$${5:Param2} = ${6:0}
+   )
+
+   ${0:# Function body}
+}
+#+end_src
+
+** Conditional Snippets
+#+begin_src snippet :tangle ./snippets/powershell-mode/m_if.yasnippet
+# -*- mode: snippet -*-
+# name: PowerShell If Statement
+# key: m_if
+# group: PowerShell Conditionals
+# type: snippet
+# --
+if (${1:condition}) {
+   ${0:# Your code here}
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/powershell-mode/m_if_else.yasnippet
+# -*- mode: snippet -*-
+# name: PowerShell If-Else Statement
+# key: m_if_else
+# group: PowerShell Conditionals
+# type: snippet
+# --
+if (${1:condition}) {
+   ${2:# True condition code}
+} else {
+   ${0:# False condition code}
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/powershell-mode/m_if_elseif_else.yasnippet
+# -*- mode: snippet -*-
+# name: PowerShell If-ElseIf-Else Statement
+# key: m_if_elseif_else
+# group: PowerShell Conditionals
+# type: snippet
+# --
+if (${1:condition1}) {
+   ${2:# Condition 1 true code}
+} elseif (${3:condition2}) {
+   ${4:# Condition 2 true code}
+} else {
+   ${0:# All conditions false code}
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/powershell-mode/m_switch.yasnippet
+# -*- mode: snippet -*-
+# name: PowerShell Switch Statement
+# key: m_switch
+# group: PowerShell Conditionals
+# type: snippet
+# --
+switch (${1:$value}) {
+   "${2:option1}" {
+       ${3:# Option 1 code}
+   }
+   "${4:option2}" {
+       ${5:# Option 2 code}
+   }
+   default {
+       ${0:# Default code}
+   }
+}
+#+end_src
+
+** Pipeline Snippets
+#+begin_src snippet :tangle ./snippets/powershell-mode/m_pipe_where.yasnippet
+# -*- mode: snippet -*-
+# name: PowerShell Where-Object Pipeline
+# key: m_pipe_where
+# group: PowerShell Pipelines
+# type: snippet
+# --
+${1:Get-ChildItem} | Where-Object { $$_.${2:PropertyName} -${3:eq} "${4:value}" } | ${0:Out-Null}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/powershell-mode/m_pipe_select.yasnippet
+# -*- mode: snippet -*-
+# name: PowerShell Select-Object Pipeline
+# key: m_pipe_select
+# group: PowerShell Pipelines
+# type: snippet
+# --
+${1:Get-Process} | Select-Object -Property ${2:Name,ID,Path} | ${0:Format-Table}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/powershell-mode/m_pipe_group.yasnippet
+# -*- mode: snippet -*-
+# name: PowerShell Group-Object Pipeline
+# key: m_pipe_group
+# group: PowerShell Pipelines
+# type: snippet
+# --
+${1:Get-ChildItem} | Group-Object -Property ${2:Extension} | Sort-Object -Property ${3:Count} -${4:Descending} | ${0:Format-Table}
+#+end_src
+
+** File Operations Snippets
+#+begin_src snippet :tangle ./snippets/powershell-mode/m_file_read.yasnippet
+# -*- mode: snippet -*-
+# name: PowerShell Read File
+# key: m_file_read
+# group: PowerShell File Operations
+# type: snippet
+# --
+$${1:content} = Get-Content -Path "${2:C:\path\to\file.txt}" ${3:-Raw}
+${0:# Process content}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/powershell-mode/m_file_write.yasnippet
+# -*- mode: snippet -*-
+# name: PowerShell Write to File
+# key: m_file_write
+# group: PowerShell File Operations
+# type: snippet
+# --
+$${1:content} = "${2:Content to write}"
+$$1 | Out-File -FilePath "${3:C:\path\to\output.txt}" ${4:-Append}
+${0:# Additional code}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/powershell-mode/m_file_copy.yasnippet
+# -*- mode: snippet -*-
+# name: PowerShell Copy Files
+# key: m_file_copy
+# group: PowerShell File Operations
+# type: snippet
+# --
+Copy-Item -Path "${1:C:\path\to\source}" -Destination "${2:C:\path\to\destination}" -${3:Recurse} ${0:-Force}
+#+end_src
+
+** Module Development Snippets
+#+begin_src snippet :tangle ./snippets/powershell-mode/m_module_manifest.yasnippet
+# -*- mode: snippet -*-
+# name: PowerShell Module Manifest
+# key: m_module_manifest
+# group: PowerShell Modules
+# type: snippet
+# --
+New-ModuleManifest -Path "${1:.\${2:ModuleName}.psd1}" `
+   -RootModule "${2:ModuleName}.psm1" `
+   -ModuleVersion "${3:0.1.0}" `
+   -Author "${4:YourName}" `
+   -Description "${5:Module description}" `
+   -PowerShellVersion "${6:5.1}" `
+   -FunctionsToExport @(${7:'Get-Something', 'Set-Something'}) `
+   ${0:# Additional parameters as needed}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/powershell-mode/m_module_function_export.yasnippet
+# -*- mode: snippet -*-
+# name: PowerShell Module Function Export
+# key: m_module_function_export
+# group: PowerShell Modules
+# type: snippet
+# --
+function ${1:Get-Something} {
+   [CmdletBinding()]
+   param (
+       ${2:# Parameters}
+   )
+
+   ${3:# Function implementation}
+}
+
+Export-ModuleMember -Function ${0:$1}
+#+end_src
+
+** Scripting Snippets
+#+begin_src snippet :tangle ./snippets/powershell-mode/m_script_param.yasnippet
+# -*- mode: snippet -*-
+# name: PowerShell Script Parameters
+# key: m_script_param
+# group: PowerShell Scripting
+# type: snippet
+# --
+param (
+   [Parameter(Mandatory = $$true)]
+   [string]$${1:RequiredParam},
+
+   [Parameter(Mandatory = $$false)]
+   [string]$${2:OptionalParam} = "${3:DefaultValue}"
+)
+
+${0:# Script body}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/powershell-mode/m_script_help.yasnippet
+# -*- mode: snippet -*-
+# name: PowerShell Script Help
+# key: m_script_help
+# group: PowerShell Scripting
+# type: snippet
+# --
+<#
+.SYNOPSIS
+   ${1:Brief description of script}
+.DESCRIPTION
+   ${2:Detailed description of script}
+.PARAMETER ${3:ParamName}
+   ${4:Description of parameter}
+.EXAMPLE
+   ${5:Example-Script.ps1 -Parameter Value}
+   ${6:Example description}
+.NOTES
+   Author: ${7:Your Name}
+   Date: ${8:$(format-time-string "%Y-%m-%d")}
+#>
+
+${0:# Script body}
+#+end_src
+
+** Utility Snippets
+#+begin_src snippet :tangle ./snippets/powershell-mode/m_util_credential.yasnippet
+# -*- mode: snippet -*-
+# name: PowerShell Get Credential
+# key: m_util_credential
+# group: PowerShell Utilities
+# type: snippet
+# --
+$${1:credential} = Get-Credential -Message "${2:Please enter your credentials}" -UserName "${3:$env:USERNAME}"
+${0:# Use credentials}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/powershell-mode/m_util_logging.yasnippet
+# -*- mode: snippet -*-
+# name: PowerShell Logging
+# key: m_util_logging
+# group: PowerShell Utilities
+# type: snippet
+# --
+function Write-Log {
+   [CmdletBinding()]
+   param (
+       [Parameter(Mandatory = $true, ValueFromPipeline = $true)]
+       [string]$Message,
+
+       [Parameter(Mandatory = $false)]
+       [ValidateSet('Info', 'Warning', 'Error')]
+       [string]$Level = 'Info',
+
+       [Parameter(Mandatory = $false)]
+       [string]$LogPath = "${1:$env:TEMP\Script.log}"
+   )
+
+   $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
+   $logMessage = "[$timestamp] [$Level] $Message"
+
+   # Write to console with appropriate color
+   switch ($Level) {
+       'Info'    { Write-Host $logMessage }
+       'Warning' { Write-Host $logMessage -ForegroundColor Yellow }
+       'Error'   { Write-Host $logMessage -ForegroundColor Red }
+   }
+
+   # Append to log file
+   $logMessage | Out-File -FilePath $LogPath -Append
+}
+
+# Usage
+Write-Log -Message "${2:Script started}" -Level Info${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/powershell-mode/m_util_progress.yasnippet
+# -*- mode: snippet -*-
+# name: PowerShell Progress Bar
+# key: m_util_progress
+# group: PowerShell Utilities
+# type: snippet
+# --
+$${1:totalItems} = ${2:100}
+
+for ($${3:i} = 1; $$3 -le $$1; $$3++) {
+   $$percentComplete = ($$3 / $$1) * 100
+   Write-Progress -Activity "${4:Processing items}" -Status "$$3 of $$1 complete" -PercentComplete $$percentComplete
+
+   ${0:# Your processing code here}
+
+   Start-Sleep -Milliseconds ${5:100} # Simulate work
+}
+
+Write-Progress -Activity "${4:Processing items}" -Completed
+#+end_src
+
+
+** m_main_fancy
+
+#+begin_src snippet :tangle ./snippets/powershell-mode/m_main_fancy.yasnippet
+# -*- mode: snippet -*-
+# name: PowerShell Script Main Template
+# key: m_main_fancy
+# group: PowerShell Scripting
+# type: snippet
+# --
+<#
+.SYNOPSIS
+   ${1:Brief description of script}
+.DESCRIPTION
+   ${2:Detailed description of script}
+.PARAMETER LogPath
+   Path to the log file. Defaults to the script directory.
+.PARAMETER LogLevel
+   Minimum log level to display. Options: DEBUG, INFO, WARNING, ERROR. Defaults to INFO.
+.EXAMPLE
+   ${3:.\ScriptName.ps1 -Parameter Value}
+   ${4:Example description}
+.NOTES
+   Author: ${5:Your Name}
+   Date: ${6:$(format-time-string "%Y-%m-%d")}
+   Version: 1.0
+#>
+
+[CmdletBinding()]
+param (
+   [Parameter()]
+   [string]$LogPath = "$(Split-Path -Parent $MyInvocation.MyCommand.Definition)\$($MyInvocation.MyCommand.Name -replace '.ps1', '.log')",
+
+   [Parameter()]
+   [ValidateSet('DEBUG', 'INFO', 'WARNING', 'ERROR')]
+   [string]$LogLevel = 'INFO'
+)
+
+#region Helper Functions
+
+# Log levels as enum values for comparison
+$LogLevelValues = @{
+   'DEBUG'   = 0
+   'INFO'    = 1
+   'WARNING' = 2
+   'ERROR'   = 3
+}
+
+function Write-Log {
+   [CmdletBinding()]
+   param (
+       [Parameter(Mandatory = $true, ValueFromPipeline = $true)]
+       [string]$Message,
+
+       [Parameter()]
+       [ValidateSet('DEBUG', 'INFO', 'WARNING', 'ERROR')]
+       [string]$Level = 'INFO'
+   )
+
+   # Skip logging if level is lower than configured threshold
+   if ($LogLevelValues[$Level] -lt $LogLevelValues[$LogLevel]) {
+       return
+   }
+
+   $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
+   $formattedMessage = "[$timestamp] [$Level] $Message"
+
+   # Output to console with color based on level
+   switch ($Level) {
+       'DEBUG'   { Write-Host $formattedMessage -ForegroundColor Gray }
+       'INFO'    { Write-Host $formattedMessage -ForegroundColor White }
+       'WARNING' { Write-Host $formattedMessage -ForegroundColor Yellow }
+       'ERROR'   { Write-Host $formattedMessage -ForegroundColor Red }
+   }
+
+   # Ensure log directory exists
+   $logDir = Split-Path -Parent $LogPath
+   if (-not (Test-Path -Path $logDir)) {
+       New-Item -Path $logDir -ItemType Directory -Force | Out-Null
+   }
+
+   # Append to log file
+   Add-Content -Path $LogPath -Value $formattedMessage
+}
+
+function Start-TimedOperation {
+   [CmdletBinding()]
+   param (
+       [Parameter(Mandatory = $true)]
+       [string]$OperationName
+   )
+
+   Write-Log -Message "Starting operation: $OperationName" -Level INFO
+
+   return @{
+       Name      = $OperationName
+       StartTime = Get-Date
+   }
+}
+
+function Stop-TimedOperation {
+   [CmdletBinding()]
+   param (
+       [Parameter(Mandatory = $true)]
+       [hashtable]$Operation
+   )
+
+   $endTime = Get-Date
+   $duration = $endTime - $Operation.StartTime
+   $formattedDuration = "{0:hh\:mm\:ss\.fff}" -f $duration
+
+   Write-Log -Message "Completed operation: $($Operation.Name) (Duration: $formattedDuration)" -Level INFO
+
+   return $formattedDuration
+}
+
+function Test-Administrator {
+   $currentUser = [Security.Principal.WindowsIdentity]::GetCurrent()
+   $windowsPrincipal = New-Object Security.Principal.WindowsPrincipal($currentUser)
+   $administratorRole = [Security.Principal.WindowsBuiltInRole]::Administrator
+
+   return $windowsPrincipal.IsInRole($administratorRole)
+}
+
+function Invoke-WithRetry {
+   [CmdletBinding()]
+   param (
+       [Parameter(Mandatory = $true)]
+       [scriptblock]$ScriptBlock,
+
+       [Parameter()]
+       [int]$MaxAttempts = 3,
+
+       [Parameter()]
+       [int]$RetryDelaySeconds = 2,
+
+       [Parameter()]
+       [scriptblock]$SuccessCondition = { $true },
+
+       [Parameter()]
+       [string]$OperationName = "Operation"
+   )
+
+   $attempt = 1
+   $success = $false
+   $result = $null
+
+   while (-not $success -and $attempt -le $MaxAttempts) {
+       if ($attempt -gt 1) {
+           Write-Log -Message "$OperationName failed, retrying (Attempt $attempt of $MaxAttempts)..." -Level WARNING
+           Start-Sleep -Seconds $RetryDelaySeconds
+       }
+
+       try {
+           $result = Invoke-Command -ScriptBlock $ScriptBlock
+
+           if (Invoke-Command -ScriptBlock $SuccessCondition) {
+               $success = $true
+               Write-Log -Message "$OperationName succeeded on attempt $attempt" -Level DEBUG
+           } else {
+               throw "$OperationName returned unsuccessful result"
+           }
+       } catch {
+           if ($attempt -eq $MaxAttempts) {
+               Write-Log -Message "$OperationName failed after $MaxAttempts attempts: $_" -Level ERROR
+               throw
+           }
+
+           Write-Log -Message "Attempt $attempt failed: $_" -Level DEBUG
+       }
+
+       $attempt++
+   }
+
+   return $result
+}
+
+function Show-BannerMessage {
+   [CmdletBinding()]
+   param (
+       [Parameter(Mandatory = $true)]
+       [string]$Message,
+
+       [Parameter()]
+       [char]$BorderChar = '*',
+
+       [Parameter()]
+       [ConsoleColor]$ForegroundColor = [ConsoleColor]::Cyan
+   )
+
+   $border = $BorderChar * ($Message.Length + 4)
+
+   Write-Host $border -ForegroundColor $ForegroundColor
+   Write-Host "$BorderChar $Message $BorderChar" -ForegroundColor $ForegroundColor
+   Write-Host $border -ForegroundColor $ForegroundColor
+}
+
+#endregion Helper Functions
+
+#region Main Script Execution
+
+# Trap any unhandled exceptions
+trap {
+   Write-Log -Message "UNHANDLED EXCEPTION: $_" -Level ERROR
+   Write-Log -Message "Script execution failed!" -Level ERROR
+   exit 1
+}
+
+# Track total script execution time
+$scriptTimer = Start-TimedOperation -OperationName "Script Execution"
+
+# Script banner
+Show-BannerMessage -Message "${7:$1 v1.0}"
+
+# Check if running as admin if needed
+if (${8:$false}) {
+   if (-not (Test-Administrator)) {
+       Write-Log -Message "This script requires administrator privileges. Please restart as administrator." -Level ERROR
+       exit 1
+   }
+   Write-Log -Message "Running with administrator privileges" -Level INFO
+}
+
+# Main script logic
+try {
+   Write-Log -Message "Script started" -Level INFO
+
+   # Your main code here
+   ${0:# Main implementation}
+
+   Write-Log -Message "Script completed successfully" -Level INFO
+   Stop-TimedOperation -Operation $scriptTimer
+   exit 0
+} catch {
+   Write-Log -Message "Error in main script block: $_" -Level ERROR
+   Write-Log -Message "Script execution failed!" -Level ERROR
+   Stop-TimedOperation -Operation $scriptTimer
+   exit 1
+}
+
+#endregion Main Script Execution
+#+end_src
+
+
+
+* Nushell Yasnippets Collection with Namespace Convention
+This is an excellent idea! Creating consistent naming patterns across different shells will make it easier to remember and use snippets regardless of the environment. Let's implement the same namespace convention for Nushell.
+
+** Basic Loop Snippets
+#+begin_src snippet :tangle ./snippets/nushell-mode/m_loop_for.yasnippet
+# -*- mode: snippet -*-
+# name: Nushell For Loop
+# key: m_loop_for
+# group: Nushell Loops
+# type: snippet
+# --
+for ${1:item} in ${2:[1 2 3]} {
+   ${0:# Your code here}
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/nushell-mode/m_loop_while.yasnippet
+# -*- mode: snippet -*-
+# name: Nushell While Loop
+# key: m_loop_while
+# group: Nushell Loops
+# type: snippet
+# --
+mut ${1:counter} = ${2:0}
+while $$1 < ${3:5} {
+   echo $$1
+   ${0:# Your code here}
+   $$1 = $$1 + 1
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/nushell-mode/m_loop_each.yasnippet
+# -*- mode: snippet -*-
+# name: Nushell Each Pipeline Loop
+# key: m_loop_each
+# group: Nushell Loops
+# type: snippet
+# --
+${1:[1 2 3]} | each {|${2:item}|
+   ${0:# Your code here}
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/nushell-mode/m_loop_range.yasnippet
+# -*- mode: snippet -*-
+# name: Nushell Range Loop
+# key: m_loop_range
+# group: Nushell Loops
+# type: snippet
+# --
+${1:0..5} | each {|${2:i}|
+   ${0:# Your code here}
+}
+#+end_src
+
+** Error Handling Snippets
+#+begin_src snippet :tangle ./snippets/nushell-mode/m_trycatch.yasnippet
+# -*- mode: snippet -*-
+# name: Nushell Try-Catch
+# key: m_trycatch
+# group: Nushell Error Handling
+# type: snippet
+# --
+try {
+   ${1:# Code that might fail}
+} catch {|${2:err}|
+   ${0:# Error handling code}
+   echo $"Error: ($$2)"
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/nushell-mode/m_trycatch_finally.yasnippet
+# -*- mode: snippet -*-
+# name: Nushell Try-Catch-Finally
+# key: m_trycatch_finally
+# group: Nushell Error Handling
+# type: snippet
+# --
+try {
+   ${1:# Code that might fail}
+} catch {|${2:err}|
+   ${3:# Error handling code}
+   echo $"Error: ($$2)"
+} finally {
+   ${0:# Cleanup code that always runs}
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/nushell-mode/m_error_handling.yasnippet
+# -*- mode: snippet -*-
+# name: Nushell Error Handling with Result
+# key: m_error_handling
+# group: Nushell Error Handling
+# type: snippet
+# --
+let ${1:result} = ${2:command} | complete
+if $$1.exit_code == 0 {
+   ${3:# Success code}
+   echo $"Command succeeded: ($$1.stdout)"
+} else {
+   ${0:# Error handling code}
+   echo $"Command failed with code ($$1.exit_code): ($$1.stderr)"
+}
+#+end_src
+
+** Function Snippets
+#+begin_src snippet :tangle ./snippets/nushell-mode/m_func_basic.yasnippet
+# -*- mode: snippet -*-
+# name: Nushell Basic Function
+# key: m_func_basic
+# group: Nushell Functions
+# type: snippet
+# --
+def ${1:function_name} [] {
+   ${0:# Function body}
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/nushell-mode/m_func_param.yasnippet
+# -*- mode: snippet -*-
+# name: Nushell Function with Parameters
+# key: m_func_param
+# group: Nushell Functions
+# type: snippet
+# --
+def ${1:function_name} [${2:param1}: ${3:string}, ${4:param2}: ${5:int} = ${6:0}] {
+   ${0:# Function body}
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/nushell-mode/m_func_return.yasnippet
+# -*- mode: snippet -*-
+# name: Nushell Function with Return Type
+# key: m_func_return
+# group: Nushell Functions
+# type: snippet
+# --
+def ${1:function_name} [${2:param1}: ${3:string}] -> ${4:string} {
+   ${5:# Function body}
+   return ${0:"result"}
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/nushell-mode/m_func_help.yasnippet
+# -*- mode: snippet -*-
+# name: Nushell Function with Help
+# key: m_func_help
+# group: Nushell Functions
+# type: snippet
+# --
+# ${1:Function description}
+def ${2:function_name} [
+   ${3:param1}: ${4:string} # ${5:Parameter description}
+   --${6:flag}: ${7:bool} # ${8:Flag description}
+] {
+   ${0:# Function body}
+}
+#+end_src
+
+** Conditional Snippets
+#+begin_src snippet :tangle ./snippets/nushell-mode/m_if.yasnippet
+# -*- mode: snippet -*-
+# name: Nushell If Statement
+# key: m_if
+# group: Nushell Conditionals
+# type: snippet
+# --
+if ${1:condition} {
+   ${0:# Your code here}
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/nushell-mode/m_if_else.yasnippet
+# -*- mode: snippet -*-
+# name: Nushell If-Else Statement
+# key: m_if_else
+# group: Nushell Conditionals
+# type: snippet
+# --
+if ${1:condition} {
+   ${2:# True condition code}
+} else {
+   ${0:# False condition code}
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/nushell-mode/m_if_elseif_else.yasnippet
+# -*- mode: snippet -*-
+# name: Nushell If-ElseIf-Else Statement
+# key: m_if_elseif_else
+# group: Nushell Conditionals
+# type: snippet
+# --
+if ${1:condition1} {
+   ${2:# Condition 1 true code}
+} else if ${3:condition2} {
+   ${4:# Condition 2 true code}
+} else {
+   ${0:# All conditions false code}
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/nushell-mode/m_match.yasnippet
+# -*- mode: snippet -*-
+# name: Nushell Match Statement
+# key: m_match
+# group: Nushell Conditionals
+# type: snippet
+# --
+match ${1:value} {
+   ${2:pattern1} => {
+       ${3:# Pattern 1 code}
+   }
+   ${4:pattern2} => {
+       ${5:# Pattern 2 code}
+   }
+   _ => {
+       ${0:# Default code}
+   }
+}
+#+end_src
+
+** Pipeline Snippets
+#+begin_src snippet :tangle ./snippets/nushell-mode/m_pipe_where.yasnippet
+# -*- mode: snippet -*-
+# name: Nushell Where Pipeline
+# key: m_pipe_where
+# group: Nushell Pipelines
+# type: snippet
+# --
+${1:ls} | where ${2:name} =~ ${3:"pattern"} | ${0:to-md}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/nushell-mode/m_pipe_select.yasnippet
+# -*- mode: snippet -*-
+# name: Nushell Select Pipeline
+# key: m_pipe_select
+# group: Nushell Pipelines
+# type: snippet
+# --
+${1:ls} | select ${2:name size modified} | ${0:sort-by size}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/nushell-mode/m_pipe_group.yasnippet
+# -*- mode: snippet -*-
+# name: Nushell Group Pipeline
+# key: m_pipe_group
+# group: Nushell Pipelines
+# type: snippet
+# --
+${1:ls} | group-by ${2:type} | ${0:sort-by type | table}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/nushell-mode/m_pipe_sort.yasnippet
+# -*- mode: snippet -*-
+# name: Nushell Sort Pipeline
+# key: m_pipe_sort
+# group: Nushell Pipelines
+# type: snippet
+# --
+${1:ls} | sort-by ${2:-r} ${3:size} | ${0:first 5}
+#+end_src
+
+** File Operations Snippets
+#+begin_src snippet :tangle ./snippets/nushell-mode/m_file_read.yasnippet
+# -*- mode: snippet -*-
+# name: Nushell Read File
+# key: m_file_read
+# group: Nushell File Operations
+# type: snippet
+# --
+let ${1:content} = open ${2:"file.txt"}
+${0:# Process content}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/nushell-mode/m_file_read_json.yasnippet
+# -*- mode: snippet -*-
+# name: Nushell Read JSON File
+# key: m_file_read_json
+# group: Nushell File Operations
+# type: snippet
+# --
+let ${1:data} = open ${2:"data.json"} | from json
+${0:# Process data}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/nushell-mode/m_file_write.yasnippet
+# -*- mode: snippet -*-
+# name: Nushell Write to File
+# key: m_file_write
+# group: Nushell File Operations
+# type: snippet
+# --
+${1:"Content to write"} | save ${2:--append} ${3:"output.txt"}
+${0:# Additional code}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/nushell-mode/m_file_write_json.yasnippet
+# -*- mode: snippet -*-
+# name: Nushell Write JSON File
+# key: m_file_write_json
+# group: Nushell File Operations
+# type: snippet
+# --
+${1:{name: "value"}} | to json | save ${2:"output.json"}
+${0:# Additional code}
+#+end_src
+
+** Module Development Snippets
+#+begin_src snippet :tangle ./snippets/nushell-mode/m_module.yasnippet
+# -*- mode: snippet -*-
+# name: Nushell Module
+# key: m_module
+# group: Nushell Modules
+# type: snippet
+# --
+# ${1:Module description}
+# Create this in a file named ${2:module_name}.nu and use 'use ${2:module_name}' to import
+
+export def ${3:function_name} [${4:param}: ${5:string}] {
+   ${6:# Function body}
+}
+
+# Private function
+def ${7:private_function} [] {
+   ${0:# Function implementation}
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/nushell-mode/m_module_import.yasnippet
+# -*- mode: snippet -*-
+# name: Nushell Module Import
+# key: m_module_import
+# group: Nushell Modules
+# type: snippet
+# --
+use ${1:module_name} ${2:[${3:specific_function}]}${0:}
+#+end_src
+
+** Scripting Snippets
+#+begin_src snippet :tangle ./snippets/nushell-mode/m_script_param.yasnippet
+# -*- mode: snippet -*-
+# name: Nushell Script Parameters
+# key: m_script_param
+# group: Nushell Scripting
+# type: snippet
+# --
+# ${1:Script description}
+# Usage: nu ${2:script.nu} [--${3:flag}] <${4:required_arg}>
+
+def main [
+   ${4:required_arg}: ${5:string} # ${6:Required argument description}
+   --${3:flag}: ${7:bool} # ${8:Flag description}
+   --${9:optional}: ${10:string} = ${11:"default"} # ${12:Optional argument description}
+] {
+   ${0:# Script body}
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/nushell-mode/m_main.yasnippet
+# -*- mode: snippet -*-
+# name: Nushell Script Main Template
+# key: m_main
+# group: Nushell Scripting
+# type: snippet
+# --
+#!/usr/bin/env nu
+# ${1:Script name} - ${2:Brief description}
+# Author: ${3:Your Name}
+# Date: ${4:$(format-time-string "%Y-%m-%d")}
+# Version: 1.0.0
+
+# Configuration
+const LOG_FILE = ${5:"$nu.temp-path/script.log"}
+const DEBUG = ${6:false}
+
+# Helper functions
+def log [message: string, level: string = "INFO"] {
+   let timestamp = (date now | format date "%Y-%m-%d %H:%M:%S")
+   let log_entry = $"[$timestamp] [$level] $message"
+
+   # Console output with color
+   match $level {
+       "DEBUG" => { if $DEBUG { $log_entry | print } }
+       "INFO" => { $log_entry | print }
+       "WARNING" => { $log_entry | ansi yellow }
+       "ERROR" => { $log_entry | ansi red_bold }
+   }
+
+   # Write to log file
+   $log_entry | save --append $LOG_FILE
+}
+
+def time-operation [name: string, block: block] {
+   log $"Starting: $name"
+   let start_time = (date now)
+
+   try {
+       do $block
+   } catch {|err|
+       log $"Operation failed: $name - $err" "ERROR"
+       return $"Failed after ($((date now) - $start_time))"
+   }
+
+   let duration = ((date now) - $start_time)
+   log $"Completed: $name (Duration: $duration)"
+
+   return $duration
+}
+
+def retry [
+   attempts: int = 3
+   delay_ms: int = 1000
+   operation: string = "Operation"
+   block: block
+] {
+   mut current_attempt = 1
+   mut success = false
+   mut result = null
+
+   while (not $success) and ($current_attempt <= $attempts) {
+       if $current_attempt > 1 {
+           log $"$operation failed, retrying (Attempt $current_attempt of $attempts)..." "WARNING"
+           sleep ($delay_ms * 1ms)
+       }
+
+       try {
+           $result = do $block
+           $success = true
+
+           if $current_attempt > 1 {
+               log $"$operation succeeded on attempt $current_attempt" "INFO"
+           }
+       } catch {|err|
+           if $current_attempt == $attempts {
+               log $"$operation failed after $attempts attempts: $err" "ERROR"
+               return { success: false, error: $err, result: null }
+           }
+
+           log $"Attempt $current_attempt failed: $err" "DEBUG"
+           $current_attempt += 1
+       }
+   }
+
+   return { success: true, error: null, result: $result }
+}
+
+def show-banner [message: string] {
+   let width = ($message | str length) + 4
+   let border = ('*' | str repeat $width)
+
+   print $"\n$border\n* $message *\n$border\n"
+}
+
+# Main function
+def main [
+   ${7:--param(-p)}: ${8:string} # ${9:Parameter description}
+   ${10:--verbose(-v)}: bool # Enable verbose output
+] {
+   # Prepare environment
+   if $${10:verbose} { $DEBUG = true }
+
+   # Clear or initialize log file
+   "" | save $LOG_FILE
+
+   log "Script started"
+   show-banner "${11:$1 v1.0.0}"
+
+   # Main execution with timing
+   let execution_time = (time-operation "Main Script" {
+       ${0:# Your main script implementation}
+   })
+
+   # Finish up
+   log $"Script completed successfully in $execution_time"
+}
+#+end_src
+
+** Utility Snippets
+#+begin_src snippet :tangle ./snippets/nushell-mode/m_util_table.yasnippet
+# -*- mode: snippet -*-
+# name: Nushell Table Output
+# key: m_util_table
+# group: Nushell Utilities
+# type: snippet
+# --
+${1:[{name: "item1", value: 10}, {name: "item2", value: 20}]} | table
+${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/nushell-mode/m_util_fetch.yasnippet
+# -*- mode: snippet -*-
+# name: Nushell HTTP Request
+# key: m_util_fetch
+# group: Nushell Utilities
+# type: snippet
+# --
+let ${1:response} = (fetch ${2:"https://api.example.com"} ${3:| get ${4:data}})
+${0:# Process response}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/nushell-mode/m_util_post.yasnippet
+# -*- mode: snippet -*-
+# name: Nushell HTTP POST Request
+# key: m_util_post
+# group: Nushell Utilities
+# type: snippet
+# --
+let ${1:payload} = ${2:{key: "value"}}
+let ${3:response} = (
+   fetch ${4:"https://api.example.com"}
+   --post
+   --content-type "application/json"
+   --data ($1 | to json)
+)
+${0:# Process response}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/nushell-mode/m_util_config.yasnippet
+# -*- mode: snippet -*-
+# name: Nushell Config File
+# key: m_util_config
+# group: Nushell Utilities
+# type: snippet
+# --
+# Configuration
+def load_config [] {
+   # Try to load config, or create default
+   if (ls ${1:"config.json"} | is-empty) {
+       {
+           ${2:setting1}: ${3:"default1"}
+           ${4:setting2}: ${5:"default2"}
+       } | save $1 --json
+   }
+
+   open $1
+}
+
+let ${6:config} = (load_config)
+${0:# Use config values like $config.setting1}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/nushell-mode/m_util_prompt.yasnippet
+# -*- mode: snippet -*-
+# name: Nushell User Input
+# key: m_util_prompt
+# group: Nushell Utilities
+# type: snippet
+# --
+# Get user input
+let ${1:user_input} = (input $"${2:Enter your value}: ")
+
+# Validate input
+if ($1 | is-empty) {
+   echo "Input cannot be empty"
+   return
+}
+
+${0:# Process user input}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/nushell-mode/m_util_color_output.yasnippet
+# -*- mode: snippet -*-
+# name: Nushell Colored Output
+# key: m_util_color_output
+# group: Nushell Utilities
+# type: snippet
+# --
+# Color output helper
+def colored [message: string, color: string = "green"] {
+   let color_map = {
+       green: "\e[32m",
+       red: "\e[31m",
+       yellow: "\e[33m",
+       blue: "\e[34m",
+       magenta: "\e[35m",
+       cyan: "\e[36m",
+       reset: "\e[0m"
+   }
+
+   $"($color_map | get $color)($message)($color_map.reset)"
+}
+
+# Usage
+echo (colored "${1:Success!}" "${2:green}")
+echo (colored "${3:Warning!}" "${4:yellow}")
+echo (colored "${5:Error!}" "${6:red}")
+${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/nushell-mode/m_util_progress.yasnippet
+# -*- mode: snippet -*-
+# name: Nushell Progress Bar
+# key: m_util_progress
+# group: Nushell Utilities
+# type: snippet
+# --
+# Simple progress indicator
+def show_progress [current: int, total: int] {
+   let percentage = ($current | into float) / ($total | into float) * 100.0
+   let bar_width = 40
+   let filled_width = ($percentage / 100.0 * $bar_width | math floor)
+   let empty_width = $bar_width - $filled_width
+
+   let bar = ('=' | str repeat $filled_width) + ('·' | str repeat $empty_width)
+
+   print $"\r[$bar] ($percentage | math round -p 1)% ($current/$total)"
+}
+
+# Usage example
+let ${1:total} = ${2:20}
+${1:total} | seq 1 | each {|${3:i}|
+   show_progress $3 $1
+   sleep ${4:100ms}
+   ${0:# Your processing code}
+}
+print "\nDone!\n"
+#+end_src
+
+
+* java
+** Java Streams and Generics Yasnippets Collection
+Let's create a comprehensive collection of Java stream and generic snippets using the same namespace convention. For Java streams, I'll use `m_stream_*` as the primary namespace, and for generics, I'll use `m_generic_*`.
+
+**** Stream Creation Snippets
+#+begin_src snippet :tangle ./snippets/java-mode/m_stream_of.yasnippet
+# -*- mode: snippet -*-
+# name: Java Stream.of Creation
+# key: m_stream_of
+# group: Java Streams Creation
+# type: snippet
+# --
+Stream.of(${1:element1}, ${2:element2}, ${3:element3})${0}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_stream_empty.yasnippet
+# -*- mode: snippet -*-
+# name: Java Empty Stream
+# key: m_stream_empty
+# group: Java Streams Creation
+# type: snippet
+# --
+Stream.empty()${0}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_stream_collection.yasnippet
+# -*- mode: snippet -*-
+# name: Java Stream from Collection
+# key: m_stream_collection
+# group: Java Streams Creation
+# type: snippet
+# --
+${1:collection}.stream()${0}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_stream_array.yasnippet
+# -*- mode: snippet -*-
+# name: Java Stream from Array
+# key: m_stream_array
+# group: Java Streams Creation
+# type: snippet
+# --
+Arrays.stream(${1:array})${0}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_stream_range.yasnippet
+# -*- mode: snippet -*-
+# name: Java IntStream Range
+# key: m_stream_range
+# group: Java Streams Creation
+# type: snippet
+# --
+IntStream.range(${1:0}, ${2:10})${0}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_stream_rangeclosed.yasnippet
+# -*- mode: snippet -*-
+# name: Java IntStream RangeClosed
+# key: m_stream_rangeclosed
+# group: Java Streams Creation
+# type: snippet
+# --
+IntStream.rangeClosed(${1:1}, ${2:10})${0}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_stream_generate.yasnippet
+# -*- mode: snippet -*-
+# name: Java Stream Generate
+# key: m_stream_generate
+# group: Java Streams Creation
+# type: snippet
+# --
+Stream.generate(() -> ${1:new Random().nextInt(100)})
+     .limit(${2:10})${0}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_stream_iterate.yasnippet
+# -*- mode: snippet -*-
+# name: Java Stream Iterate
+# key: m_stream_iterate
+# group: Java Streams Creation
+# type: snippet
+# --
+Stream.iterate(${1:1}, n -> n + ${2:1})
+     .limit(${3:10})${0}
+#+end_src
+
+**** Stream Operations Snippets
+#+begin_src snippet :tangle ./snippets/java-mode/m_stream_filter.yasnippet
+# -*- mode: snippet -*-
+# name: Java Stream Filter
+# key: m_stream_filter
+# group: Java Streams Operations
+# type: snippet
+# --
+.filter(${1:item} -> ${2:$1.isValid()})${0}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_stream_map.yasnippet
+# -*- mode: snippet -*-
+# name: Java Stream Map
+# key: m_stream_map
+# group: Java Streams Operations
+# type: snippet
+# --
+.map(${1:item} -> ${2:$1.transform()})${0}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_stream_flatmap.yasnippet
+# -*- mode: snippet -*-
+# name: Java Stream FlatMap
+# key: m_stream_flatmap
+# group: Java Streams Operations
+# type: snippet
+# --
+.flatMap(${1:item} -> ${2:$1.getList().stream()})${0}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_stream_distinct.yasnippet
+# -*- mode: snippet -*-
+# name: Java Stream Distinct
+# key: m_stream_distinct
+# group: Java Streams Operations
+# type: snippet
+# --
+.distinct()${0}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_stream_sorted.yasnippet
+# -*- mode: snippet -*-
+# name: Java Stream Sorted
+# key: m_stream_sorted
+# group: Java Streams Operations
+# type: snippet
+# --
+.sorted()${0}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_stream_sorted_comparator.yasnippet
+# -*- mode: snippet -*-
+# name: Java Stream Sorted with Comparator
+# key: m_stream_sorted_comparator
+# group: Java Streams Operations
+# type: snippet
+# --
+.sorted(Comparator.comparing(${1:Person}::${2:getName}))${0}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_stream_sorted_reversed.yasnippet
+# -*- mode: snippet -*-
+# name: Java Stream Sorted Reversed
+# key: m_stream_sorted_reversed
+# group: Java Streams Operations
+# type: snippet
+# --
+.sorted(Comparator.comparing(${1:Person}::${2:getName}).reversed())${0}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_stream_peek.yasnippet
+# -*- mode: snippet -*-
+# name: Java Stream Peek
+# key: m_stream_peek
+# group: Java Streams Operations
+# type: snippet
+# --
+.peek(${1:item} -> ${2:System.out.println($1)})${0}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_stream_limit.yasnippet
+# -*- mode: snippet -*-
+# name: Java Stream Limit
+# key: m_stream_limit
+# group: Java Streams Operations
+# type: snippet
+# --
+.limit(${1:10})${0}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_stream_skip.yasnippet
+# -*- mode: snippet -*-
+# name: Java Stream Skip
+# key: m_stream_skip
+# group: Java Streams Operations
+# type: snippet
+# --
+.skip(${1:5})${0}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_stream_reduce.yasnippet
+# -*- mode: snippet -*-
+# name: Java Stream Reduce
+# key: m_stream_reduce
+# group: Java Streams Terminal Operations
+# type: snippet
+# --
+.reduce(${1:0}, (${2:acc}, ${3:item}) -> ${4:acc + item})${0}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_stream_collect_list.yasnippet
+# -*- mode: snippet -*-
+# name: Java Stream Collect to List
+# key: m_stream_collect_list
+# group: Java Streams Terminal Operations
+# type: snippet
+# --
+.collect(Collectors.toList())${0}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_stream_collect_set.yasnippet
+# -*- mode: snippet -*-
+# name: Java Stream Collect to Set
+# key: m_stream_collect_set
+# group: Java Streams Terminal Operations
+# type: snippet
+# --
+.collect(Collectors.toSet())${0}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_stream_collect_map.yasnippet
+# -*- mode: snippet -*-
+# name: Java Stream Collect to Map
+# key: m_stream_collect_map
+# group: Java Streams Terminal Operations
+# type: snippet
+# --
+.collect(Collectors.toMap(
+   ${1:Person}::${2:getId},    // key mapper
+   ${3:Function.identity()}    // value mapper
+))${0}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_stream_collect_groupby.yasnippet
+# -*- mode: snippet -*-
+# name: Java Stream Collect GroupBy
+# key: m_stream_collect_groupby
+# group: Java Streams Terminal Operations
+# type: snippet
+# --
+.collect(Collectors.groupingBy(${1:Person}::${2:getGroup}))${0}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_stream_collect_joining.yasnippet
+# -*- mode: snippet -*-
+# name: Java Stream Collect Joining
+# key: m_stream_collect_joining
+# group: Java Streams Terminal Operations
+# type: snippet
+# --
+.collect(Collectors.joining("${1:, }", "${2:prefix}", "${3:suffix}"))${0}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_stream_collect_counting.yasnippet
+# -*- mode: snippet -*-
+# name: Java Stream Collect Counting
+# key: m_stream_collect_counting
+# group: Java Streams Terminal Operations
+# type: snippet
+# --
+.collect(Collectors.counting())${0}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_stream_count.yasnippet
+# -*- mode: snippet -*-
+# name: Java Stream Count
+# key: m_stream_count
+# group: Java Streams Terminal Operations
+# type: snippet
+# --
+.count()${0}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_stream_foreach.yasnippet
+# -*- mode: snippet -*-
+# name: Java Stream ForEach
+# key: m_stream_foreach
+# group: Java Streams Terminal Operations
+# type: snippet
+# --
+.forEach(${1:item} -> ${2:System.out.println($1)})${0}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_stream_anymatch.yasnippet
+# -*- mode: snippet -*-
+# name: Java Stream Any Match
+# key: m_stream_anymatch
+# group: Java Streams Terminal Operations
+# type: snippet
+# --
+.anyMatch(${1:item} -> ${2:$1.isValid()})${0}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_stream_allmatch.yasnippet
+# -*- mode: snippet -*-
+# name: Java Stream All Match
+# key: m_stream_allmatch
+# group: Java Streams Terminal Operations
+# type: snippet
+# --
+.allMatch(${1:item} -> ${2:$1.isValid()})${0}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_stream_nonematch.yasnippet
+# -*- mode: snippet -*-
+# name: Java Stream None Match
+# key: m_stream_nonematch
+# group: Java Streams Terminal Operations
+# type: snippet
+# --
+.noneMatch(${1:item} -> ${2:$1.isInvalid()})${0}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_stream_findany.yasnippet
+# -*- mode: snippet -*-
+# name: Java Stream Find Any
+# key: m_stream_findany
+# group: Java Streams Terminal Operations
+# type: snippet
+# --
+.findAny()${0}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_stream_findfirst.yasnippet
+# -*- mode: snippet -*-
+# name: Java Stream Find First
+# key: m_stream_findfirst
+# group: Java Streams Terminal Operations
+# type: snippet
+# --
+.findFirst()${0}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_stream_min.yasnippet
+# -*- mode: snippet -*-
+# name: Java Stream Min
+# key: m_stream_min
+# group: Java Streams Terminal Operations
+# type: snippet
+# --
+.min(Comparator.comparing(${1:Person}::${2:getAge}))${0}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_stream_max.yasnippet
+# -*- mode: snippet -*-
+# name: Java Stream Max
+# key: m_stream_max
+# group: Java Streams Terminal Operations
+# type: snippet
+# --
+.max(Comparator.comparing(${1:Person}::${2:getAge}))${0}
+#+end_src
+
+**** Stream Chaining Snippets
+#+begin_src snippet :tangle ./snippets/java-mode/m_stream_chain_basic.yasnippet
+# -*- mode: snippet -*-
+# name: Java Stream Basic Chain
+# key: m_stream_chain_basic
+# group: Java Streams Chains
+# type: snippet
+# --
+${1:items}.stream()
+   .filter(${2:item} -> ${3:$2.isValid()})
+   .map(${4:item} -> ${5:$4.transform()})
+   .collect(Collectors.toList())${0}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_stream_chain_advanced.yasnippet
+# -*- mode: snippet -*-
+# name: Java Stream Advanced Chain
+# key: m_stream_chain_advanced
+# group: Java Streams Chains
+# type: snippet
+# --
+${1:items}.stream()
+   .filter(${2:item} -> ${3:$2.isValid()})
+   .map(${4:item} -> ${5:$4.transform()})
+   .sorted(Comparator.comparing(${6:Object}::${7:getProperty}))
+   .limit(${8:10})
+   .collect(Collectors.toList())${0}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_stream_chain_parallel.yasnippet
+# -*- mode: snippet -*-
+# name: Java Parallel Stream Chain
+# key: m_stream_chain_parallel
+# group: Java Streams Chains
+# type: snippet
+# --
+${1:items}.parallelStream()
+   .filter(${2:item} -> ${3:$2.isValid()})
+   .map(${4:item} -> ${5:$4.transform()})
+   .collect(Collectors.toList())${0}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_stream_chain_optional.yasnippet
+# -*- mode: snippet -*-
+# name: Java Stream Chain with Optional
+# key: m_stream_chain_optional
+# group: Java Streams Chains
+# type: snippet
+# --
+${1:items}.stream()
+   .filter(${2:item} -> ${3:$2.isValid()})
+   .map(${4:item} -> ${5:$4.transform()})
+   .findFirst()
+   .orElse(${6:defaultValue})${0}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_stream_chain_groupby.yasnippet
+# -*- mode: snippet -*-
+# name: Java Stream Chain with GroupBy
+# key: m_stream_chain_groupby
+# group: Java Streams Chains
+# type: snippet
+# --
+Map<${1:String}, List<${2:Person}>> ${3:groupedPeople} = ${4:people}.stream()
+   .collect(Collectors.groupingBy(${2:Person}::${5:getGroup}));
+${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_stream_chain_summary.yasnippet
+# -*- mode: snippet -*-
+# name: Java Stream Chain with Summary Statistics
+# key: m_stream_chain_summary
+# group: Java Streams Chains
+# type: snippet
+# --
+DoubleSummaryStatistics ${1:stats} = ${2:items}.stream()
+   .mapToDouble(${3:Item}::${4:getValue})
+   .summaryStatistics();
+
+// Access statistics
+double average = $1.getAverage();
+double sum = $1.getSum();
+long count = $1.getCount();
+double max = $1.getMax();
+double min = $1.getMin();
+${0:}
+#+end_src
+
+**** Generics Snippets
+#+begin_src snippet :tangle ./snippets/java-mode/m_generic_class.yasnippet
+# -*- mode: snippet -*-
+# name: Java Generic Class
+# key: m_generic_class
+# group: Java Generics
+# type: snippet
+# --
+/**
+** ${5:Generic class description}
+*
+** @param <${1:T}> ${6:Type parameter description}
+*/
+public class ${2:GenericClass}<${1:T}> {
+   private $1 ${3:value};
+
+   public $2($1 $3) {
+       this.$3 = $3;
+   }
+
+   public $1 get${4:$(capitalize text)} {
+       return $3;
+   }
+
+   public void set${4:$(capitalize text)}($1 $3) {
+       this.$3 = $3;
+   }
+   ${0:}
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_generic_method.yasnippet
+# -*- mode: snippet -*-
+# name: Java Generic Method
+# key: m_generic_method
+# group: Java Generics
+# type: snippet
+# --
+/**
+** ${6:Generic method description}
+*
+** @param <${1:T}> ${7:Type parameter description}
+** @param ${3:input} ${8:Parameter description}
+** @return ${9:Return value description}
+*/
+public <${1:T}> $1 ${2:genericMethod}(${1:T} ${3:input}) {
+   ${4:// Method implementation}
+   return ${5:result};
+}
+${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_generic_wildcard.yasnippet
+# -*- mode: snippet -*-
+# name: Java Generic Wildcard
+# key: m_generic_wildcard
+# group: Java Generics
+# type: snippet
+# --
+List<? extends ${1:Number}> ${2:list}${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_generic_super.yasnippet
+# -*- mode: snippet -*-
+# name: Java Generic Super Wildcard
+# key: m_generic_super
+# group: Java Generics
+# type: snippet
+# --
+List<? super ${1:Integer}> ${2:list}${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_generic_pair.yasnippet
+# -*- mode: snippet -*-
+# name: Java Generic Pair Class
+# key: m_generic_pair
+# group: Java Generics
+# type: snippet
+# --
+/**
+** A generic Pair class that holds two related values of different types.
+*
+** @param <K> Type of the first element
+** @param <V> Type of the second element
+*/
+public class Pair<K, V> {
+   private final K first;
+   private final V second;
+
+   public Pair(K first, V second) {
+       this.first = first;
+       this.second = second;
+   }
+
+   public K getFirst() {
+       return first;
+   }
+
+   public V getSecond() {
+       return second;
+   }
+
+   @Override
+   public boolean equals(Object o) {
+       if (this == o) return true;
+       if (o == null || getClass() != o.getClass()) return false;
+
+       Pair<?, ?> pair = (Pair<?, ?>) o;
+
+       if (first != null ? !first.equals(pair.first) : pair.first != null) return false;
+       return second != null ? second.equals(pair.second) : pair.second == null;
+   }
+
+   @Override
+   public int hashCode() {
+       int result = first != null ? first.hashCode() : 0;
+       result = 31 * result + (second != null ? second.hashCode() : 0);
+       return result;
+   }
+
+   @Override
+   public String toString() {
+       return "(" + first + ", " + second + ")";
+   }
+}
+${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_generic_bound.yasnippet
+# -*- mode: snippet -*-
+# name: Java Generic with Bounds
+# key: m_generic_bound
+# group: Java Generics
+# type: snippet
+# --
+public <${1:T} extends ${2:Comparable}<$1>> $1 ${3:max}(${4:List}<$1> ${5:list}) {
+   return $5.stream()
+           .max($1::compareTo)
+           .orElseThrow(() -> new IllegalArgumentException("Empty list"));
+}
+${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_generic_method_multiple.yasnippet
+# -*- mode: snippet -*-
+# name: Java Generic Method with Multiple Type Parameters
+# key: m_generic_method_multiple
+# group: Java Generics
+# type: snippet
+# --
+/**
+** ${7:Generic method description}
+*
+** @param <${1:T}> ${8:First type parameter description}
+** @param <${2:U}> ${9:Second type parameter description}
+** @param ${4:input1} ${10:First parameter description}
+** @param ${5:input2} ${11:Second parameter description}
+** @return ${12:Return value description}
+*/
+public <${1:T}, ${2:U}> ${1:T} ${3:genericMethod}(${1:T} ${4:input1}, ${2:U} ${5:input2}) {
+   ${0:// Method implementation}
+   return $4;
+}
+#+end_src
+
+*** Combined Stream and Generics Snippets
+#+begin_src snippet :tangle ./snippets/java-mode/m_stream_generic_filter.yasnippet
+# -*- mode: snippet -*-
+# name: Java Generic Stream Filter with Type Parameter
+# key: m_stream_generic_filter
+# group: Java Streams Generics Combined
+# type: snippet
+# --
+public <T> List<T> filter${1:Elements}(List<T> ${2:list}, Predicate<T> ${3:condition}) {
+   return $2.stream()
+           .filter($3)
+           .collect(Collectors.toList());
+}
+${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_stream_generic_map.yasnippet
+# -*- mode: snippet -*-
+# name: Java Generic Stream Map with Type Parameters
+# key: m_stream_generic_map
+# group: Java Streams Generics Combined
+# type: snippet
+# --
+public <T, R> List<R> map${1:Elements}(List<T> ${2:list}, Function<T, R> ${3:mapper}) {
+   return $2.stream()
+           .map($3)
+           .collect(Collectors.toList());
+}
+${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_stream_generic_collector.yasnippet
+# -*- mode: snippet -*-
+# name: Java Generic Custom Collector
+# key: m_stream_generic_collector
+# group: Java Streams Generics Combined
+# type: snippet
+# --
+public <T> Collector<T, ?, ${1:Map}<${2:String}, ${3:List}<T>>> ${4:customGroupingBy}(Function<T, $2> ${5:keyExtractor}) {
+   return Collectors.groupingBy($5);
+}
+${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_stream_generic_util.yasnippet
+# -*- mode: snippet -*-
+# name: Java Generic Stream Utility Class
+# key: m_stream_generic_util
+# group: Java Streams Generics Combined
+# type: snippet
+# --
+/**
+** A utility class for stream operations.
+*/
+public final class StreamUtils {
+
+   private StreamUtils() {
+       // Prevent instantiation
+   }
+
+   /**
+    * Filters elements from a list based on a condition.
+    *
+    * @param <T> the type of elements in the list
+    * @param list the list to filter
+    * @param condition the filtering condition
+    * @return a new list containing only elements that match the condition
+    */
+   public static <T> List<T> filter(List<T> list, Predicate<T> condition) {
+       return list.stream()
+               .filter(condition)
+               .collect(Collectors.toList());
+   }
+
+   /**
+    * Maps elements from one type to another.
+    *
+    * @param <T> the source type
+    * @param <R> the result type
+    * @param list the list to transform
+    * @param mapper the transformation function
+    * @return a new list containing transformed elements
+    */
+   public static <T, R> List<R> map(List<T> list, Function<T, R> mapper) {
+       return list.stream()
+               .map(mapper)
+               .collect(Collectors.toList());
+   }
+
+   /**
+    * Groups elements by a key.
+    *
+    * @param <T> the type of elements
+    * @param <K> the type of keys
+    * @param list the list to group
+    * @param keyExtractor the function to extract keys
+    * @return a map of grouped elements
+    */
+   public static <T, K> Map<K, List<T>> groupBy(List<T> list, Function<T, K> keyExtractor) {
+       return list.stream()
+               .collect(Collectors.groupingBy(keyExtractor));
+   }
+
+   /**
+    * Finds the first element matching a condition.
+    *
+    * @param <T> the type of elements
+    * @param list the list to search
+    * @param condition the search condition
+    * @return an Optional containing the first matching element, or empty if none found
+    */
+   public static <T> Optional<T> findFirst(List<T> list, Predicate<T> condition) {
+       return list.stream()
+               .filter(condition)
+               .findFirst();
+   }
+
+   /**
+    * Converts to a collection of another type.
+    *
+    * @param <T> the source type
+    * @param <R> the result type
+    * @param <C> the collection type
+    * @param source the source collection
+    * @param mapper the transformation function
+    * @param collector the collector to use
+    * @return the result collection
+    */
+   public static <T, R, C> C collectTo(Collection<T> source,
+                                     Function<T, R> mapper,
+                                     Collector<R, ?, C> collector) {
+       return source.stream()
+               .map(mapper)
+               .collect(collector);
+   }
+}
+${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_stream_generic_function.yasnippet
+# -*- mode: snippet -*-
+# name: Java Generic Stream Function Interface
+# key: m_stream_generic_function
+# group: Java Streams Generics Combined
+# type: snippet
+# --
+/**
+** A functional interface that transforms one object into another.
+*
+** @param <T> the source type
+** @param <R> the result type
+*/
+@FunctionalInterface
+public interface ${1:Transformer}<T, R> {
+
+   /**
+    * Transforms the source object to the result type.
+    *
+    * @param source the source object
+    * @return the transformed result
+    */
+   R transform(T source);
+
+   /**
+    * Returns a composed function that first applies this function and then applies the after function.
+    *
+    * @param <V> the type of output of the after function
+    * @param after the function to apply after this function
+    * @return a composed function that first applies this function and then the after function
+    * @throws NullPointerException if after is null
+    */
+   default <V> $1<T, V> andThen($1<? super R, ? extends V> after) {
+       Objects.requireNonNull(after);
+       return (T t) -> after.transform(transform(t));
+   }
+}
+${0:}
+#+end_src
+
+
+
+* java concurrency
+* Java Concurrency Yasnippets Collection
+Let's create a comprehensive collection of Java concurrency snippets using our namespace convention. I'll use `m_thread_*` for threads, `m_executor_*` for executor framework, `m_sync_*` for synchronization, `m_process_*` for processes, `m_lock_*` for locks, `m_atomic_*` for atomic operations, and `m_async_*` for asynchronous programming.
+
+** Thread Creation and Management Snippets
+#+begin_src snippet :tangle ./snippets/java-mode/m_thread_runnable.yasnippet
+# -*- mode: snippet -*-
+# name: Java Thread from Runnable
+# key: m_thread_runnable
+# group: Java Threads
+# type: snippet
+# --
+Thread ${1:thread} = new Thread(new Runnable() {
+   @Override
+   public void run() {
+       ${2:// Thread code here}
+   }
+});
+$1.start();${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_thread_lambda.yasnippet
+# -*- mode: snippet -*-
+# name: Java Thread with Lambda
+# key: m_thread_lambda
+# group: Java Threads
+# type: snippet
+# --
+Thread ${1:thread} = new Thread(() -> {
+   ${2:// Thread code here}
+});
+$1.start();${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_thread_extend.yasnippet
+# -*- mode: snippet -*-
+# name: Java Thread by Extension
+# key: m_thread_extend
+# group: Java Threads
+# type: snippet
+# --
+class ${1:MyThread} extends Thread {
+   @Override
+   public void run() {
+       ${2:// Thread code here}
+   }
+}
+
+// Usage
+$1 ${3:thread} = new $1();
+$3.start();${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_thread_join.yasnippet
+# -*- mode: snippet -*-
+# name: Java Thread Join
+# key: m_thread_join
+# group: Java Threads
+# type: snippet
+# --
+try {
+   ${1:thread}.join(${2:1000}); // Wait for thread to complete, with optional timeout
+} catch (InterruptedException e) {
+   Thread.currentThread().interrupt();
+   ${3:// Handle interruption}
+}${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_thread_sleep.yasnippet
+# -*- mode: snippet -*-
+# name: Java Thread Sleep
+# key: m_thread_sleep
+# group: Java Threads
+# type: snippet
+# --
+try {
+   Thread.sleep(${1:1000}); // Sleep for $1 milliseconds
+} catch (InterruptedException e) {
+   Thread.currentThread().interrupt();
+   ${2:// Handle interruption}
+}${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_thread_interrupt.yasnippet
+# -*- mode: snippet -*-
+# name: Java Thread Interrupt
+# key: m_thread_interrupt
+# group: Java Threads
+# type: snippet
+# --
+if (${1:thread}.isAlive()) {
+   $1.interrupt();
+}${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_thread_state.yasnippet
+# -*- mode: snippet -*-
+# name: Java Thread State Check
+# key: m_thread_state
+# group: Java Threads
+# type: snippet
+# --
+Thread.State ${1:state} = ${2:thread}.getState();
+switch ($1) {
+   case NEW:
+       ${3:// Thread created but not started}
+       break;
+   case RUNNABLE:
+       ${4:// Thread is executing}
+       break;
+   case BLOCKED:
+       ${5:// Thread is blocked waiting for a monitor lock}
+       break;
+   case WAITING:
+       ${6:// Thread is waiting indefinitely}
+       break;
+   case TIMED_WAITING:
+       ${7:// Thread is waiting for a specified time}
+       break;
+   case TERMINATED:
+       ${8:// Thread has completed execution}
+       break;
+}${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_thread_daemon.yasnippet
+# -*- mode: snippet -*-
+# name: Java Daemon Thread
+# key: m_thread_daemon
+# group: Java Threads
+# type: snippet
+# --
+Thread ${1:daemonThread} = new Thread(() -> {
+   ${2:// Background service code}
+   while (!Thread.currentThread().isInterrupted()) {
+       try {
+           ${3:// Daemon task}
+           Thread.sleep(${4:1000});
+       } catch (InterruptedException e) {
+           Thread.currentThread().interrupt();
+           break;
+       }
+   }
+});
+$1.setDaemon(true); // Mark as daemon thread
+$1.start();${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_thread_priority.yasnippet
+# -*- mode: snippet -*-
+# name: Java Thread Priority
+# key: m_thread_priority
+# group: Java Threads
+# type: snippet
+# --
+${1:thread}.setPriority(${2:Thread.MAX_PRIORITY}); // Options: MIN_PRIORITY (1), NORM_PRIORITY (5), MAX_PRIORITY (10)${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_thread_group.yasnippet
+# -*- mode: snippet -*-
+# name: Java Thread Group
+# key: m_thread_group
+# group: Java Threads
+# type: snippet
+# --
+ThreadGroup ${1:group} = new ThreadGroup("${2:MyThreadGroup}");
+Thread ${3:thread1} = new Thread($1, () -> {
+   ${4:// Thread 1 code}
+});
+Thread ${5:thread2} = new Thread($1, () -> {
+   ${6:// Thread 2 code}
+});
+
+$3.start();
+$5.start();
+
+// Operations on thread group
+System.out.println("Active threads: " + $1.activeCount());
+$1.interrupt(); // Interrupt all threads in the group${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_thread_uncaught.yasnippet
+# -*- mode: snippet -*-
+# name: Java Uncaught Exception Handler
+# key: m_thread_uncaught
+# group: Java Threads
+# type: snippet
+# --
+${1:thread}.setUncaughtExceptionHandler((t, e) -> {
+   System.err.println("Uncaught exception in thread " + t.getName() + ": " + e.getMessage());
+   ${2:// Handle exception, log, notify, etc.}
+});${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_thread_factory.yasnippet
+# -*- mode: snippet -*-
+# name: Java Thread Factory
+# key: m_thread_factory
+# group: Java Threads
+# type: snippet
+# --
+/**
+* Custom thread factory for creating configurable threads.
+*/
+class ${1:CustomThreadFactory} implements ThreadFactory {
+   private final String namePrefix;
+   private final boolean daemon;
+   private final int priority;
+   private final AtomicInteger threadNumber = new AtomicInteger(1);
+
+   public $1(String namePrefix, boolean daemon, int priority) {
+       this.namePrefix = namePrefix;
+       this.daemon = daemon;
+       this.priority = priority;
+   }
+
+   @Override
+   public Thread newThread(Runnable r) {
+       Thread thread = new Thread(r, namePrefix + "-" + threadNumber.getAndIncrement());
+       thread.setDaemon(daemon);
+       thread.setPriority(priority);
+       thread.setUncaughtExceptionHandler((t, e) -> {
+           System.err.println("Uncaught exception in thread " + t.getName() + ": " + e.getMessage());
+           e.printStackTrace();
+       });
+       return thread;
+   }
+}
+
+// Usage
+ThreadFactory ${2:factory} = new $1("${3:Worker}", ${4:false}, ${5:Thread.NORM_PRIORITY});
+Thread ${6:thread} = $2.newThread(() -> {
+   ${7:// Thread code}
+});
+$6.start();${0:}
+#+end_src
+
+** Executor Framework Snippets
+#+begin_src snippet :tangle ./snippets/java-mode/m_executor_single.yasnippet
+# -*- mode: snippet -*-
+# name: Java Single Thread Executor
+# key: m_executor_single
+# group: Java Executors
+# type: snippet
+# --
+ExecutorService ${1:executor} = Executors.newSingleThreadExecutor();
+try {
+   $1.submit(() -> {
+       ${2:// Task code}
+   });
+   ${3:// More tasks}
+} finally {
+   $1.shutdown();
+   if (!$1.awaitTermination(${4:5}, TimeUnit.${5:SECONDS})) {
+       $1.shutdownNow();
+   }
+}${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_executor_fixed.yasnippet
+# -*- mode: snippet -*-
+# name: Java Fixed Thread Pool
+# key: m_executor_fixed
+# group: Java Executors
+# type: snippet
+# --
+ExecutorService ${1:executor} = Executors.newFixedThreadPool(${2:Runtime.getRuntime().availableProcessors()});
+try {
+   for (int i = 0; i < ${3:10}; i++) {
+       final int taskId = i;
+       $1.submit(() -> {
+           ${4:// Task code using taskId}
+       });
+   }
+} finally {
+   $1.shutdown();
+   if (!$1.awaitTermination(${5:5}, TimeUnit.${6:SECONDS})) {
+       $1.shutdownNow();
+   }
+}${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_executor_cached.yasnippet
+# -*- mode: snippet -*-
+# name: Java Cached Thread Pool
+# key: m_executor_cached
+# group: Java Executors
+# type: snippet
+# --
+ExecutorService ${1:executor} = Executors.newCachedThreadPool();
+try {
+   for (int i = 0; i < ${2:tasks.size()}; i++) {
+       final int taskId = i;
+       $1.submit(() -> {
+           ${3:// Task code using taskId}
+       });
+   }
+} finally {
+   $1.shutdown();
+   if (!$1.awaitTermination(${4:5}, TimeUnit.${5:SECONDS})) {
+       $1.shutdownNow();
+   }
+}${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_executor_scheduled.yasnippet
+# -*- mode: snippet -*-
+# name: Java Scheduled Thread Pool
+# key: m_executor_scheduled
+# group: Java Executors
+# type: snippet
+# --
+ScheduledExecutorService ${1:scheduler} = Executors.newScheduledThreadPool(${2:1});
+try {
+   // One-time delayed task
+   $1.schedule(() -> {
+       ${3:// Delayed task code}
+   }, ${4:5}, TimeUnit.${5:SECONDS});
+
+   // Periodic task (fixed rate)
+   ScheduledFuture<?> ${6:periodicTask} = $1.scheduleAtFixedRate(() -> {
+       ${7:// Periodic task code}
+   }, ${8:1}, ${9:10}, TimeUnit.${10:SECONDS});
+
+   // Can cancel periodic task
+   // $6.cancel(false);
+} finally {
+   // Shutdown after time or application termination
+   $1.shutdown();
+   if (!$1.awaitTermination(${11:10}, TimeUnit.${12:SECONDS})) {
+       $1.shutdownNow();
+   }
+}${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_executor_future.yasnippet
+# -*- mode: snippet -*-
+# name: Java Future Task
+# key: m_executor_future
+# group: Java Executors
+# type: snippet
+# --
+ExecutorService ${1:executor} = Executors.newSingleThreadExecutor();
+try {
+   Future<${2:String}> ${3:future} = $1.submit(() -> {
+       ${4:// Computation code}
+       return ${5:"Result"};
+   });
+
+   try {
+       $2 ${6:result} = $3.get(${7:5}, TimeUnit.${8:SECONDS});
+       ${9:// Process result}
+   } catch (InterruptedException e) {
+       Thread.currentThread().interrupt();
+       ${10:// Handle interruption}
+   } catch (ExecutionException e) {
+       ${11:// Handle computation exception}
+   } catch (TimeoutException e) {
+       $3.cancel(true);
+       ${12:// Handle timeout}
+   }
+} finally {
+   $1.shutdown();
+}${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_executor_callable.yasnippet
+# -*- mode: snippet -*-
+# name: Java Callable Task
+# key: m_executor_callable
+# group: Java Executors
+# type: snippet
+# --
+Callable<${1:String}> ${2:task} = () -> {
+   ${3:// Computation code}
+   if (${4:Thread.currentThread().isInterrupted()}) {
+       throw new InterruptedException("Task interrupted");
+   }
+   return ${5:"Result"};
+};
+
+ExecutorService ${6:executor} = Executors.newSingleThreadExecutor();
+try {
+   Future<$1> ${7:future} = $6.submit($2);
+
+   try {
+       $1 ${8:result} = $7.get();
+       ${9:// Process result}
+   } catch (InterruptedException | ExecutionException e) {
+       ${10:// Handle exceptions}
+   }
+} finally {
+   $6.shutdown();
+}${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_executor_invokeall.yasnippet
+# -*- mode: snippet -*-
+# name: Java Invoke All Tasks
+# key: m_executor_invokeall
+# group: Java Executors
+# type: snippet
+# --
+List<Callable<${1:String}>> ${2:tasks} = new ArrayList<>();
+for (int i = 0; i < ${3:10}; i++) {
+   final int taskId = i;
+   $2.add(() -> {
+       ${4:// Task code}
+       return ${5:"Result-" + taskId};
+   });
+}
+
+ExecutorService ${6:executor} = Executors.newFixedThreadPool(${7:Runtime.getRuntime().availableProcessors()});
+try {
+   // Execute all tasks and get results
+   List<Future<$1>> ${8:results} = $6.invokeAll($2, ${9:1}, TimeUnit.${10:MINUTES});
+
+   for (int i = 0; i < $8.size(); i++) {
+       try {
+           $1 result = $8.get(i).get();
+           ${11:// Process result}
+       } catch (ExecutionException e) {
+           ${12:// Handle computation exception}
+       }
+   }
+} catch (InterruptedException e) {
+   Thread.currentThread().interrupt();
+   ${13:// Handle interruption}
+} finally {
+   $6.shutdown();
+}${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_executor_invokeany.yasnippet
+# -*- mode: snippet -*-
+# name: Java Invoke Any Task
+# key: m_executor_invokeany
+# group: Java Executors
+# type: snippet
+# --
+List<Callable<${1:String}>> ${2:tasks} = new ArrayList<>();
+for (int i = 0; i < ${3:5}; i++) {
+   final int taskId = i;
+   $2.add(() -> {
+       ${4:// Task code}
+       if (${5:Math.random() > 0.8}) { // Simulate some tasks failing
+           throw new Exception("Task " + taskId + " failed");
+       }
+       return ${6:"Result-" + taskId};
+   });
+}
+
+ExecutorService ${7:executor} = Executors.newFixedThreadPool(${8:Runtime.getRuntime().availableProcessors()});
+try {
+   // Execute tasks and get first successful result
+   $1 ${9:firstResult} = $7.invokeAny($2, ${10:30}, TimeUnit.${11:SECONDS});
+   ${12:// Process the first successful result}
+} catch (InterruptedException e) {
+   Thread.currentThread().interrupt();
+   ${13:// Handle interruption}
+} catch (ExecutionException e) {
+   ${14:// Handle case when all tasks failed}
+} catch (TimeoutException e) {
+   ${15:// Handle timeout}
+} finally {
+   $7.shutdown();
+}${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_executor_complete.yasnippet
+# -*- mode: snippet -*-
+# name: Java CompletableFuture Basic
+# key: m_executor_complete
+# group: Java Executors
+# type: snippet
+# --
+CompletableFuture<${1:String}> ${2:future} = CompletableFuture.supplyAsync(() -> {
+   ${3:// Computation code}
+   return ${4:"Result"};
+}, ${5:Executors.newCachedThreadPool()});
+
+$2.thenAccept(result -> {
+   ${6:// Process result}
+})
+.exceptionally(ex -> {
+   ${7:// Handle exception}
+   return null;
+});
+
+// Optionally wait for completion
+// $2.join();${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_executor_complete_chain.yasnippet
+# -*- mode: snippet -*-
+# name: Java CompletableFuture Chain
+# key: m_executor_complete_chain
+# group: Java Executors
+# type: snippet
+# --
+CompletableFuture<${1:String}> ${2:future} = CompletableFuture.supplyAsync(() -> {
+   ${3:// First stage}
+   return ${4:"First result"};
+})
+.thenApply(result -> {
+   ${5:// Transform result}
+   return ${6:result + " transformed"};
+})
+.thenCompose(result -> CompletableFuture.supplyAsync(() -> {
+   ${7:// Dependent async operation}
+   return ${8:result + " with async addition"};
+}))
+.thenCombine(CompletableFuture.supplyAsync(() -> {
+   ${9:// Parallel operation}
+   return ${10:"Parallel result"};
+}), (result1, result2) -> {
+   ${11:// Combine results}
+   return ${12:result1 + " combined with " + result2};
+});
+
+$2.whenComplete((result, ex) -> {
+   if (ex != null) {
+       ${13:// Handle exception}
+   } else {
+       ${14:// Process final result}
+   }
+});
+
+// Optionally wait for completion
+// $2.join();${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_executor_complete_allof.yasnippet
+# -*- mode: snippet -*-
+# name: Java CompletableFuture AllOf
+# key: m_executor_complete_allof
+# group: Java Executors
+# type: snippet
+# --
+List<CompletableFuture<${1:String}>> ${2:futures} = new ArrayList<>();
+
+for (int i = 0; i < ${3:5}; i++) {
+   final int id = i;
+   $2.add(CompletableFuture.supplyAsync(() -> {
+       ${4:// Task code}
+       return ${5:"Result-" + id};
+   }));
+}
+
+// Wait for all futures to complete
+CompletableFuture<Void> ${6:allFutures} = CompletableFuture.allOf($2.toArray(new CompletableFuture[0]));
+
+// Process results after all complete
+$6.thenRun(() -> {
+   List<$1> ${7:results} = $2.stream()
+           .map(CompletableFuture::join)
+           .collect(Collectors.toList());
+   ${8:// Process all results}
+});
+
+// Handle exceptions
+$6.exceptionally(ex -> {
+   ${9:// Handle exceptions from any future}
+   return null;
+});${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_executor_complete_anyof.yasnippet
+# -*- mode: snippet -*-
+# name: Java CompletableFuture AnyOf
+# key: m_executor_complete_anyof
+# group: Java Executors
+# type: snippet
+# --
+List<CompletableFuture<${1:String}>> ${2:futures} = new ArrayList<>();
+
+for (int i = 0; i < ${3:5}; i++) {
+   final int id = i;
+   $2.add(CompletableFuture.supplyAsync(() -> {
+       ${4:// Task code with varying completion times}
+       try {
+           Thread.sleep((long) (Math.random() * 1000));
+       } catch (InterruptedException e) {
+           Thread.currentThread().interrupt();
+       }
+       return ${5:"Result-" + id};
+   }));
+}
+
+// Get the first completed future
+CompletableFuture<Object> ${6:anyFuture} = CompletableFuture.anyOf($2.toArray(new CompletableFuture[0]));
+
+// Process the first result
+$6.thenAccept(firstResult -> {
+   $1 result = ($1) firstResult;
+   ${7:// Process first completed result}
+});
+
+// Handle exceptions
+$6.exceptionally(ex -> {
+   ${8:// Handle exception}
+   return null;
+});${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_executor_custom_pool.yasnippet
+# -*- mode: snippet -*-
+# name: Java Custom Thread Pool
+# key: m_executor_custom_pool
+# group: Java Executors
+# type: snippet
+# --
+// Custom thread pool configuration
+int ${1:corePoolSize} = ${2:2};
+int ${3:maxPoolSize} = ${4:4};
+long ${5:keepAliveTime} = ${6:60L};
+TimeUnit ${7:timeUnit} = TimeUnit.${8:SECONDS};
+BlockingQueue<Runnable> ${9:workQueue} = new ${10:LinkedBlockingQueue<>(100)};
+ThreadFactory ${11:threadFactory} = new ThreadFactory() {
+   private final AtomicInteger threadNumber = new AtomicInteger(1);
+   @Override
+   public Thread newThread(Runnable r) {
+       Thread t = new Thread(r, "${12:CustomWorker}-" + threadNumber.getAndIncrement());
+       t.setDaemon(${13:false});
+       return t;
+   }
+};
+RejectedExecutionHandler ${14:handler} = new ${15:ThreadPoolExecutor.CallerRunsPolicy()};
+
+ThreadPoolExecutor ${16:executor} = new ThreadPoolExecutor(
+       $1, $3, $5, $7, $9, $11, $14);
+
+try {
+   // Submit tasks
+   for (int i = 0; i < ${17:10}; i++) {
+       final int taskId = i;
+       $16.submit(() -> {
+           ${18:// Task code}
+       });
+   }
+
+   // Optionally monitor the thread pool
+   System.out.println("Active threads: " + $16.getActiveCount());
+   System.out.println("Task count: " + $16.getTaskCount());
+   System.out.println("Completed tasks: " + $16.getCompletedTaskCount());
+} finally {
+   $16.shutdown();
+   if (!$16.awaitTermination(${19:5}, TimeUnit.${20:SECONDS})) {
+       $16.shutdownNow();
+   }
+}${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_executor_fork_join.yasnippet
+# -*- mode: snippet -*-
+# name: Java Fork Join Pool
+# key: m_executor_fork_join
+# group: Java Executors
+# type: snippet
+# --
+/**
+* A RecursiveTask that divides work into smaller chunks.
+*/
+class ${1:SumTask} extends RecursiveTask<${2:Long}> {
+   private static final int THRESHOLD = ${3:1000};
+   private final $2[] ${4:array};
+   private final int ${5:start};
+   private final int ${6:end};
+
+   public $1($2[] $4, int $5, int $6) {
+       this.$4 = $4;
+       this.$5 = $5;
+       this.$6 = $6;
+   }
+
+   @Override
+   protected $2 compute() {
+       int length = $6 - $5;
+       if (length <= THRESHOLD) {
+           // Small enough to compute directly
+           return computeDirectly();
+       }
+
+       // Divide and conquer
+       int middle = $5 + length / 2;
+
+       $1 leftTask = new $1($4, $5, middle);
+       $1 rightTask = new $1($4, middle, $6);
+
+       // Fork right task
+       rightTask.fork();
+
+       // Compute left task
+       $2 leftResult = leftTask.compute();
+
+       // Join right task
+       $2 rightResult = rightTask.join();
+
+       // Combine results
+       return ${7:leftResult + rightResult};
+   }
+
+   private $2 computeDirectly() {
+       $2 sum = ${8:0L};
+       for (int i = $5; i < $6; i++) {
+           sum += $4[i];
+       }
+       return sum;
+   }
+}
+
+// Usage
+$2[] ${9:data} = ${10:new $2[100000]}; // Initialize data
+ForkJoinPool ${11:pool} = new ForkJoinPool();
+
+try {
+   $1 ${12:task} = new $1($9, 0, $9.length);
+   $2 ${13:result} = $11.invoke($12);
+   ${14:// Process result}
+} finally {
+   $11.shutdown();
+}${0:}
+#+end_src
+
+** Synchronization Snippets
+#+begin_src snippet :tangle ./snippets/java-mode/m_sync_method.yasnippet
+# -*- mode: snippet -*-
+# name: Java Synchronized Method
+# key: m_sync_method
+# group: Java Synchronization
+# type: snippet
+# --
+/**
+ * Synchronized method to ensure thread-safe access.
+*/
+public synchronized ${1:void} ${2:methodName}(${3:parameters}) {
+   ${0:// Critical section code}
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_sync_block.yasnippet
+# -*- mode: snippet -*-
+# name: Java Synchronized Block
+# key: m_sync_block
+# group: Java Synchronization
+# type: snippet
+# --
+synchronized (${1:lockObject}) {
+   ${0:// Critical section code}
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_sync_staticmethod.yasnippet
+# -*- mode: snippet -*-
+# name: Java Synchronized Static Method
+# key: m_sync_staticmethod
+# group: Java Synchronization
+# type: snippet
+# --
+/**
+ * Synchronized static method (synchronized on the class object).
+*/
+public static synchronized ${1:void} ${2:methodName}(${3:parameters}) {
+   ${0:// Critical section code}
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_sync_staticblock.yasnippet
+# -*- mode: snippet -*-
+# name: Java Synchronized Static Block
+# key: m_sync_staticblock
+# group: Java Synchronization
+# type: snippet
+# --
+synchronized (${1:ClassName}.class) {
+   ${0:// Critical section code}
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_sync_wait.yasnippet
+# -*- mode: snippet -*-
+# name: Java Object Wait
+# key: m_sync_wait
+# group: Java Synchronization
+# type: snippet
+# --
+synchronized (${1:lockObject}) {
+   while (!${2:condition}) {
+       try {
+           $1.wait(); // Wait until notified
+       } catch (InterruptedException e) {
+           Thread.currentThread().interrupt();
+           ${3:// Handle interruption}
+       }
+   }
+
+   ${0:// Code to execute once condition is true}
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_sync_notify.yasnippet
+# -*- mode: snippet -*-
+# name: Java Object Notify
+# key: m_sync_notify
+# group: Java Synchronization
+# type: snippet
+# --
+synchronized (${1:lockObject}) {
+   ${2:// Change state that affects waiting threads}
+   $1.notify(); // Notify a single waiting thread
+   // or
+   // $1.notifyAll(); // Notify all waiting threads
+}${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_sync_volatile.yasnippet
+# -*- mode: snippet -*-
+# name: Java Volatile Field
+# key: m_sync_volatile
+# group: Java Synchronization
+# type: snippet
+# --
+private volatile ${1:boolean} ${2:flag} = ${3:false};
+
+// Usage - volatile ensures visibility across threads
+// but does not protect compound operations
+public void setFlag(boolean value) {
+   $2 = value;
+}
+
+public $1 getFlag() {
+   return $2;
+}${0:}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_sync_double_check.yasnippet
+# -*- mode: snippet -*-
+# name: Java Double-Checked Locking
+# key: m_sync_double_check
+# group: Java Synchronization
+# type: snippet
+# --
+// Singleton with double-checked locking
+public class ${1:Singleton} {
+   private static volatile $1 instance;
+
+   private $1() {
+       // Private constructor
+   }
+
+   public static $1 getInstance() {
+       if (instance == null) {
+           synchronized ($1.class) {
+               if (instance == null) {
+                   instance = new $1();
+               }
+           }
+       }
+       return instance;
+   }
+
+   ${0:// Methods and fields}
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_sync_producer_consumer.yasnippet
+# -*- mode: snippet -*-
+# name: Java Producer-Consumer Pattern
+# key: m_sync_producer_consumer
+# group: Java Synchronization
+# type: snippet
+# --
+/**
+** Thread-safe shared buffer using wait/notify.
+*/
+class ${1:SharedBuffer}<${2:T}> {
+   private final $2[] ${3:buffer};
+   private int ${4:count} = 0;
+   private int ${5:putIndex} = 0;
+   private int ${6:takeIndex} = 0;
+
+   public $1(int ${7:capacity}) {
+       $3 = ($2[]) new Object[$7];
+   }
+
+   public synchronized void put($2 ${8:item}) throws InterruptedException {
+       while ($4 == $3.length) {
+           // Buffer is full, wait
+

@@ -1,0 +1,1899 @@
+* Java Design Patterns Yasnippets Collection
+Let's create a comprehensive collection of Java design patterns yasnippets using our namespace convention. I'll use `m_pattern_*` as the primary namespace to make these easily discoverable, and I'll make sure to use only `//` comments for Java code.
+
+** Creational Patterns
+#+begin_src snippet :tangle ./snippets/java-mode/m_pattern_singleton.yasnippet
+# -*- mode: snippet -*-
+# name: Java Singleton Pattern
+# key: m_pattern_singleton
+# group: Java Design Patterns (Creational)
+# type: snippet
+# --
+// Singleton pattern implementation with thread safety using eager initialization.
+public class ${1:Singleton} {
+   // Private static instance, eagerly initialized
+   private static final $1 INSTANCE = new $1();
+
+   // Private constructor prevents instantiation from other classes
+   private $1() {
+       ${2:// Initialization code}
+   }
+
+   // Returns the single instance of this class
+   // @return the singleton instance
+   public static $1 getInstance() {
+       return INSTANCE;
+   }
+
+   ${0:// Add methods here}
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_pattern_singleton_lazy.yasnippet
+# -*- mode: snippet -*-
+# name: Java Singleton Pattern (Lazy Initialization)
+# key: m_pattern_singleton_lazy
+# group: Java Design Patterns (Creational)
+# type: snippet
+# --
+// Singleton pattern implementation with thread safety using lazy initialization.
+// Uses double-checked locking for thread safety.
+public class ${1:Singleton} {
+   // Private static instance, lazily initialized
+   private static volatile $1 instance;
+
+   // Private constructor prevents instantiation from other classes
+   private $1() {
+       ${2:// Initialization code}
+   }
+
+   // Returns the single instance of this class, creating it if necessary
+   // Thread-safe implementation using double-checked locking
+   // @return the singleton instance
+   public static $1 getInstance() {
+       // First check (no locking)
+       if (instance == null) {
+           // Lock for thread safety
+           synchronized ($1.class) {
+               // Second check (with locking)
+               if (instance == null) {
+                   instance = new $1();
+               }
+           }
+       }
+       return instance;
+   }
+
+   ${0:// Add methods here}
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_pattern_singleton_enum.yasnippet
+# -*- mode: snippet -*-
+# name: Java Singleton Pattern (Enum)
+# key: m_pattern_singleton_enum
+# group: Java Design Patterns (Creational)
+# type: snippet
+# --
+// Singleton pattern implementation using Enum.
+// This approach guarantees thread safety and proper serialization.
+public enum ${1:Singleton} {
+   INSTANCE;
+
+   ${2:// Add fields here}
+
+   $1() {
+       ${3:// Initialization code}
+   }
+
+   ${0:// Add methods here}
+
+   // Example method
+   public void doSomething() {
+       // Implementation here
+   }
+}
+
+// Usage example:
+// $1.INSTANCE.doSomething();
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_pattern_factory_method.yasnippet
+# -*- mode: snippet -*-
+# name: Java Factory Method Pattern
+# key: m_pattern_factory_method
+# group: Java Design Patterns (Creational)
+# type: snippet
+# --
+// Factory Method Design Pattern
+
+// Product interface
+interface ${1:Product} {
+   void ${2:operation}();
+}
+
+// Concrete Products
+class ${3:ConcreteProduct1} implements $1 {
+   @Override
+   public void $2() {
+       ${4:// Implementation for product 1}
+   }
+}
+
+class ${5:ConcreteProduct2} implements $1 {
+   @Override
+   public void $2() {
+       ${6:// Implementation for product 2}
+   }
+}
+
+// Creator
+abstract class ${7:Creator} {
+   // Factory method that creates a Product
+   public abstract $1 create${8:Product}();
+
+   // Template method that uses the factory method
+   public void someOperation() {
+       // Call the factory method to create a product
+       $1 product = create$8();
+       // Then use the product
+       product.$2();
+   }
+}
+
+// Concrete Creators
+class ${9:ConcreteCreator1} extends $7 {
+   @Override
+   public $1 create$8() {
+       return new $3();
+   }
+}
+
+class ${10:ConcreteCreator2} extends $7 {
+   @Override
+   public $1 create$8() {
+       return new $5();
+   }
+}
+
+${0:// Client code example:
+// $7 creator = new $9();
+// creator.someOperation();
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_pattern_abstract_factory.yasnippet
+# -*- mode: snippet -*-
+# name: Java Abstract Factory Pattern
+# key: m_pattern_abstract_factory
+# group: Java Design Patterns (Creational)
+# type: snippet
+# --
+// Abstract Factory Design Pattern
+
+// Abstract Product A
+interface ${1:ProductA} {
+   void ${2:operationA}();
+}
+
+// Abstract Product B
+interface ${3:ProductB} {
+   void ${4:operationB}();
+   void ${5:collaborateWith}($1 a);
+}
+
+// Concrete Products A1
+class ${6:ConcreteProductA1} implements $1 {
+   @Override
+   public void $2() {
+       ${7:// Implementation for product A1}
+   }
+}
+
+// Concrete Products A2
+class ${8:ConcreteProductA2} implements $1 {
+   @Override
+   public void $2() {
+       ${9:// Implementation for product A2}
+   }
+}
+
+// Concrete Products B1
+class ${10:ConcreteProductB1} implements $3 {
+   @Override
+   public void $4() {
+       ${11:// Implementation for product B1}
+   }
+
+   @Override
+   public void $5($1 a) {
+       ${12:// Collaboration with product A}
+       a.$2();
+   }
+}
+
+// Concrete Products B2
+class ${13:ConcreteProductB2} implements $3 {
+   @Override
+   public void $4() {
+       ${14:// Implementation for product B2}
+   }
+
+   @Override
+   public void $5($1 a) {
+       ${15:// Collaboration with product A}
+       a.$2();
+   }
+}
+
+// Abstract Factory
+interface ${16:AbstractFactory} {
+   $1 create${17:ProductA}();
+   $3 create${18:ProductB}();
+}
+
+// Concrete Factory 1
+class ${19:ConcreteFactory1} implements $16 {
+   @Override
+   public $1 create$17() {
+       return new $6();
+   }
+
+   @Override
+   public $3 create$18() {
+       return new $10();
+   }
+}
+
+// Concrete Factory 2
+class ${20:ConcreteFactory2} implements $16 {
+   @Override
+   public $1 create$17() {
+       return new $8();
+   }
+
+   @Override
+   public $3 create$18() {
+       return new $13();
+   }
+}
+
+// Client
+class ${21:Client} {
+   private $1 productA;
+   private $3 productB;
+
+   // Constructor injects a factory object
+   public $21($16 factory) {
+       productA = factory.create$17();
+       productB = factory.create$18();
+   }
+
+   public void execute() {
+       productB.$5(productA);
+   }
+}
+
+${0:// Usage example:
+// $16 factory1 = new $19();
+// $21 client = new $21(factory1);
+// client.execute();
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_pattern_builder.yasnippet
+# -*- mode: snippet -*-
+# name: Java Builder Pattern
+# key: m_pattern_builder
+# group: Java Design Patterns (Creational)
+# type: snippet
+# --
+// Builder Pattern implementation
+public class ${1:Product} {
+   // Required parameters
+   private final ${2:String} ${3:required1};
+   private final ${4:int} ${5:required2};
+
+   // Optional parameters
+   private final ${6:String} ${7:optional1};
+   private final ${8:boolean} ${9:optional2};
+
+   private $1(Builder builder) {
+       $3 = builder.$3;
+       $5 = builder.$5;
+       $7 = builder.$7;
+       $9 = builder.$9;
+   }
+
+   public $2 get${3^}() {
+       return $3;
+   }
+
+   public $4 get${5^}() {
+       return $5;
+   }
+
+   public $6 get${7^}() {
+       return $7;
+   }
+
+   public $8 is${9^}() {
+       return $9;
+   }
+
+   // Builder for $1
+   public static class Builder {
+       // Required parameters
+       private final $2 $3;
+       private final $4 $5;
+
+       // Optional parameters - initialized with default values
+       private $6 $7 = ${10:null};
+       private $8 $9 = ${11:false};
+
+       // Constructor with required parameters
+       public Builder($2 $3, $4 $5) {
+           this.$3 = $3;
+           this.$5 = $5;
+       }
+
+       // Set optional parameter $7
+       public Builder ${7}($6 $7) {
+           this.$7 = $7;
+           return this;
+       }
+
+       // Set optional parameter $9
+       public Builder ${9}($8 $9) {
+           this.$9 = $9;
+           return this;
+       }
+
+       // Build the final product
+       public $1 build() {
+           return new $1(this);
+       }
+   }
+}
+
+${0:// Usage example:
+// $1 product = new $1.Builder("required1Value", 42)
+//                  .$7("optional1Value")
+//                  .$9(true)
+//                  .build();
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_pattern_prototype.yasnippet
+# -*- mode: snippet -*-
+# name: Java Prototype Pattern
+# key: m_pattern_prototype
+# group: Java Design Patterns (Creational)
+# type: snippet
+# --
+// Prototype Design Pattern
+import java.util.HashMap;
+import java.util.Map;
+
+// Prototype interface
+interface ${1:Prototype} extends Cloneable {
+   $1 clone();
+   ${2:// Additional methods}
+}
+
+// Concrete Prototype
+class ${3:ConcretePrototype} implements $1 {
+   private ${4:String} ${5:field};
+
+   public $3($4 $5) {
+       this.$5 = $5;
+   }
+
+   // Copy constructor
+   public $3($3 source) {
+       this.$5 = source.$5;
+   }
+
+   @Override
+   public $1 clone() {
+       return new $3(this);
+   }
+
+   // Getters and setters
+   public $4 get${5^}() {
+       return $5;
+   }
+
+   public void set${5^}($4 $5) {
+       this.$5 = $5;
+   }
+
+   ${6:// Additional methods implementation}
+}
+
+// Prototype registry
+class ${7:PrototypeRegistry} {
+   private Map<${8:String}, $1> ${9:prototypes} = new HashMap<>();
+
+   public void add$1($8 key, $1 prototype) {
+       $9.put(key, prototype);
+   }
+
+   public $1 get$1($8 key) {
+       return $9.get(key).clone();
+   }
+}
+
+${0:// Usage example:
+// $3 original = new $3("original-value");
+// $3 clone = ($3) original.clone();
+// clone.set${5^}("modified-value");
+//
+// $7 registry = new $7();
+// registry.add$1("prototype1", original);
+// $1 prototypeFromRegistry = registry.get$1("prototype1");
+}
+#+end_src
+
+** Structural Patterns
+#+begin_src snippet :tangle ./snippets/java-mode/m_pattern_adapter.yasnippet
+# -*- mode: snippet -*-
+# name: Java Adapter Pattern
+# key: m_pattern_adapter
+# group: Java Design Patterns (Structural)
+# type: snippet
+# --
+// Adapter Pattern (Object Adapter implementation)
+
+// Target interface - what the client expects
+interface ${1:Target} {
+   void ${2:request}();
+}
+
+// Adaptee - the class that needs adapting
+class ${3:Adaptee} {
+   // This is the incompatible interface
+   public void ${4:specificRequest}() {
+       ${5:// Specific implementation}
+       System.out.println("Adaptee's specific request");
+   }
+}
+
+// Adapter - adapts Adaptee to Target
+class ${6:Adapter} implements $1 {
+   private final $3 ${7:adaptee};
+
+   public $6($3 $7) {
+       this.$7 = $7;
+   }
+
+   // Implement the Target interface by delegating to Adaptee
+   @Override
+   public void $2() {
+       System.out.println("Adapter is translating the request");
+       $7.${4}();
+       ${8:// Additional adaptation logic if needed}
+   }
+}
+
+${0:// Usage example:
+// $3 adaptee = new $3();
+// $1 adapter = new $6(adaptee);
+// adapter.$2();  // Client uses the Target interface
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_pattern_adapter_class.yasnippet
+# -*- mode: snippet -*-
+# name: Java Adapter Pattern (Class Adapter)
+# key: m_pattern_adapter_class
+# group: Java Design Patterns (Structural)
+# type: snippet
+# --
+// Adapter Pattern (Class Adapter implementation using inheritance)
+
+// Target interface - what the client expects
+interface ${1:Target} {
+   void ${2:request}();
+}
+
+// Adaptee - the class that needs adapting
+class ${3:Adaptee} {
+   // This is the incompatible interface
+   public void ${4:specificRequest}() {
+       ${5:// Specific implementation}
+       System.out.println("Adaptee's specific request");
+   }
+}
+
+// Class Adapter - adapts Adaptee to Target through inheritance
+class ${6:ClassAdapter} extends $3 implements $1 {
+   // Implement the Target interface by reusing parent's method
+   @Override
+   public void $2() {
+       System.out.println("Class Adapter is translating the request");
+       ${4}();  // Call the method from the parent class
+       ${7:// Additional adaptation logic if needed}
+   }
+}
+
+${0:// Usage example:
+// $1 adapter = new $6();
+// adapter.$2();  // Client uses the Target interface
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_pattern_bridge.yasnippet
+# -*- mode: snippet -*-
+# name: Java Bridge Pattern
+# key: m_pattern_bridge
+# group: Java Design Patterns (Structural)
+# type: snippet
+# --
+// Bridge Design Pattern
+//
+// Decouples an abstraction from its implementation
+// so the two can vary independently.
+
+// Implementation interface
+interface ${1:Implementation} {
+   void ${2:operationImpl}();
+}
+
+// Concrete Implementation A
+class ${3:ConcreteImplementationA} implements $1 {
+   @Override
+   public void $2() {
+       ${4:// Concrete implementation A}
+       System.out.println("Concrete Implementation A");
+   }
+}
+
+// Concrete Implementation B
+class ${5:ConcreteImplementationB} implements $1 {
+   @Override
+   public void $2() {
+       ${6:// Concrete implementation B}
+       System.out.println("Concrete Implementation B");
+   }
+}
+
+// Abstraction
+abstract class ${7:Abstraction} {
+   protected $1 ${8:implementation};
+
+   public $7($1 $8) {
+       this.$8 = $8;
+   }
+
+   // Operation that uses the implementation
+   public abstract void ${9:operation}();
+}
+
+// Refined Abstraction
+class ${10:RefinedAbstraction} extends $7 {
+   public $10($1 $8) {
+       super($8);
+   }
+
+   @Override
+   public void $9() {
+       System.out.println("Refined Abstraction operation");
+       $8.$2();
+       ${11:// Additional abstraction logic}
+   }
+}
+
+${0:// Usage example:
+// $1 implementationA = new $3();
+// $7 abstraction = new $10(implementationA);
+// abstraction.$9();
+//
+// // Switch implementation at runtime
+// $1 implementationB = new $5();
+// abstraction = new $10(implementationB);
+// abstraction.$9();
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_pattern_composite.yasnippet
+# -*- mode: snippet -*-
+# name: Java Composite Pattern
+# key: m_pattern_composite
+# group: Java Design Patterns (Structural)
+# type: snippet
+# --
+// Composite Pattern
+//
+// Composes objects into tree structures to represent part-whole hierarchies.
+import java.util.ArrayList;
+import java.util.List;
+
+// Component interface
+interface ${1:Component} {
+   void ${2:operation}();
+   void add($1 component);
+   void remove($1 component);
+   $1 getChild(int index);
+}
+
+// Leaf class
+class ${3:Leaf} implements $1 {
+   private String ${4:name};
+
+   public $3(String $4) {
+       this.$4 = $4;
+   }
+
+   @Override
+   public void $2() {
+       System.out.println("Leaf " + $4 + " operation");
+   }
+
+   @Override
+   public void add($1 component) {
+       // Leaf cannot have children
+       throw new UnsupportedOperationException("Cannot add to a leaf");
+   }
+
+   @Override
+   public void remove($1 component) {
+       // Leaf cannot have children
+       throw new UnsupportedOperationException("Cannot remove from a leaf");
+   }
+
+   @Override
+   public $1 getChild(int index) {
+       // Leaf has no children
+       throw new UnsupportedOperationException("Leaf has no children");
+   }
+}
+
+// Composite class
+class ${5:Composite} implements $1 {
+   private String ${6:name};
+   private List<$1> ${7:children} = new ArrayList<>();
+
+   public $5(String $6) {
+       this.$6 = $6;
+   }
+
+   @Override
+   public void $2() {
+       System.out.println("Composite " + $6 + " operation");
+
+       // Execute operation on all children
+       for ($1 component : $7) {
+           component.$2();
+       }
+   }
+
+   @Override
+   public void add($1 component) {
+       $7.add(component);
+   }
+
+   @Override
+   public void remove($1 component) {
+       $7.remove(component);
+   }
+
+   @Override
+   public $1 getChild(int index) {
+       return $7.get(index);
+   }
+}
+
+${0:// Usage example:
+// $1 leaf1 = new $3("Leaf 1");
+// $1 leaf2 = new $3("Leaf 2");
+// $1 leaf3 = new $3("Leaf 3");
+//
+// $1 composite = new $5("Composite 1");
+// $1 subComposite = new $5("SubComposite 1");
+//
+// composite.add(leaf1);
+// composite.add(subComposite);
+// subComposite.add(leaf2);
+// subComposite.add(leaf3);
+//
+// // Execute operation on the entire tree
+// composite.$2();
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_pattern_decorator.yasnippet
+# -*- mode: snippet -*-
+# name: Java Decorator Pattern
+# key: m_pattern_decorator
+# group: Java Design Patterns (Structural)
+# type: snippet
+# --
+// Decorator Pattern
+//
+// Attaches additional responsibilities to objects dynamically.
+// Provides a flexible alternative to subclassing for extending functionality.
+
+// Component interface
+interface ${1:Component} {
+   ${2:String} ${3:operation}();
+}
+
+// Concrete Component
+class ${4:ConcreteComponent} implements $1 {
+   @Override
+   public $2 $3() {
+       return "${5:ConcreteComponent result}";
+   }
+}
+
+// Base Decorator class
+abstract class ${6:Decorator} implements $1 {
+   protected $1 ${7:component};
+
+   public $6($1 $7) {
+       this.$7 = $7;
+   }
+
+   @Override
+   public $2 $3() {
+       return $7.$3();
+   }
+}
+
+// Concrete Decorator A
+class ${8:ConcreteDecoratorA} extends $6 {
+   public $8($1 $7) {
+       super($7);
+   }
+
+   @Override
+   public $2 $3() {
+       return "DecoratorA(" + super.$3() + ")";
+   }
+
+   // Additional methods specific to this decorator
+   public $2 ${9:additionalOperationA}() {
+       return "${10:ConcreteDecoratorA additional operation}";
+   }
+}
+
+// Concrete Decorator B
+class ${11:ConcreteDecoratorB} extends $6 {
+   public $11($1 $7) {
+       super($7);
+   }
+
+   @Override
+   public $2 $3() {
+       return "DecoratorB(" + super.$3() + ")";
+   }
+
+   // Additional behavior
+   private $2 ${12:additionalBehavior}() {
+       return "${13:Additional behavior from ConcreteDecoratorB}";
+   }
+}
+
+${0:// Usage example:
+// $1 component = new $4();
+// System.out.println("Plain component: " + component.$3());
+//
+// // Wrap component with Decorator A
+// $1 decoratorA = new $8(component);
+// System.out.println("Decorated with A: " + decoratorA.$3());
+//
+// // Wrap with Decorator B
+// $1 decoratorB = new $11(decoratorA);
+// System.out.println("Decorated with B (which decorates A): " + decoratorB.$3());
+//
+// // Direct decoration with multiple decorators
+// $1 decoratedComponent = new $11(new $8(new $4()));
+// System.out.println("With multiple decorators: " + decoratedComponent.$3());
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_pattern_facade.yasnippet
+# -*- mode: snippet -*-
+# name: Java Facade Pattern
+# key: m_pattern_facade
+# group: Java Design Patterns (Structural)
+# type: snippet
+# --
+// Facade Pattern
+//
+// Provides a unified interface to a set of interfaces in a subsystem.
+// Defines a higher-level interface that makes the subsystem easier to use.
+
+// Subsystem Component 1
+class ${1:SubsystemOne} {
+   public void ${2:operationOne}() {
+       System.out.println("${3:Subsystem One Operation}");
+   }
+}
+
+// Subsystem Component 2
+class ${4:SubsystemTwo} {
+   public void ${5:operationTwo}() {
+       System.out.println("${6:Subsystem Two Operation}");
+   }
+}
+
+// Subsystem Component 3
+class ${7:SubsystemThree} {
+   public void ${8:operationThree}() {
+       System.out.println("${9:Subsystem Three Operation}");
+   }
+}
+
+// Facade
+class ${10:Facade} {
+   private final $1 ${11:subsystemOne};
+   private final $4 ${12:subsystemTwo};
+   private final $7 ${13:subsystemThree};
+
+   public $10() {
+       $11 = new $1();
+       $12 = new $4();
+       $13 = new $7();
+   }
+
+   // Facade methods that simplify client interactions
+
+   // Simplified operation that coordinates multiple subsystems
+   public void ${14:operationA}() {
+       System.out.println("${15:Facade Operation A}");
+       $11.$2();
+       $12.$5();
+   }
+
+   // Another simplified operation
+   public void ${16:operationB}() {
+       System.out.println("${17:Facade Operation B}");
+       $11.$2();
+       $13.$8();
+   }
+}
+
+${0:// Usage example:
+// // Client code only interacts with the facade
+// $10 facade = new $10();
+//
+// // Use simplified interface
+// facade.$14();
+// facade.$16();
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_pattern_flyweight.yasnippet
+# -*- mode: snippet -*-
+# name: Java Flyweight Pattern
+# key: m_pattern_flyweight
+# group: Java Design Patterns (Structural)
+# type: snippet
+# --
+// Flyweight Pattern
+//
+// Uses sharing to support large numbers of fine-grained objects efficiently.
+import java.util.HashMap;
+import java.util.Map;
+
+// Flyweight interface
+interface ${1:Flyweight} {
+   void ${2:operation}(${3:String} ${4:extrinsicState});
+}
+
+// Concrete Flyweight
+class ${5:ConcreteFlyweight} implements $1 {
+   private final ${6:String} ${7:intrinsicState};
+
+   public $5($6 $7) {
+       this.$7 = $7;
+   }
+
+   @Override
+   public void $2($3 $4) {
+       System.out.println("Concrete Flyweight with intrinsic state ["
+               + $7 + "] and extrinsic state [" + $4 + "]");
+   }
+}
+
+// Unshared Concrete Flyweight (optional)
+class ${8:UnsharedConcreteFlyweight} implements $1 {
+   private final ${9:String} ${10:allState};
+
+   public $8($9 $10) {
+       this.$10 = $10;
+   }
+
+   @Override
+   public void $2($3 $4) {
+       System.out.println("Unshared Concrete Flyweight with state ["
+               + $10 + "] and extrinsic state [" + $4 + "]");
+   }
+}
+
+// Flyweight Factory
+class ${11:FlyweightFactory} {
+   private final Map<${6}, $1> ${12:flyweights} = new HashMap<>();
+
+   public $1 ${13:getFlyweight}($6 key) {
+       if (!$12.containsKey(key)) {
+           $12.put(key, new $5(key));
+       }
+       return $12.get(key);
+   }
+
+   public int ${14:getFlyweightCount}() {
+       return $12.size();
+   }
+}
+
+${0:// Usage example:
+// $11 factory = new $11();
+//
+// // Get flyweight objects - reuses existing ones with the same key
+// $1 fw1 = factory.$13("key1");
+// $1 fw2 = factory.$13("key2");
+// $1 fw3 = factory.$13("key1");  // This reuses the first flyweight
+//
+// // Use the flyweights with different extrinsic states
+// fw1.$2("extrinsic state 1");
+// fw2.$2("extrinsic state 2");
+// fw3.$2("extrinsic state 3");
+//
+// // Verify object reuse
+// System.out.println("Total flyweights: " + factory.$14());  // Should be 2
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_pattern_proxy.yasnippet
+# -*- mode: snippet -*-
+# name: Java Proxy Pattern
+# key: m_pattern_proxy
+# group: Java Design Patterns (Structural)
+# type: snippet
+# --
+// Proxy Pattern
+//
+// Provides a surrogate or placeholder for another object to control access to it.
+
+// Subject interface
+interface ${1:Subject} {
+   void ${2:request}();
+}
+
+// Real Subject
+class ${3:RealSubject} implements $1 {
+   @Override
+   public void $2() {
+       System.out.println("${4:RealSubject handling request}");
+   }
+}
+
+// Proxy
+class ${5:Proxy} implements $1 {
+   private $3 ${6:realSubject};
+   private final ${7:boolean} ${8:accessCondition};
+
+   public $5(${7} $8) {
+       this.$8 = $8;
+   }
+
+   @Override
+   public void $2() {
+       // Lazy initialization
+       if ($6 == null) {
+           $6 = new $3();
+       }
+
+       // Access control
+       if ($8) {
+           // Additional pre-processing if needed
+           System.out.println("${9:Proxy pre-processing}");
+
+           // Delegate to real subject
+           $6.$2();
+
+           // Additional post-processing if needed
+           System.out.println("${10:Proxy post-processing}");
+       } else {
+           System.out.println("${11:Access denied by proxy}");
+       }
+   }
+}
+
+${0:// Usage example:
+// // Create a proxy with access granted
+// $1 proxy1 = new $5(true);
+// proxy1.$2();
+//
+// // Create a proxy with access denied
+// $1 proxy2 = new $5(false);
+// proxy2.$2();
+}
+#+end_src
+
+** Behavioral Patterns
+#+begin_src snippet :tangle ./snippets/java-mode/m_pattern_chain_of_responsibility.yasnippet
+# -*- mode: snippet -*-
+# name: Java Chain of Responsibility Pattern
+# key: m_pattern_chain_of_responsibility
+# group: Java Design Patterns (Behavioral)
+# type: snippet
+# --
+// Chain of Responsibility Pattern
+//
+// Passes a request along a chain of handlers until one of them handles the request.
+
+// Handler interface
+abstract class ${1:Handler} {
+   protected $1 ${2:nextHandler};
+
+   public $1 set${3:Next}($1 $2) {
+       this.$2 = $2;
+       return $2;
+   }
+
+   public abstract void ${4:handle}(${5:String} ${6:request});
+}
+
+// Concrete Handler A
+class ${7:ConcreteHandlerA} extends $1 {
+   @Override
+   public void $4($5 $6) {
+       if (${8:$6.contains("A")}) {
+           System.out.println("${9:ConcreteHandlerA handled the request}");
+       } else if ($2 != null) {
+           System.out.println("${10:ConcreteHandlerA passing to next handler}");
+           $2.$4($6);
+       } else {
+           System.out.println("${11:Request unhandled}");
+       }
+   }
+}
+
+// Concrete Handler B
+class ${12:ConcreteHandlerB} extends $1 {
+   @Override
+   public void $4($5 $6) {
+       if (${13:$6.contains("B")}) {
+           System.out.println("${14:ConcreteHandlerB handled the request}");
+       } else if ($2 != null) {
+           System.out.println("${15:ConcreteHandlerB passing to next handler}");
+           $2.$4($6);
+       } else {
+           System.out.println("${16:Request unhandled}");
+       }
+   }
+}
+
+// Concrete Handler C
+class ${17:ConcreteHandlerC} extends $1 {
+   @Override
+   public void $4($5 $6) {
+       if (${18:$6.contains("C")}) {
+           System.out.println("${19:ConcreteHandlerC handled the request}");
+       } else if ($2 != null) {
+           System.out.println("${20:ConcreteHandlerC passing to next handler}");
+           $2.$4($6);
+       } else {
+           System.out.println("${21:Request unhandled}");
+       }
+   }
+}
+
+${0:// Usage example:
+// $1 handlerA = new $7();
+// $1 handlerB = new $12();
+// $1 handlerC = new $17();
+//
+// // Set up the chain
+// handlerA.set$3(handlerB);
+// handlerB.set$3(handlerC);
+//
+// // Process requests
+// handlerA.$4("Request for B");
+// handlerA.$4("Request for A");
+// handlerA.$4("Request for C");
+// handlerA.$4("Request for None");
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_pattern_command.yasnippet
+# -*- mode: snippet -*-
+# name: Java Command Pattern
+# key: m_pattern_command
+# group: Java Design Patterns (Behavioral)
+# type: snippet
+# --
+// Command Pattern
+//
+// Encapsulates a request as an object, allowing parameterization of clients with different requests,
+// queue or log requests, and support undoable operations.
+
+// Command interface
+interface ${1:Command} {
+   void ${2:execute}();
+   void ${3:undo}();
+}
+
+// Receiver (knows how to perform the operations)
+class ${4:Receiver} {
+   public void ${5:action}() {
+       System.out.println("${6:Receiver is performing an action}");
+   }
+
+   public void ${7:undoAction}() {
+       System.out.println("${8:Receiver is undoing the action}");
+   }
+}
+
+// Concrete Command
+class ${9:ConcreteCommand} implements $1 {
+   private final $4 ${10:receiver};
+   private final ${11:String} ${12:parameter};
+
+   public $9($4 $10, $11 $12) {
+       this.$10 = $10;
+       this.$12 = $12;
+   }
+
+   @Override
+   public void $2() {
+       System.out.println("${13:Executing command with parameter: }" + $12);
+       $10.${5}();
+   }
+
+   @Override
+   public void $3() {
+       System.out.println("${14:Undoing command with parameter: }" + $12);
+       $10.${7}();
+   }
+}
+
+// Invoker
+class ${15:Invoker} {
+   private $1 ${16:command};
+
+   public void ${17:setCommand}($1 $16) {
+       this.$16 = $16;
+   }
+
+   public void ${18:executeCommand}() {
+       $16.$2();
+   }
+
+   public void ${19:undoCommand}() {
+       $16.$3();
+   }
+}
+
+${0:// Usage example:
+// // Create the receiver
+// $4 receiver = new $4();
+//
+// // Create commands
+// $1 command = new $9(receiver, "Command Parameter");
+//
+// // Create invoker and associate with command
+// $15 invoker = new $15();
+// invoker.$17(command);
+//
+// // Execute and undo
+// invoker.$18();
+// invoker.$19();
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_pattern_iterator.yasnippet
+# -*- mode: snippet -*-
+# name: Java Iterator Pattern
+# key: m_pattern_iterator
+# group: Java Design Patterns (Behavioral)
+# type: snippet
+# --
+// Iterator Pattern
+//
+// Provides a way to access the elements of an aggregate object sequentially
+// without exposing its underlying representation.
+import java.util.ArrayList;
+import java.util.List;
+
+// Iterator interface
+interface ${1:Iterator}<${2:T}> {
+   boolean ${3:hasNext}();
+   $2 ${4:next}();
+}
+
+// Aggregate interface
+interface ${5:Aggregate}<$2> {
+   $1<$2> ${6:createIterator}();
+}
+
+// Concrete Iterator
+class ${7:ConcreteIterator}<$2> implements $1<$2> {
+   private final List<$2> ${8:items};
+   private int ${9:position} = 0;
+
+   public $7(List<$2> $8) {
+       this.$8 = $8;
+   }
+
+   @Override
+   public boolean $3() {
+       return $9 < $8.size();
+   }
+
+   @Override
+   public $2 $4() {
+       if (!$3()) {
+           throw new IndexOutOfBoundsException("No more elements");
+       }
+       return $8.get($9++);
+   }
+}
+
+// Concrete Aggregate
+class ${10:ConcreteAggregate}<$2> implements $5<$2> {
+   private final List<$2> ${11:items} = new ArrayList<>();
+
+   public void ${12:add}($2 ${13:item}) {
+       $11.add($13);
+   }
+
+   public $2 ${14:get}(int ${15:index}) {
+       return $11.get($15);
+   }
+
+   public int ${16:size}() {
+       return $11.size();
+   }
+
+   @Override
+   public $1<$2> $6() {
+       return new $7<>($11);
+   }
+}
+
+${0:// Usage example:
+// $10<String> collection = new $10<>();
+// collection.$12("Item 1");
+// collection.$12("Item 2");
+// collection.$12("Item 3");
+//
+// $1<String> iterator = collection.$6();
+// while (iterator.$3()) {
+//     String item = iterator.$4();
+//     System.out.println(item);
+// }
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_pattern_mediator.yasnippet
+# -*- mode: snippet -*-
+# name: Java Mediator Pattern
+# key: m_pattern_mediator
+# group: Java Design Patterns (Behavioral)
+# type: snippet
+# --
+// Mediator Pattern
+//
+// Defines an object that encapsulates how a set of objects interact.
+// Promotes loose coupling by keeping objects from referring to each other explicitly.
+
+// Mediator interface
+interface ${1:Mediator} {
+   void ${2:notify}(${3:Colleague} ${4:sender}, ${5:String} ${6:event});
+}
+
+// Base Colleague class
+abstract class ${3:Colleague} {
+   protected $1 ${7:mediator};
+
+   public $3($1 $7) {
+       this.$7 = $7;
+   }
+}
+
+// Concrete Colleague A
+class ${8:ConcreteColleagueA} extends $3 {
+   public $8($1 $7) {
+       super($7);
+   }
+
+   public void ${9:operationA}() {
+       System.out.println("${10:Colleague A performs operation A}");
+       $7.$2(this, "${11:A_EVENT}");
+   }
+
+   public void ${12:receiveEvent}($5 $6) {
+       System.out.println("${13:Colleague A received event: }" + $6);
+   }
+}
+
+// Concrete Colleague B
+class ${14:ConcreteColleagueB} extends $3 {
+   public $14($1 $7) {
+       super($7);
+   }
+
+   public void ${15:operationB}() {
+       System.out.println("${16:Colleague B performs operation B}");
+       $7.$2(this, "${17:B_EVENT}");
+   }
+
+   public void ${18:receiveEvent}($5 $6) {
+       System.out.println("${19:Colleague B received event: }" + $6);
+   }
+}
+
+// Concrete Mediator
+class ${20:ConcreteMediator} implements $1 {
+   private $8 ${21:colleagueA};
+   private $14 ${22:colleagueB};
+
+   public void ${23:setColleagueA}($8 $21) {
+       this.$21 = $21;
+   }
+
+   public void ${24:setColleagueB}($14 $22) {
+       this.$22 = $22;
+   }
+
+   @Override
+   public void $2($3 $4, $5 $6) {
+       if ($4 instanceof $8 && $6.equals("$11")) {
+           $22.${18}("${25:Event from Colleague A}");
+       } else if ($4 instanceof $14 && $6.equals("$17")) {
+           $21.${12}("${26:Event from Colleague B}");
+       }
+   }
+}
+
+${0:// Usage example:
+// // Create mediator
+// $20 mediator = new $20();
+//
+// // Create colleagues
+// $8 colleagueA = new $8(mediator);
+// $14 colleagueB = new $14(mediator);
+//
+// // Set up relationships
+// mediator.$23(colleagueA);
+// mediator.$24(colleagueB);
+//
+// // Trigger interaction
+// colleagueA.$9();
+// colleagueB.$15();
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_pattern_memento.yasnippet
+# -*- mode: snippet -*-
+# name: Java Memento Pattern
+# key: m_pattern_memento
+# group: Java Design Patterns (Behavioral)
+# type: snippet
+# --
+// Memento Pattern
+//
+// Captures and externalizes an object's internal state without violating encapsulation,
+// so the object can be restored to this state later.
+
+// Memento - stores the internal state of the Originator
+class ${1:Memento} {
+   private final ${2:String} ${3:state};
+
+   public $1($2 $3) {
+       this.$3 = $3;
+   }
+
+   // Only accessible to the originator
+   protected $2 ${4:getState}() {
+       return $3;
+   }
+}
+
+// Originator - creates a memento containing a snapshot of its current state
+class ${5:Originator} {
+   private $2 ${6:state};
+
+   public void ${7:setState}($2 $6) {
+       this.$6 = $6;
+       System.out.println("${8:Setting state to: }" + $6);
+   }
+
+   public $1 ${9:saveToMemento}() {
+       System.out.println("${10:Saving to Memento: }" + $6);
+       return new $1($6);
+   }
+
+   public void ${11:restoreFromMemento}($1 ${12:memento}) {
+       $6 = $12.$4();
+       System.out.println("${13:State restored from Memento: }" + $6);
+   }
+}
+
+// Caretaker - responsible for keeping track of the mementos
+class ${14:Caretaker} {
+   private final List<$1> ${15:mementoList} = new ArrayList<>();
+
+   public void ${16:add}($1 ${17:state}) {
+       $15.add($17);
+   }
+
+   public $1 ${18:get}(int ${19:index}) {
+       return $15.get($19);
+   }
+}
+
+${0:// Usage example:
+// $5 originator = new $5();
+// $14 caretaker = new $14();
+//
+// // Set state and save
+// originator.$7("State 1");
+// caretaker.$16(originator.$9());
+//
+// // Change state and save again
+// originator.$7("State 2");
+// caretaker.$16(originator.$9());
+//
+// // Change state again
+// originator.$7("State 3");
+//
+// // Restore to earlier states
+// originator.$11(caretaker.$18(1)); // State 2
+// originator.$11(caretaker.$18(0)); // State 1
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_pattern_observer.yasnippet
+# -*- mode: snippet -*-
+# name: Java Observer Pattern
+# key: m_pattern_observer
+# group: Java Design Patterns (Behavioral)
+# type: snippet
+# --
+// Observer Pattern
+//
+// Defines a one-to-many dependency between objects so that when one object changes state,
+// all its dependents are notified and updated automatically.
+import java.util.ArrayList;
+import java.util.List;
+
+// Observer interface
+interface ${1:Observer} {
+   void ${2:update}(${3:String} ${4:message});
+}
+
+// Subject (Observable)
+class ${5:Subject} {
+   private final List<$1> ${6:observers} = new ArrayList<>();
+   private ${7:String} ${8:state};
+
+   public void ${9:attach}($1 ${10:observer}) {
+       $6.add($10);
+   }
+
+   public void ${11:detach}($1 ${12:observer}) {
+       $6.remove($12);
+   }
+
+   public $7 ${13:getState}() {
+       return $8;
+   }
+
+   public void ${14:setState}($7 $8) {
+       this.$8 = $8;
+       ${15:notifyObservers}();
+   }
+
+   private void $15() {
+       for ($1 observer : $6) {
+           observer.$2("${16:State changed to: }" + $8);
+       }
+   }
+}
+
+// Concrete Observer A
+class ${17:ConcreteObserverA} implements $1 {
+   private final ${18:String} ${19:name};
+
+   public $17($18 $19) {
+       this.$19 = $19;
+   }
+
+   @Override
+   public void $2($3 $4) {
+       System.out.println("${20:Observer }" + $19 + "${21: received update: }" + $4);
+   }
+}
+
+// Concrete Observer B
+class ${22:ConcreteObserverB} implements $1 {
+   private final ${23:String} ${24:id};
+
+   public $22($23 $24) {
+       this.$24 = $24;
+   }
+
+   @Override
+   public void $2($3 $4) {
+       System.out.println("${25:Observer with ID }" + $24 + "${26: was notified: }" + $4);
+   }
+}
+
+${0:// Usage example:
+// // Create subject
+// $5 subject = new $5();
+//
+// // Create observers
+// $1 observerA = new $17("Observer A");
+// $1 observerB = new $22("B-1234");
+//
+// // Register observers
+// subject.$9(observerA);
+// subject.$9(observerB);
+//
+// // Change state - triggers notifications
+// subject.$14("New State");
+//
+// // Detach an observer
+// subject.$11(observerA);
+//
+// // Change state again - only observerB is notified
+// subject.$14("Another State");
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_pattern_state.yasnippet
+# -*- mode: snippet -*-
+# name: Java State Pattern
+# key: m_pattern_state
+# group: Java Design Patterns (Behavioral)
+# type: snippet
+# --
+// State Pattern
+//
+// Allows an object to alter its behavior when its internal state changes.
+// The object will appear to change its class.
+
+// State interface
+interface ${1:State} {
+   void ${2:handle}(${3:Context} ${4:context});
+}
+
+// Concrete State A
+class ${5:ConcreteStateA} implements $1 {
+   @Override
+   public void $2($3 $4) {
+       System.out.println("${6:Handling in State A, transitioning to State B}");
+       $4.${7:setState}(new ${8:ConcreteStateB}());
+   }
+}
+
+// Concrete State B
+class $8 implements $1 {
+   @Override
+   public void $2($3 $4) {
+       System.out.println("${9:Handling in State B, transitioning to State C}");
+       $4.$7(new ${10:ConcreteStateC}());
+   }
+}
+
+// Concrete State C
+class $10 implements $1 {
+   @Override
+   public void $2($3 $4) {
+       System.out.println("${11:Handling in State C, transitioning back to State A}");
+       $4.$7(new $5());
+   }
+}
+
+// Context class
+class $3 {
+   private $1 ${12:state};
+
+   public $3() {
+       // Default initial state
+       $12 = new $5();
+   }
+
+   public void $7($1 $12) {
+       this.$12 = $12;
+   }
+
+   public void ${13:request}() {
+       $12.$2(this);
+   }
+}
+
+${0:// Usage example:
+// $3 context = new $3();
+//
+// // Trigger state transitions
+// context.$13();  // A -> B
+// context.$13();  // B -> C
+// context.$13();  // C -> A
+// context.$13();  // A -> B
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_pattern_strategy.yasnippet
+# -*- mode: snippet -*-
+# name: Java Strategy Pattern
+# key: m_pattern_strategy
+# group: Java Design Patterns (Behavioral)
+# type: snippet
+# --
+// Strategy Pattern
+//
+// Defines a family of algorithms, encapsulates each one, and makes them interchangeable.
+// Strategy lets the algorithm vary independently from clients that use it.
+
+// Strategy interface
+interface ${1:Strategy} {
+   ${2:int} ${3:execute}(${4:int} ${5:a}, ${4} ${6:b});
+}
+
+// Concrete Strategy A
+class ${7:ConcreteStrategyA} implements $1 {
+   @Override
+   public $2 $3($4 $5, $4 $6) {
+       System.out.println("${8:Executing strategy A - Addition}");
+       return $5 + $6;
+   }
+}
+
+// Concrete Strategy B
+class ${9:ConcreteStrategyB} implements $1 {
+   @Override
+   public $2 $3($4 $5, $4 $6) {
+       System.out.println("${10:Executing strategy B - Subtraction}");
+       return $5 - $6;
+   }
+}
+
+// Concrete Strategy C
+class ${11:ConcreteStrategyC} implements $1 {
+   @Override
+   public $2 $3($4 $5, $4 $6) {
+       System.out.println("${12:Executing strategy C - Multiplication}");
+       return $5 * $6;
+   }
+}
+
+// Context class
+class ${13:Context} {
+   private $1 ${14:strategy};
+
+   public void ${15:setStrategy}($1 $14) {
+       this.$14 = $14;
+   }
+
+   public $2 ${16:executeStrategy}($4 $5, $4 $6) {
+       return $14.$3($5, $6);
+   }
+}
+
+${0:// Usage example:
+// $13 context = new $13();
+//
+// // Use addition strategy
+// context.$15(new $7());
+// int resultA = context.$16(10, 5);  // Returns 15
+//
+// // Switch to subtraction strategy
+// context.$15(new $9());
+// int resultB = context.$16(10, 5);  // Returns 5
+//
+// // Switch to multiplication strategy
+// context.$15(new $11());
+// int resultC = context.$16(10, 5);  // Returns 50
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_pattern_template_method.yasnippet
+# -*- mode: snippet -*-
+# name: Java Template Method Pattern
+# key: m_pattern_template_method
+# group: Java Design Patterns (Behavioral)
+# type: snippet
+# --
+// Template Method Pattern
+//
+// Defines the skeleton of an algorithm in a method, deferring some steps to subclasses.
+// Template Method lets subclasses redefine certain steps of an algorithm without changing the algorithm's structure.
+
+// Abstract class containing the template method
+abstract class ${1:AbstractClass} {
+   // Template method - defines the algorithm skeleton
+   public final void ${2:templateMethod}() {
+       ${3:step1}();
+       ${4:step2}();
+       ${5:step3}();
+       if (${6:hookMethod}()) {
+           ${7:step4}();
+       }
+   }
+
+   // Concrete methods
+   protected void $3() {
+       System.out.println("${8:AbstractClass: Step 1}");
+   }
+
+   // Abstract methods to be implemented by subclasses
+   protected abstract void $4();
+   protected abstract void $5();
+
+   // Hook method with default implementation - can be overridden by subclasses
+   protected boolean $6() {
+       return true;
+   }
+
+   // Another concrete method
+   protected void $7() {
+       System.out.println("${9:AbstractClass: Step 4}");
+   }
+}
+
+// Concrete implementation
+class ${10:ConcreteClassA} extends $1 {
+   @Override
+   protected void $4() {
+       System.out.println("${11:ConcreteClassA: Implementation of Step 2}");
+   }
+
+   @Override
+   protected void $5() {
+       System.out.println("${12:ConcreteClassA: Implementation of Step 3}");
+   }
+}
+
+// Another concrete implementation
+class ${13:ConcreteClassB} extends $1 {
+   @Override
+   protected void $4() {
+       System.out.println("${14:ConcreteClassB: Implementation of Step 2}");
+   }
+
+   @Override
+   protected void $5() {
+       System.out.println("${15:ConcreteClassB: Implementation of Step 3}");
+   }
+
+   // Override hook method to alter algorithm flow
+   @Override
+   protected boolean $6() {
+       return false; // Skip step4
+   }
+}
+
+${0:// Usage example:
+// $1 concreteA = new $10();
+// $1 concreteB = new $13();
+//
+// System.out.println("Executing template method on ConcreteClassA:");
+// concreteA.$2();  // Executes all steps including step4
+//
+// System.out.println("\nExecuting template method on ConcreteClassB:");
+// concreteB.$2();  // Skips step4 due to hook method override
+}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/java-mode/m_pattern_visitor.yasnippet
+# -*- mode: snippet -*-
+# name: Java Visitor Pattern
+# key: m_pattern_visitor
+# group: Java Design Patterns (Behavioral)
+# type: snippet
+# --
+// Visitor Pattern
+//
+// Represents an operation to be performed on the elements of an object structure.
+// Visitor lets you define a new operation without changing the classes of the elements on which it operates.
+
+// Visitor interface
+interface ${1:Visitor} {
+   void ${2:visit}(${3:ConcreteElementA} ${4:elementA});
+   void ${5:visit}(${6:ConcreteElementB} ${7:elementB});
+}
+
+// Element interface
+interface ${8:Element} {
+   void ${9:accept}($1 ${10:visitor});
+}
+
+// Concrete Element A
+class $3 implements $8 {
+   private ${11:String} ${12:propertyA} = "${13:Property A Value}";
+
+   @Override
+   public void $9($1 $10) {
+       $10.$2(this);
+   }
+
+   public $11 get${12^}() {
+       return $12;
+   }
+}
+
+// Concrete Element B
+class $6 implements $8 {
+   private ${14:int} ${15:propertyB} = ${16:42};
+
+   @Override
+   public void $9($1 $10) {
+       $10.$5(this);
+   }
+
+   public $14 get${15^}() {
+       return $15;
+   }
+}
+
+// Concrete Visitor 1
+class ${17:ConcreteVisitor1} implements $1 {
+   @Override
+   public void $2($3 $4) {
+       System.out.println("${18:Visitor 1: Processing Element A with property: }" + $4.get$12());
+   }
+
+   @Override
+   public void $5($6 $7) {
+       System.out.println("${19:Visitor 1: Processing Element B with property: }" + $7.get$15());
+   }
+}
+
+// Concrete Visitor 2
+class ${20:ConcreteVisitor2} implements $1 {
+   @Override
+   public void $2($3 $4) {
+       System.out.println("${21:Visitor 2: Different processing of Element A: }" + $4.get$12().toUpperCase());
+   }
+
+   @Override
+   public void $5($6 $7) {
+       System.out.println("${22:Visitor 2: Different processing of Element B: }" + ($7.get$15() * 2));
+   }
+}
+
+// Object Structure
+class ${23:ObjectStructure} {
+   private final List<$8> ${24:elements} = new ArrayList<>();
+
+   public void ${25:attach}($8 ${26:element}) {
+       $24.add($26);
+   }
+
+   public void ${27:detach}($8 ${28:element}) {
+       $24.remove($28);
+   }
+
+   public void ${29:accept}($1 ${30:visitor}) {
+       for ($8 element : $24) {
+           element.$9($30);
+       }
+   }
+}
+
+${0:// Usage example:
+// // Create object structure with elements
+// $23 objectStructure = new $23();
+// objectStructure.$25(new $3());
+// objectStructure.$25(new $6());
+//
+// // Create visitors
+// $1 visitor1 = new $17();
+// $1 visitor2 = new $20();
+//
+// // Apply visitors to structure
+// System.out.println("Visitor 1 operations:");
+// objectStructure.$29(visitor1);
+//
+// System.out.println("\nVisitor 2 operations:");
+// objectStructure.$29(visitor2);
+}
+#+end_src

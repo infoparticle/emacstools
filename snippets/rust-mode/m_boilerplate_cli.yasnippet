@@ -1,0 +1,32 @@
+# -*- mode: snippet -*-
+# name: Rust CLI Program Boilerplate
+# key: m_boilerplate_cli
+# group: Rust Program Structure
+# type: snippet
+# --
+//! ${1:CLI program description}
+
+use std::env;
+use std::process;
+
+fn main() {
+   let args: Vec<String> = env::args().collect();
+
+   if args.len() < ${2:2} {
+       eprintln!("Usage: {} ${3:<required_arg>}", args[0]);
+       process::exit(1);
+   }
+
+   match run(&args) {
+       Ok(_) => println!("${4:Operation completed successfully}"),
+       Err(err) => {
+           eprintln!("Error: {}", err);
+           process::exit(1);
+       }
+   }
+}
+
+fn run(args: &[String]) -> Result<(), ${5:Box<dyn std::error::Error>}> {
+   ${0:// Program implementation}
+   Ok(())
+}

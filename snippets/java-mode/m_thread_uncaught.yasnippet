@@ -1,0 +1,12 @@
+# [[file:../../all-snippets.org::*Thread Creation and Management Snippets][Thread Creation and Management Snippets:11]]
+# -*- mode: snippet -*-
+# name: Java Uncaught Exception Handler
+# key: m_thread_uncaught
+# group: Java Threads
+# type: snippet
+# --
+${1:thread}.setUncaughtExceptionHandler((t, e) -> {
+   System.err.println("Uncaught exception in thread " + t.getName() + ": " + e.getMessage());
+   ${2:// Handle exception, log, notify, etc.}
+});${0:}
+# Thread Creation and Management Snippets:11 ends here

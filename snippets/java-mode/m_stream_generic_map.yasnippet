@@ -1,0 +1,14 @@
+# [[file:../../all-snippets.org::*Combined Stream and Generics Snippets][Combined Stream and Generics Snippets:2]]
+# -*- mode: snippet -*-
+# name: Java Generic Stream Map with Type Parameters
+# key: m_stream_generic_map
+# group: Java Streams Generics Combined
+# type: snippet
+# --
+public <T, R> List<R> map${1:Elements}(List<T> ${2:list}, Function<T, R> ${3:mapper}) {
+   return $2.stream()
+           .map($3)
+           .collect(Collectors.toList());
+}
+${0:}
+# Combined Stream and Generics Snippets:2 ends here

@@ -1,0 +1,85 @@
+# -*- mode: snippet -*-
+# name: Java Template Method Pattern
+# key: m_pattern_template_method
+# group: Java Design Patterns (Behavioral)
+# type: snippet
+# --
+// Template Method Pattern
+//
+// Defines the skeleton of an algorithm in a method, deferring some steps to subclasses.
+// Template Method lets subclasses redefine certain steps of an algorithm without changing the algorithm's structure.
+
+// Abstract class containing the template method
+abstract class ${1:AbstractClass} {
+   // Template method - defines the algorithm skeleton
+   public final void ${2:templateMethod}() {
+       ${3:step1}();
+       ${4:step2}();
+       ${5:step3}();
+       if (${6:hookMethod}()) {
+           ${7:step4}();
+       }
+   }
+
+   // Concrete methods
+   protected void $3() {
+       System.out.println("${8:AbstractClass: Step 1}");
+   }
+
+   // Abstract methods to be implemented by subclasses
+   protected abstract void $4();
+   protected abstract void $5();
+
+   // Hook method with default implementation - can be overridden by subclasses
+   protected boolean $6() {
+       return true;
+   }
+
+   // Another concrete method
+   protected void $7() {
+       System.out.println("${9:AbstractClass: Step 4}");
+   }
+}
+
+// Concrete implementation
+class ${10:ConcreteClassA} extends $1 {
+   @Override
+   protected void $4() {
+       System.out.println("${11:ConcreteClassA: Implementation of Step 2}");
+   }
+
+   @Override
+   protected void $5() {
+       System.out.println("${12:ConcreteClassA: Implementation of Step 3}");
+   }
+}
+
+// Another concrete implementation
+class ${13:ConcreteClassB} extends $1 {
+   @Override
+   protected void $4() {
+       System.out.println("${14:ConcreteClassB: Implementation of Step 2}");
+   }
+
+   @Override
+   protected void $5() {
+       System.out.println("${15:ConcreteClassB: Implementation of Step 3}");
+   }
+
+   // Override hook method to alter algorithm flow
+   @Override
+   protected boolean $6() {
+       return false; // Skip step4
+   }
+}
+
+${0:// Usage example:
+// $1 concreteA = new $10();
+// $1 concreteB = new $13();
+//
+// System.out.println("Executing template method on ConcreteClassA:");
+// concreteA.$2();  // Executes all steps including step4
+//
+// System.out.println("\nExecuting template method on ConcreteClassB:");
+// concreteB.$2();  // Skips step4 due to hook method override
+}

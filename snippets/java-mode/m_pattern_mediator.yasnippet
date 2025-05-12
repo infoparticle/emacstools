@@ -1,0 +1,96 @@
+# -*- mode: snippet -*-
+# name: Java Mediator Pattern
+# key: m_pattern_mediator
+# group: Java Design Patterns (Behavioral)
+# type: snippet
+# --
+// Mediator Pattern
+//
+// Defines an object that encapsulates how a set of objects interact.
+// Promotes loose coupling by keeping objects from referring to each other explicitly.
+
+// Mediator interface
+interface ${1:Mediator} {
+   void ${2:notify}(${3:Colleague} ${4:sender}, ${5:String} ${6:event});
+}
+
+// Base Colleague class
+abstract class ${3:Colleague} {
+   protected $1 ${7:mediator};
+
+   public $3($1 $7) {
+       this.$7 = $7;
+   }
+}
+
+// Concrete Colleague A
+class ${8:ConcreteColleagueA} extends $3 {
+   public $8($1 $7) {
+       super($7);
+   }
+
+   public void ${9:operationA}() {
+       System.out.println("${10:Colleague A performs operation A}");
+       $7.$2(this, "${11:A_EVENT}");
+   }
+
+   public void ${12:receiveEvent}($5 $6) {
+       System.out.println("${13:Colleague A received event: }" + $6);
+   }
+}
+
+// Concrete Colleague B
+class ${14:ConcreteColleagueB} extends $3 {
+   public $14($1 $7) {
+       super($7);
+   }
+
+   public void ${15:operationB}() {
+       System.out.println("${16:Colleague B performs operation B}");
+       $7.$2(this, "${17:B_EVENT}");
+   }
+
+   public void ${18:receiveEvent}($5 $6) {
+       System.out.println("${19:Colleague B received event: }" + $6);
+   }
+}
+
+// Concrete Mediator
+class ${20:ConcreteMediator} implements $1 {
+   private $8 ${21:colleagueA};
+   private $14 ${22:colleagueB};
+
+   public void ${23:setColleagueA}($8 $21) {
+       this.$21 = $21;
+   }
+
+   public void ${24:setColleagueB}($14 $22) {
+       this.$22 = $22;
+   }
+
+   @Override
+   public void $2($3 $4, $5 $6) {
+       if ($4 instanceof $8 && $6.equals("$11")) {
+           $22.${18}("${25:Event from Colleague A}");
+       } else if ($4 instanceof $14 && $6.equals("$17")) {
+           $21.${12}("${26:Event from Colleague B}");
+       }
+   }
+}
+
+${0:// Usage example:
+// // Create mediator
+// $20 mediator = new $20();
+//
+// // Create colleagues
+// $8 colleagueA = new $8(mediator);
+// $14 colleagueB = new $14(mediator);
+//
+// // Set up relationships
+// mediator.$23(colleagueA);
+// mediator.$24(colleagueB);
+//
+// // Trigger interaction
+// colleagueA.$9();
+// colleagueB.$15();
+}

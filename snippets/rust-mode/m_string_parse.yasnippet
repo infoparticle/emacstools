@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: Rust Parse String to Type
+# key: m_string_parse
+# group: Rust Strings
+# type: snippet
+# --
+let ${1:parsed}: ${2:i32} = ${3:string}.parse()
+   .expect("${4:Could not parse as $2}");${0:}

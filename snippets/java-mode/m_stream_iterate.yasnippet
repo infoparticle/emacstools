@@ -1,0 +1,10 @@
+# [[file:../../all-snippets.org::*Stream Creation Snippets][Stream Creation Snippets:8]]
+# -*- mode: snippet -*-
+# name: Java Stream Iterate
+# key: m_stream_iterate
+# group: Java Streams Creation
+# type: snippet
+# --
+Stream.iterate(${1:1}, n -> n + ${2:1})
+     .limit(${3:10})${0}
+# Stream Creation Snippets:8 ends here

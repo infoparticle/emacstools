@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: Rust Basic Lifetime
+# key: m_lifetime_basic
+# group: Rust Lifetimes
+# type: snippet
+# --
+fn ${1:function_name}<'${2:a}>(${3:param}: &'$2 ${4:str}) -> &'$2 $4 {
+   ${0:// Function body}
+}

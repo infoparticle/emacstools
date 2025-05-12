@@ -1,0 +1,20 @@
+# [[file:../../all-snippets.org::*Synchronization Snippets][Synchronization Snippets:5]]
+# -*- mode: snippet -*-
+# name: Java Object Wait
+# key: m_sync_wait
+# group: Java Synchronization
+# type: snippet
+# --
+synchronized (${1:lockObject}) {
+   while (!${2:condition}) {
+       try {
+           $1.wait(); // Wait until notified
+       } catch (InterruptedException e) {
+           Thread.currentThread().interrupt();
+           ${3:// Handle interruption}
+       }
+   }
+
+   ${0:// Code to execute once condition is true}
+}
+# Synchronization Snippets:5 ends here

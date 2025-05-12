@@ -1,0 +1,21 @@
+# -*- mode: snippet -*-
+# name: Rust Enum with Implementation
+# key: m_enum_impl
+# group: Rust Enum
+# type: snippet
+# --
+/// ${4:Enum description}
+#[derive(${1:Debug, Clone})]
+enum ${2:EnumName} {
+   ${3:Variant1},
+   ${4:Variant2(type)},
+}
+
+impl $2 {
+   /// Create a new instance
+   fn new(${5:args}) -> Self {
+       ${6:// Implementation}
+   }
+
+   ${0:// Additional methods}
+}

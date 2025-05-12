@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: Rust Iterator Chain
+# key: m_iter_chain
+# group: Rust Iterators
+# type: snippet
+# --
+let ${1:result}: ${2:Vec<_>} = ${3:collection}.iter()
+   .filter(|${4:item}| ${5:// Filter condition})
+   .map(|${6:item}| ${7:// Transform})
+   .take(${8:10})
+   .collect();${0:}

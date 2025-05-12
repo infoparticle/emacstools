@@ -1,0 +1,16 @@
+# [[file:../../all-snippets.org::*Module Development Snippets][Module Development Snippets:1]]
+# -*- mode: snippet -*-
+# name: PowerShell Module Manifest
+# key: m_module_manifest
+# group: PowerShell Modules
+# type: snippet
+# --
+New-ModuleManifest -Path "${1:.\${2:ModuleName}.psd1}" `
+   -RootModule "${2:ModuleName}.psm1" `
+   -ModuleVersion "${3:0.1.0}" `
+   -Author "${4:YourName}" `
+   -Description "${5:Module description}" `
+   -PowerShellVersion "${6:5.1}" `
+   -FunctionsToExport @(${7:'Get-Something', 'Set-Something'}) `
+   ${0:# Additional parameters as needed}
+# Module Development Snippets:1 ends here

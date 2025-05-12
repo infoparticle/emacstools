@@ -1,0 +1,34 @@
+# [[file:../../all-snippets.org::*Executor Framework Snippets][Executor Framework Snippets:11]]
+# -*- mode: snippet -*-
+# name: Java CompletableFuture AllOf
+# key: m_executor_complete_allof
+# group: Java Executors
+# type: snippet
+# --
+List<CompletableFuture<${1:String}>> ${2:futures} = new ArrayList<>();
+
+for (int i = 0; i < ${3:5}; i++) {
+   final int id = i;
+   $2.add(CompletableFuture.supplyAsync(() -> {
+       ${4:// Task code}
+       return ${5:"Result-" + id};
+   }));
+}
+
+// Wait for all futures to complete
+CompletableFuture<Void> ${6:allFutures} = CompletableFuture.allOf($2.toArray(new CompletableFuture[0]));
+
+// Process results after all complete
+$6.thenRun(() -> {
+   List<$1> ${7:results} = $2.stream()
+           .map(CompletableFuture::join)
+           .collect(Collectors.toList());
+   ${8:// Process all results}
+});
+
+// Handle exceptions
+$6.exceptionally(ex -> {
+   ${9:// Handle exceptions from any future}
+   return null;
+});${0:}
+# Executor Framework Snippets:11 ends here

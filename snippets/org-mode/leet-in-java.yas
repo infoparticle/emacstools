@@ -1,0 +1,50 @@
+
+# -*- mode: snippet -*-
+# name: leetcode in java
+# key: leet-in-java
+# --
+
+** attempt 1
+#+begin_src java
+class Solution {
+    public static void main(String[] args){
+
+    }
+}
+#+end_src
+
+** attempt 2
+#+begin_src java
+class Solution {
+    public static void main(String[] args){
+
+    }
+}
+#+end_src
+
+** attempt 3
+#+begin_src java
+class Solution {
+    public static void main(String[] args){
+
+    }
+}
+#+end_src
+
+** attempt 4
+#+begin_src java
+class Solution {
+    public static void main(String[] args){
+
+    }
+}
+#+end_src
+
+** attempt 5
+#+begin_src java
+class Solution {
+    public static void main(String[] args){
+
+    }
+}
+#+end_src

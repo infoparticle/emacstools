@@ -1,0 +1,28 @@
+# [[file:../../all-snippets.org::*Function Snippets][Function Snippets:2]]
+# -*- mode: snippet -*-
+# name: PowerShell Advanced Function
+# key: m_func_advanced
+# group: PowerShell Functions
+# type: snippet
+# --
+function ${1:Get-Something} {
+   [CmdletBinding()]
+   param (
+       [Parameter(Mandatory = $$true, ValueFromPipeline = $$true)]
+       [${2:string}]
+       $${3:InputObject}
+   )
+
+   begin {
+       ${4:# Initialization code}
+   }
+
+   process {
+       ${5:# Main processing code}
+   }
+
+   end {
+       ${0:# Cleanup code}
+   }
+}
+# Function Snippets:2 ends here

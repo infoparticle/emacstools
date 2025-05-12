@@ -1,0 +1,19 @@
+# [[file:../../all-snippets.org::*Synchronization Snippets][Synchronization Snippets:7]]
+# -*- mode: snippet -*-
+# name: Java Volatile Field
+# key: m_sync_volatile
+# group: Java Synchronization
+# type: snippet
+# --
+private volatile ${1:boolean} ${2:flag} = ${3:false};
+
+// Usage - volatile ensures visibility across threads
+// but does not protect compound operations
+public void setFlag(boolean value) {
+   $2 = value;
+}
+
+public $1 getFlag() {
+   return $2;
+}${0:}
+# Synchronization Snippets:7 ends here

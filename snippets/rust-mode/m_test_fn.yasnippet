@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: Rust Test Function
+# key: m_test_fn
+# group: Rust Testing
+# type: snippet
+# --
+#[test]
+fn ${1:test_name}() {
+   ${0:// Test code}
+   assert_eq!(${2:expected}, ${3:actual});
+}

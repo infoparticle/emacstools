@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: Rust HashMap
+# key: m_hashmap
+# group: Rust Collections
+# type: snippet
+# --
+use std::collections::HashMap;
+
+let mut ${1:map} = HashMap::<${2:String}, ${3:i32}>::new();
+$1.insert(${4:"key"}.to_string(), ${5:42});${0:}

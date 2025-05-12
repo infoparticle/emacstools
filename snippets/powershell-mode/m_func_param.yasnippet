@@ -1,0 +1,17 @@
+# [[file:../../all-snippets.org::*Function Snippets][Function Snippets:3]]
+# -*- mode: snippet -*-
+# name: PowerShell Function with Parameters
+# key: m_func_param
+# group: PowerShell Functions
+# type: snippet
+# --
+function ${1:Get-Something} {
+   param (
+       [${2:string}]$${3:Param1},
+
+       [${4:int}]$${5:Param2} = ${6:0}
+   )
+
+   ${0:# Function body}
+}
+# Function Snippets:3 ends here

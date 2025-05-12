@@ -1,0 +1,9 @@
+# [[file:../../all-snippets.org::*Pipeline Snippets][Pipeline Snippets:3]]
+# -*- mode: snippet -*-
+# name: Nushell Group Pipeline
+# key: m_pipe_group
+# group: Nushell Pipelines
+# type: snippet
+# --
+${1:ls} | group-by ${2:type} | ${0:sort-by type | table}
+# Pipeline Snippets:3 ends here

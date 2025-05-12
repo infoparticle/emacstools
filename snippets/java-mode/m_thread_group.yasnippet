@@ -1,0 +1,22 @@
+# [[file:../../all-snippets.org::*Thread Creation and Management Snippets][Thread Creation and Management Snippets:10]]
+# -*- mode: snippet -*-
+# name: Java Thread Group
+# key: m_thread_group
+# group: Java Threads
+# type: snippet
+# --
+ThreadGroup ${1:group} = new ThreadGroup("${2:MyThreadGroup}");
+Thread ${3:thread1} = new Thread($1, () -> {
+   ${4:// Thread 1 code}
+});
+Thread ${5:thread2} = new Thread($1, () -> {
+   ${6:// Thread 2 code}
+});
+
+$3.start();
+$5.start();
+
+// Operations on thread group
+System.out.println("Active threads: " + $1.activeCount());
+$1.interrupt(); // Interrupt all threads in the group${0:}
+# Thread Creation and Management Snippets:10 ends here

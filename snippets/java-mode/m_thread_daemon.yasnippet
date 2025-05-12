@@ -1,0 +1,22 @@
+# [[file:../../all-snippets.org::*Thread Creation and Management Snippets][Thread Creation and Management Snippets:8]]
+# -*- mode: snippet -*-
+# name: Java Daemon Thread
+# key: m_thread_daemon
+# group: Java Threads
+# type: snippet
+# --
+Thread ${1:daemonThread} = new Thread(() -> {
+   ${2:// Background service code}
+   while (!Thread.currentThread().isInterrupted()) {
+       try {
+           ${3:// Daemon task}
+           Thread.sleep(${4:1000});
+       } catch (InterruptedException e) {
+           Thread.currentThread().interrupt();
+           break;
+       }
+   }
+});
+$1.setDaemon(true); // Mark as daemon thread
+$1.start();${0:}
+# Thread Creation and Management Snippets:8 ends here

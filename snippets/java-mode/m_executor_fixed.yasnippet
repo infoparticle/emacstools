@@ -1,0 +1,22 @@
+# [[file:../../all-snippets.org::*Executor Framework Snippets][Executor Framework Snippets:2]]
+# -*- mode: snippet -*-
+# name: Java Fixed Thread Pool
+# key: m_executor_fixed
+# group: Java Executors
+# type: snippet
+# --
+ExecutorService ${1:executor} = Executors.newFixedThreadPool(${2:Runtime.getRuntime().availableProcessors()});
+try {
+   for (int i = 0; i < ${3:10}; i++) {
+       final int taskId = i;
+       $1.submit(() -> {
+           ${4:// Task code using taskId}
+       });
+   }
+} finally {
+   $1.shutdown();
+   if (!$1.awaitTermination(${5:5}, TimeUnit.${6:SECONDS})) {
+       $1.shutdownNow();
+   }
+}${0:}
+# Executor Framework Snippets:2 ends here

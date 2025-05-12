@@ -1,0 +1,37 @@
+# -*- mode: snippet -*-
+# name: Java Adapter Pattern (Class Adapter)
+# key: m_pattern_adapter_class
+# group: Java Design Patterns (Structural)
+# type: snippet
+# --
+// Adapter Pattern (Class Adapter implementation using inheritance)
+
+// Target interface - what the client expects
+interface ${1:Target} {
+   void ${2:request}();
+}
+
+// Adaptee - the class that needs adapting
+class ${3:Adaptee} {
+   // This is the incompatible interface
+   public void ${4:specificRequest}() {
+       ${5:// Specific implementation}
+       System.out.println("Adaptee's specific request");
+   }
+}
+
+// Class Adapter - adapts Adaptee to Target through inheritance
+class ${6:ClassAdapter} extends $3 implements $1 {
+   // Implement the Target interface by reusing parent's method
+   @Override
+   public void $2() {
+       System.out.println("Class Adapter is translating the request");
+       ${4}();  // Call the method from the parent class
+       ${7:// Additional adaptation logic if needed}
+   }
+}
+
+${0:// Usage example:
+// $1 adapter = new $6();
+// adapter.$2();  // Client uses the Target interface
+}

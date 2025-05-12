@@ -1,0 +1,29 @@
+# [[file:../../all-snippets.org::*Executor Framework Snippets][Executor Framework Snippets:4]]
+# -*- mode: snippet -*-
+# name: Java Scheduled Thread Pool
+# key: m_executor_scheduled
+# group: Java Executors
+# type: snippet
+# --
+ScheduledExecutorService ${1:scheduler} = Executors.newScheduledThreadPool(${2:1});
+try {
+   // One-time delayed task
+   $1.schedule(() -> {
+       ${3:// Delayed task code}
+   }, ${4:5}, TimeUnit.${5:SECONDS});
+
+   // Periodic task (fixed rate)
+   ScheduledFuture<?> ${6:periodicTask} = $1.scheduleAtFixedRate(() -> {
+       ${7:// Periodic task code}
+   }, ${8:1}, ${9:10}, TimeUnit.${10:SECONDS});
+
+   // Can cancel periodic task
+   // $6.cancel(false);
+} finally {
+   // Shutdown after time or application termination
+   $1.shutdown();
+   if (!$1.awaitTermination(${11:10}, TimeUnit.${12:SECONDS})) {
+       $1.shutdownNow();
+   }
+}${0:}
+# Executor Framework Snippets:4 ends here

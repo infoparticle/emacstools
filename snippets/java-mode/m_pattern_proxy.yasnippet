@@ -1,0 +1,64 @@
+# -*- mode: snippet -*-
+# name: Java Proxy Pattern
+# key: m_pattern_proxy
+# group: Java Design Patterns (Structural)
+# type: snippet
+# --
+// Proxy Pattern
+//
+// Provides a surrogate or placeholder for another object to control access to it.
+
+// Subject interface
+interface ${1:Subject} {
+   void ${2:request}();
+}
+
+// Real Subject
+class ${3:RealSubject} implements $1 {
+   @Override
+   public void $2() {
+       System.out.println("${4:RealSubject handling request}");
+   }
+}
+
+// Proxy
+class ${5:Proxy} implements $1 {
+   private $3 ${6:realSubject};
+   private final ${7:boolean} ${8:accessCondition};
+
+   public $5(${7} $8) {
+       this.$8 = $8;
+   }
+
+   @Override
+   public void $2() {
+       // Lazy initialization
+       if ($6 == null) {
+           $6 = new $3();
+       }
+
+       // Access control
+       if ($8) {
+           // Additional pre-processing if needed
+           System.out.println("${9:Proxy pre-processing}");
+
+           // Delegate to real subject
+           $6.$2();
+
+           // Additional post-processing if needed
+           System.out.println("${10:Proxy post-processing}");
+       } else {
+           System.out.println("${11:Access denied by proxy}");
+       }
+   }
+}
+
+${0:// Usage example:
+// // Create a proxy with access granted
+// $1 proxy1 = new $5(true);
+// proxy1.$2();
+//
+// // Create a proxy with access denied
+// $1 proxy2 = new $5(false);
+// proxy2.$2();
+}

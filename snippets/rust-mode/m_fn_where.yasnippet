@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: Rust Function with Where Clause
+# key: m_fn_where
+# group: Rust Functions
+# type: snippet
+# --
+/// ${7:Function description}
+fn ${1:function_name}<${2:T}>(${3:arg}: ${4:&$2}) ${5:-> $2 }
+where
+   ${6:T: Display + Clone},
+{
+   ${0:// Function body}
+}

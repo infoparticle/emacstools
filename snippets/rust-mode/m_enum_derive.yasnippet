@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: Rust Enum with Derive
+# key: m_enum_derive
+# group: Rust Enum
+# type: snippet
+# --
+/// ${4:Enum description}
+#[derive(${1:Debug, Clone})]
+enum ${2:EnumName} {
+   ${3:Variant1},
+   ${0:Variant2},
+}

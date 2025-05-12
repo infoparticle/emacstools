@@ -1,0 +1,20 @@
+# [[file:../../all-snippets.org::*Executor Framework Snippets][Executor Framework Snippets:1]]
+# -*- mode: snippet -*-
+# name: Java Single Thread Executor
+# key: m_executor_single
+# group: Java Executors
+# type: snippet
+# --
+ExecutorService ${1:executor} = Executors.newSingleThreadExecutor();
+try {
+   $1.submit(() -> {
+       ${2:// Task code}
+   });
+   ${3:// More tasks}
+} finally {
+   $1.shutdown();
+   if (!$1.awaitTermination(${4:5}, TimeUnit.${5:SECONDS})) {
+       $1.shutdownNow();
+   }
+}${0:}
+# Executor Framework Snippets:1 ends here

@@ -1,0 +1,80 @@
+# -*- mode: snippet -*-
+# name: Java Builder Pattern
+# key: m_pattern_builder
+# group: Java Design Patterns (Creational)
+# type: snippet
+# --
+// Builder Pattern implementation
+public class ${1:Product} {
+   // Required parameters
+   private final ${2:String} ${3:required1};
+   private final ${4:int} ${5:required2};
+
+   // Optional parameters
+   private final ${6:String} ${7:optional1};
+   private final ${8:boolean} ${9:optional2};
+
+   private $1(Builder builder) {
+       $3 = builder.$3;
+       $5 = builder.$5;
+       $7 = builder.$7;
+       $9 = builder.$9;
+   }
+
+   public $2 get${3^}() {
+       return $3;
+   }
+
+   public $4 get${5^}() {
+       return $5;
+   }
+
+   public $6 get${7^}() {
+       return $7;
+   }
+
+   public $8 is${9^}() {
+       return $9;
+   }
+
+   // Builder for $1
+   public static class Builder {
+       // Required parameters
+       private final $2 $3;
+       private final $4 $5;
+
+       // Optional parameters - initialized with default values
+       private $6 $7 = ${10:null};
+       private $8 $9 = ${11:false};
+
+       // Constructor with required parameters
+       public Builder($2 $3, $4 $5) {
+           this.$3 = $3;
+           this.$5 = $5;
+       }
+
+       // Set optional parameter $7
+       public Builder ${7}($6 $7) {
+           this.$7 = $7;
+           return this;
+       }
+
+       // Set optional parameter $9
+       public Builder ${9}($8 $9) {
+           this.$9 = $9;
+           return this;
+       }
+
+       // Build the final product
+       public $1 build() {
+           return new $1(this);
+       }
+   }
+}
+
+${0:// Usage example:
+// $1 product = new $1.Builder("required1Value", 42)
+//                  .$7("optional1Value")
+//                  .$9(true)
+//                  .build();
+}

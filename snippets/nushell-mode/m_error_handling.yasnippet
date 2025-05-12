@@ -1,0 +1,16 @@
+# [[file:../../all-snippets.org::*Error Handling Snippets][Error Handling Snippets:3]]
+# -*- mode: snippet -*-
+# name: Nushell Error Handling with Result
+# key: m_error_handling
+# group: Nushell Error Handling
+# type: snippet
+# --
+let ${1:result} = ${2:command} | complete
+if $$1.exit_code == 0 {
+   ${3:# Success code}
+   echo $"Command succeeded: ($$1.stdout)"
+} else {
+   ${0:# Error handling code}
+   echo $"Command failed with code ($$1.exit_code): ($$1.stderr)"
+}
+# Error Handling Snippets:3 ends here

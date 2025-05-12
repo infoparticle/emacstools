@@ -1,0 +1,20 @@
+# [[file:../../all-snippets.org::*Utility Snippets][Utility Snippets:3]]
+# -*- mode: snippet -*-
+# name: PowerShell Progress Bar
+# key: m_util_progress
+# group: PowerShell Utilities
+# type: snippet
+# --
+$${1:totalItems} = ${2:100}
+
+for ($${3:i} = 1; $$3 -le $$1; $$3++) {
+   $$percentComplete = ($$3 / $$1) * 100
+   Write-Progress -Activity "${4:Processing items}" -Status "$$3 of $$1 complete" -PercentComplete $$percentComplete
+
+   ${0:# Your processing code here}
+
+   Start-Sleep -Milliseconds ${5:100} # Simulate work
+}
+
+Write-Progress -Activity "${4:Processing items}" -Completed
+# Utility Snippets:3 ends here

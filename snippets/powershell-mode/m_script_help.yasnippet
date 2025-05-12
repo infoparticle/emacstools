@@ -1,0 +1,24 @@
+# [[file:../../all-snippets.org::*Scripting Snippets][Scripting Snippets:2]]
+# -*- mode: snippet -*-
+# name: PowerShell Script Help
+# key: m_script_help
+# group: PowerShell Scripting
+# type: snippet
+# --
+<#
+.SYNOPSIS
+   ${1:Brief description of script}
+.DESCRIPTION
+   ${2:Detailed description of script}
+.PARAMETER ${3:ParamName}
+   ${4:Description of parameter}
+.EXAMPLE
+   ${5:Example-Script.ps1 -Parameter Value}
+   ${6:Example description}
+.NOTES
+   Author: ${7:Your Name}
+   Date: ${8:$(format-time-string "%Y-%m-%d")}
+#>
+
+${0:# Script body}
+# Scripting Snippets:2 ends here

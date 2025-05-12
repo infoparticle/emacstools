@@ -1,0 +1,71 @@
+# -*- mode: snippet -*-
+# name: Java Strategy Pattern
+# key: m_pattern_strategy
+# group: Java Design Patterns (Behavioral)
+# type: snippet
+# --
+// Strategy Pattern
+//
+// Defines a family of algorithms, encapsulates each one, and makes them interchangeable.
+// Strategy lets the algorithm vary independently from clients that use it.
+
+// Strategy interface
+interface ${1:Strategy} {
+   ${2:int} ${3:execute}(${4:int} ${5:a}, ${4} ${6:b});
+}
+
+// Concrete Strategy A
+class ${7:ConcreteStrategyA} implements $1 {
+   @Override
+   public $2 $3($4 $5, $4 $6) {
+       System.out.println("${8:Executing strategy A - Addition}");
+       return $5 + $6;
+   }
+}
+
+// Concrete Strategy B
+class ${9:ConcreteStrategyB} implements $1 {
+   @Override
+   public $2 $3($4 $5, $4 $6) {
+       System.out.println("${10:Executing strategy B - Subtraction}");
+       return $5 - $6;
+   }
+}
+
+// Concrete Strategy C
+class ${11:ConcreteStrategyC} implements $1 {
+   @Override
+   public $2 $3($4 $5, $4 $6) {
+       System.out.println("${12:Executing strategy C - Multiplication}");
+       return $5 * $6;
+   }
+}
+
+// Context class
+class ${13:Context} {
+   private $1 ${14:strategy};
+
+   public void ${15:setStrategy}($1 $14) {
+       this.$14 = $14;
+   }
+
+   public $2 ${16:executeStrategy}($4 $5, $4 $6) {
+       return $14.$3($5, $6);
+   }
+}
+
+${0:// Usage example:
+// $13 context = new $13();
+//
+// // Use addition strategy
+// context.$15(new $7());
+// int resultA = context.$16(10, 5);  // Returns 15
+//
+// // Switch to subtraction strategy
+// context.$15(new $9());
+// int resultB = context.$16(10, 5);  // Returns 5
+//
+// // Switch to multiplication strategy
+// context.$15(new $11());
+// int resultC = context.$16(10, 5);  // Returns 50
+}

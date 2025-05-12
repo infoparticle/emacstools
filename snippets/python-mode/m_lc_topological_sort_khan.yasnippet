@@ -1,0 +1,66 @@
+# -*- mode: snippet -*-
+# name: Python Topological Sort (Khan's)
+# key: m_lc_topological_sort_khan
+# group: LeetCode Famous Algorithms
+# type: snippet
+# --
+from collections import defaultdict, deque
+
+def topological_sort(num_nodes, edges):
+   """
+   Kahn's algorithm for topological sorting of a directed acyclic graph (DAG).
+
+   Args:
+       num_nodes: Number of nodes in the graph (0 to num_nodes-1)
+       edges: List of (from, to) directed edges
+
+   Returns:
+       Topologically sorted list of nodes, or None if graph has a cycle
+   """
+   # Build adjacency list and in-degree count
+   graph = defaultdict(list)
+   in_degree = [0] * num_nodes
+
+   for src, dst in edges:
+       graph[src].append(dst)
+       in_degree[dst] += 1
+
+   # Queue of nodes with no incoming edges
+   queue = deque()
+   for i in range(num_nodes):
+       if in_degree[i] == 0:
+           queue.append(i)
+
+   result = []
+
+   # Process until queue is empty
+   while queue:
+       node = queue.popleft()
+       result.append(node)
+
+       # Reduce in-degree of all neighbors
+       for neighbor in graph[node]:
+           in_degree[neighbor] -= 1
+           # If in-degree becomes 0, add to queue
+           if in_degree[neighbor] == 0:
+               queue.append(neighbor)
+
+   # If all nodes are in result, return the topological sort
+   if len(result) == num_nodes:
+       return result
+   else:
+       # Graph has at least one cycle
+       return None
+
+# Example
+num_nodes = ${1:6}
+edges = [
+   (${2:5}, ${3:2}),
+   (${4:5}, ${5:0}),
+   (${6:4}, ${7:0}),
+   (${8:4}, ${9:1}),
+   (${10:2}, ${11:3}),
+   (${12:3}, ${13:1})
+]
+topo_order = topological_sort(num_nodes, edges)
+${0:}

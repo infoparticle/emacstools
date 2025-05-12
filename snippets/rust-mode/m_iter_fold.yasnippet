@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: Rust Iterator Fold
+# key: m_iter_fold
+# group: Rust Iterators
+# type: snippet
+# --
+let ${1:result} = ${2:collection}.iter().fold(${3:0}, |${4:acc}, ${5:item}| {
+   ${0:// Accumulation logic}
+});

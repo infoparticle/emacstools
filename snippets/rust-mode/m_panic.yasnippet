@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: Rust Panic Test
+# key: m_panic
+# group: Rust Testing
+# type: snippet
+# --
+#[test]
+#[should_panic(expected = "${1:panic message}")]
+fn ${2:test_panics}() {
+   ${0:// Code that should panic}
+}

@@ -1,0 +1,28 @@
+# [[file:../../all-snippets.org::*Utility Snippets][Utility Snippets:6]]
+# -*- mode: snippet -*-
+# name: Nushell Colored Output
+# key: m_util_color_output
+# group: Nushell Utilities
+# type: snippet
+# --
+# Color output helper
+def colored [message: string, color: string = "green"] {
+   let color_map = {
+       green: "\e[32m",
+       red: "\e[31m",
+       yellow: "\e[33m",
+       blue: "\e[34m",
+       magenta: "\e[35m",
+       cyan: "\e[36m",
+       reset: "\e[0m"
+   }
+
+   $"($color_map | get $color)($message)($color_map.reset)"
+}
+
+# Usage
+echo (colored "${1:Success!}" "${2:green}")
+echo (colored "${3:Warning!}" "${4:yellow}")
+echo (colored "${5:Error!}" "${6:red}")
+${0:}
+# Utility Snippets:6 ends here

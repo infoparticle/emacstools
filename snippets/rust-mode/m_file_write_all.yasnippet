@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: Rust Write File (fs::write)
+# key: m_file_write_all
+# group: Rust File IO
+# type: snippet
+# --
+use std::fs;
+use std::io;
+
+fn ${1:write_file}(${2:path}: &str, ${3:content}: &str) -> io::Result<()> {
+   fs::write($2, $3)
+}${0:}

@@ -1,0 +1,18 @@
+# [[file:../../all-snippets.org::*Module Development Snippets][Module Development Snippets:2]]
+# -*- mode: snippet -*-
+# name: PowerShell Module Function Export
+# key: m_module_function_export
+# group: PowerShell Modules
+# type: snippet
+# --
+function ${1:Get-Something} {
+   [CmdletBinding()]
+   param (
+       ${2:# Parameters}
+   )
+
+   ${3:# Function implementation}
+}
+
+Export-ModuleMember -Function ${0:$1}
+# Module Development Snippets:2 ends here

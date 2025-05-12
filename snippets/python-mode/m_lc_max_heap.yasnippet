@@ -1,0 +1,26 @@
+# -*- mode: snippet -*-
+# name: Python Max Heap
+# key: m_lc_max_heap
+# group: LeetCode Data Structures
+# type: snippet
+# --
+import heapq
+
+# Create a max heap (using negation trick)
+max_heap = []
+
+# Add elements (push) - negate the value to simulate max heap
+heapq.heappush(max_heap, -${1:item})
+
+# Remove and return largest element (pop)
+largest = -heapq.heappop(max_heap)
+
+# Convert a list into a max heap in-place
+items = [${2:5, 3, 8, 1, 2}]
+items = [-item for item in items]
+heapq.heapify(items)
+
+# Access largest element without removing
+if items:
+   largest = -items[0]
+${0:}

@@ -1,0 +1,9 @@
+# [[file:../../all-snippets.org::*File Operations Snippets][File Operations Snippets:3]]
+# -*- mode: snippet -*-
+# name: PowerShell Copy Files
+# key: m_file_copy
+# group: PowerShell File Operations
+# type: snippet
+# --
+Copy-Item -Path "${1:C:\path\to\source}" -Destination "${2:C:\path\to\destination}" -${3:Recurse} ${0:-Force}
+# File Operations Snippets:3 ends here

@@ -1,0 +1,81 @@
+# -*- mode: snippet -*-
+# name: Java Iterator Pattern
+# key: m_pattern_iterator
+# group: Java Design Patterns (Behavioral)
+# type: snippet
+# --
+// Iterator Pattern
+//
+// Provides a way to access the elements of an aggregate object sequentially
+// without exposing its underlying representation.
+import java.util.ArrayList;
+import java.util.List;
+
+// Iterator interface
+interface ${1:Iterator}<${2:T}> {
+   boolean ${3:hasNext}();
+   $2 ${4:next}();
+}
+
+// Aggregate interface
+interface ${5:Aggregate}<$2> {
+   $1<$2> ${6:createIterator}();
+}
+
+// Concrete Iterator
+class ${7:ConcreteIterator}<$2> implements $1<$2> {
+   private final List<$2> ${8:items};
+   private int ${9:position} = 0;
+
+   public $7(List<$2> $8) {
+       this.$8 = $8;
+   }
+
+   @Override
+   public boolean $3() {
+       return $9 < $8.size();
+   }
+
+   @Override
+   public $2 $4() {
+       if (!$3()) {
+           throw new IndexOutOfBoundsException("No more elements");
+       }
+       return $8.get($9++);
+   }
+}
+
+// Concrete Aggregate
+class ${10:ConcreteAggregate}<$2> implements $5<$2> {
+   private final List<$2> ${11:items} = new ArrayList<>();
+
+   public void ${12:add}($2 ${13:item}) {
+       $11.add($13);
+   }
+
+   public $2 ${14:get}(int ${15:index}) {
+       return $11.get($15);
+   }
+
+   public int ${16:size}() {
+       return $11.size();
+   }
+
+   @Override
+   public $1<$2> $6() {
+       return new $7<>($11);
+   }
+}
+
+${0:// Usage example:
+// $10<String> collection = new $10<>();
+// collection.$12("Item 1");
+// collection.$12("Item 2");
+// collection.$12("Item 3");
+//
+// $1<String> iterator = collection.$6();
+// while (iterator.$3()) {
+//     String item = iterator.$4();
+//     System.out.println(item);
+// }
+}

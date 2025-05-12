@@ -1,0 +1,10 @@
+# [[file:../../all-snippets.org::*Stream Creation Snippets][Stream Creation Snippets:7]]
+# -*- mode: snippet -*-
+# name: Java Stream Generate
+# key: m_stream_generate
+# group: Java Streams Creation
+# type: snippet
+# --
+Stream.generate(() -> ${1:new Random().nextInt(100)})
+     .limit(${2:10})${0}
+# Stream Creation Snippets:7 ends here

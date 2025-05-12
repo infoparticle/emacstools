@@ -1,0 +1,48 @@
+# -*- mode: snippet -*-
+# name: Python DP - Space Optimization
+# key: m_lc_dp_space_optimization
+# group: LeetCode DP Patterns
+# type: snippet
+# --
+def solve_problem_optimized(input):
+   """
+   Dynamic Programming with space optimization.
+   Often used when only recent results are needed.
+
+   Args:
+       input: Problem input
+   """
+   n = ${1:input_size}
+
+   # Initialize previous state variables
+   prev1 = ${2:initial_value_1}
+   prev2 = ${3:initial_value_2}
+
+   # Process each step
+   for i in range(2, n + 1):
+       # Compute current value based on previous values
+       current = ${4:formula(prev1, prev2)}
+
+       # Update previous values for next iteration
+       prev2 = prev1
+       prev1 = current
+
+   return prev1
+
+# Example: Fibonacci with O(1) space
+def fibonacci(n):
+   if n <= 1:
+       return n
+
+   prev2 = 0  # fib(0)
+   prev1 = 1  # fib(1)
+
+   for i in range(2, n + 1):
+       current = prev1 + prev2
+       prev2 = prev1
+       prev1 = current
+
+   return prev1
+
+result = fibonacci(${5:10})
+${0:}

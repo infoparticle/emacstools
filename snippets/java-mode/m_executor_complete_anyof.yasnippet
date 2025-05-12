@@ -1,0 +1,37 @@
+# [[file:../../all-snippets.org::*Executor Framework Snippets][Executor Framework Snippets:12]]
+# -*- mode: snippet -*-
+# name: Java CompletableFuture AnyOf
+# key: m_executor_complete_anyof
+# group: Java Executors
+# type: snippet
+# --
+List<CompletableFuture<${1:String}>> ${2:futures} = new ArrayList<>();
+
+for (int i = 0; i < ${3:5}; i++) {
+   final int id = i;
+   $2.add(CompletableFuture.supplyAsync(() -> {
+       ${4:// Task code with varying completion times}
+       try {
+           Thread.sleep((long) (Math.random() * 1000));
+       } catch (InterruptedException e) {
+           Thread.currentThread().interrupt();
+       }
+       return ${5:"Result-" + id};
+   }));
+}
+
+// Get the first completed future
+CompletableFuture<Object> ${6:anyFuture} = CompletableFuture.anyOf($2.toArray(new CompletableFuture[0]));
+
+// Process the first result
+$6.thenAccept(firstResult -> {
+   $1 result = ($1) firstResult;
+   ${7:// Process first completed result}
+});
+
+// Handle exceptions
+$6.exceptionally(ex -> {
+   ${8:// Handle exception}
+   return null;
+});${0:}
+# Executor Framework Snippets:12 ends here

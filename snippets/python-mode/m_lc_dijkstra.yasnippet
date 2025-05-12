@@ -1,0 +1,56 @@
+# -*- mode: snippet -*-
+# name: Python Dijkstra's Algorithm
+# key: m_lc_dijkstra
+# group: LeetCode Graph Algorithms
+# type: snippet
+# --
+import heapq
+
+def dijkstra(graph, start):
+   """
+   Dijkstra's algorithm for finding shortest paths from start node
+   to all other nodes in a weighted graph.
+
+   Args:
+       graph: Dictionary mapping nodes to lists of (neighbor, weight) tuples
+       start: Starting node
+
+   Returns:
+       Dictionary mapping each node to its shortest distance from start
+   """
+   # Initialize distances dictionary
+   distances = {node: float('infinity') for node in graph}
+   distances[start] = 0
+
+   # Priority queue ordered by distance
+   priority_queue = [(0, start)]
+
+   while priority_queue:
+       current_distance, current_node = heapq.heappop(priority_queue)
+
+       # If we've already found a better path, skip
+       if current_distance > distances[current_node]:
+           continue
+
+       # Check all neighbors
+       for neighbor, weight in graph[current_node]:
+           distance = current_distance + weight
+
+           # If we found a better path, update and add to queue
+           if distance < distances[neighbor]:
+               distances[neighbor] = distance
+               heapq.heappush(priority_queue, (distance, neighbor))
+
+   return distances
+
+# Example usage for weighted graph as adjacency list with weights
+weighted_graph = {
+   ${1:'A'}: [(${2:'B'}, ${3:1}), (${4:'C'}, ${5:4})],
+   ${6:'B'}: [(${7:'A'}, ${8:1}), (${9:'C'}, ${10:2}), (${11:'D'}, ${12:5})],
+   ${13:'C'}: [(${14:'A'}, ${15:4}), (${16:'B'}, ${17:2}), (${18:'D'}, ${19:1})],
+   ${20:'D'}: [(${21:'B'}, ${22:5}), (${23:'C'}, ${24:1})]
+}
+
+# Find shortest paths from 'A'
+shortest_distances = dijkstra(weighted_graph, ${25:'A'})
+${0:}

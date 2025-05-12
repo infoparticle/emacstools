@@ -1,0 +1,18 @@
+# [[file:../../all-snippets.org::*Scripting Snippets][Scripting Snippets:1]]
+# -*- mode: snippet -*-
+# name: Nushell Script Parameters
+# key: m_script_param
+# group: Nushell Scripting
+# type: snippet
+# --
+# ${1:Script description}
+# Usage: nu ${2:script.nu} [--${3:flag}] <${4:required_arg}>
+
+def main [
+   ${4:required_arg}: ${5:string} # ${6:Required argument description}
+   --${3:flag}: ${7:bool} # ${8:Flag description}
+   --${9:optional}: ${10:string} = ${11:"default"} # ${12:Optional argument description}
+] {
+   ${0:# Script body}
+}
+# Scripting Snippets:1 ends here

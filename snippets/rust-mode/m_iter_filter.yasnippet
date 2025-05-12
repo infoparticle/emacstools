@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: Rust Iterator Filter
+# key: m_iter_filter
+# group: Rust Iterators
+# type: snippet
+# --
+let ${1:filtered} = ${2:collection}.iter().filter(|${3:item}| {
+   ${0:// Predicate code}
+});

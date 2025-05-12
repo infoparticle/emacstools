@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# name: Rust Error Handling Block
+# key: m_try_block
+# group: Rust Error Handling
+# type: snippet
+# --
+fn ${1:function_name}(${2:args}) -> Result<${3:SuccessType}, ${4:ErrorType}> {
+   ${5:// Setup code}
+
+   let ${6:result} = ${7:expression}?;
+
+   ${8:// More code using result}
+
+   Ok(${0:return_value})
+}

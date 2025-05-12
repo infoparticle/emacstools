@@ -1,0 +1,29 @@
+# [[file:../../all-snippets.org::*Thread Creation and Management Snippets][Thread Creation and Management Snippets:7]]
+# -*- mode: snippet -*-
+# name: Java Thread State Check
+# key: m_thread_state
+# group: Java Threads
+# type: snippet
+# --
+Thread.State ${1:state} = ${2:thread}.getState();
+switch ($1) {
+   case NEW:
+       ${3:// Thread created but not started}
+       break;
+   case RUNNABLE:
+       ${4:// Thread is executing}
+       break;
+   case BLOCKED:
+       ${5:// Thread is blocked waiting for a monitor lock}
+       break;
+   case WAITING:
+       ${6:// Thread is waiting indefinitely}
+       break;
+   case TIMED_WAITING:
+       ${7:// Thread is waiting for a specified time}
+       break;
+   case TERMINATED:
+       ${8:// Thread has completed execution}
+       break;
+}${0:}
+# Thread Creation and Management Snippets:7 ends here

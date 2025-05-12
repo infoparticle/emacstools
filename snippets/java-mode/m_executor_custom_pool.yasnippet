@@ -1,0 +1,47 @@
+# [[file:../../all-snippets.org::*Executor Framework Snippets][Executor Framework Snippets:13]]
+# -*- mode: snippet -*-
+# name: Java Custom Thread Pool
+# key: m_executor_custom_pool
+# group: Java Executors
+# type: snippet
+# --
+// Custom thread pool configuration
+int ${1:corePoolSize} = ${2:2};
+int ${3:maxPoolSize} = ${4:4};
+long ${5:keepAliveTime} = ${6:60L};
+TimeUnit ${7:timeUnit} = TimeUnit.${8:SECONDS};
+BlockingQueue<Runnable> ${9:workQueue} = new ${10:LinkedBlockingQueue<>(100)};
+ThreadFactory ${11:threadFactory} = new ThreadFactory() {
+   private final AtomicInteger threadNumber = new AtomicInteger(1);
+   @Override
+   public Thread newThread(Runnable r) {
+       Thread t = new Thread(r, "${12:CustomWorker}-" + threadNumber.getAndIncrement());
+       t.setDaemon(${13:false});
+       return t;
+   }
+};
+RejectedExecutionHandler ${14:handler} = new ${15:ThreadPoolExecutor.CallerRunsPolicy()};
+
+ThreadPoolExecutor ${16:executor} = new ThreadPoolExecutor(
+       $1, $3, $5, $7, $9, $11, $14);
+
+try {
+   // Submit tasks
+   for (int i = 0; i < ${17:10}; i++) {
+       final int taskId = i;
+       $16.submit(() -> {
+           ${18:// Task code}
+       });
+   }
+
+   // Optionally monitor the thread pool
+   System.out.println("Active threads: " + $16.getActiveCount());
+   System.out.println("Task count: " + $16.getTaskCount());
+   System.out.println("Completed tasks: " + $16.getCompletedTaskCount());
+} finally {
+   $16.shutdown();
+   if (!$16.awaitTermination(${19:5}, TimeUnit.${20:SECONDS})) {
+       $16.shutdownNow();
+   }
+}${0:}
+# Executor Framework Snippets:13 ends here

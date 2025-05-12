@@ -1,0 +1,17 @@
+# -*- mode: snippet -*-
+# name: Rust Labeled Loop
+# key: m_loop_labeled
+# group: Rust Loops
+# type: snippet
+# --
+'${1:outer}: loop {
+   ${2:// Outer loop body}
+
+   loop {
+       ${3:// Inner loop body}
+
+       if ${4:condition} {
+           break '$1;
+       }
+   }
+}${0:}

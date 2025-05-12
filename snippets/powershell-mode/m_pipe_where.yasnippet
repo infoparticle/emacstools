@@ -1,0 +1,9 @@
+# [[file:../../all-snippets.org::*Pipeline Snippets][Pipeline Snippets:1]]
+# -*- mode: snippet -*-
+# name: PowerShell Where-Object Pipeline
+# key: m_pipe_where
+# group: PowerShell Pipelines
+# type: snippet
+# --
+${1:Get-ChildItem} | Where-Object { $$_.${2:PropertyName} -${3:eq} "${4:value}" } | ${0:Out-Null}
+# Pipeline Snippets:1 ends here

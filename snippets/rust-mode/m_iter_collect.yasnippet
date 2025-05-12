@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: Rust Iterator Collect
+# key: m_iter_collect
+# group: Rust Iterators
+# type: snippet
+# --
+let ${1:result}: ${2:Vec<_>} = ${3:collection}.iter()
+   .map(|${4:item}| ${5:// Transform})
+   .collect();${0:}

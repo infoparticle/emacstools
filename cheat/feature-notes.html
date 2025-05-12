@@ -1,0 +1,540 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2025-02-04 Tue 14:36 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Cheatsheet Lookup System for Emacs</title>
+<meta name="author" content="Your Name" />
+<meta name="description" content="Enhanced cheatsheet lookup system with caching, org-mode support, and history" />
+<meta name="generator" content="Org Mode" />
+<style type="text/css">
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">Cheatsheet Lookup System for Emacs</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org2008eb0">1. Cheat System Code</a>
+<ul>
+<li><a href="#org2727700">1.1. Core Implementation</a></li>
+<li><a href="#org2da309c">1.2. Key Features</a>
+<ul>
+<li><a href="#org055b7c8">1.2.1. 1. Intelligent Caching</a></li>
+<li><a href="#org4b21a29">1.2.2. 2. Org-Mode Integration</a></li>
+<li><a href="#org6472cd5">1.2.3. 3. Safe Buffer Handling</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org09df335">2. Installation &amp; Usage</a>
+<ul>
+<li><a href="#org437d4f1">2.1. Basic Setup</a></li>
+<li><a href="#org43e8ae7">2.2. Keybindings</a></li>
+</ul>
+</li>
+<li><a href="#org1d18097">3. Customization</a>
+<ul>
+<li><a href="#org61c4d48">3.1. Directory Structure Example</a></li>
+<li><a href="#orgdbde27f">3.2. Configuration Options</a></li>
+</ul>
+</li>
+<li><a href="#org69a6120">4. Extension Ideas</a>
+<ul>
+<li><a href="#org450b1ee">4.1. Search Integration</a></li>
+<li><a href="#org13e83dd">4.2. Bookmark System</a></li>
+</ul>
+</li>
+<li><a href="#orgaa5f739">5. Documentation</a>
+<ul>
+<li><a href="#orgd4824e0">5.1. Function Reference</a></li>
+<li><a href="#org36e35e8">5.2. Variables</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org2008eb0" class="outline-2">
+<h2 id="org2008eb0"><span class="section-number-2">1.</span> Cheat System Code</h2>
+<div class="outline-text-2" id="text-1">
+</div>
+<div id="outline-container-org2727700" class="outline-3">
+<h3 id="org2727700"><span class="section-number-3">1.1.</span> Core Implementation</h3>
+<div class="outline-text-3" id="text-1-1">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #656868;">;; </span><span style="color: #656868;">Customization interface</span>
+<span style="color: #635770;">(</span><span style="color: #8AC6F2;">defcustom</span> <span style="color: #BF93C3;">cheat-repo-root</span> <span style="color: #86B187;">"~/emacstools/cheat/cheat-repo/"</span>
+<span style="color: #385e39a639a6;"> </span> <span style="color: #8b8d8d;">"Directory containing cheatsheet .org files."</span>
+<span style="color: #385e39a639a6;"> </span> <span style="color: #F28B86;">:type</span> <span style="color: #C7B299;">'</span><span style="color: #C7B299;">directory</span>
+<span style="color: #385e39a639a6;"> </span> <span style="color: #F28B86;">:group</span> <span style="color: #C7B299;">'</span><span style="color: #C7B299;">cheat</span>
+<span style="color: #385e39a639a6;"> </span> <span style="color: #F28B86;">:package-version</span> <span style="color: #C7B299;">'</span><span style="color: #635770;">(</span>cheat . <span style="color: #86B187;">"1.0"</span><span style="color: #635770;">))</span>
+ 
+<span style="color: #635770;">(</span><span style="color: #8AC6F2;">defvar</span> <span style="color: #BF93C3;">cheat--file-cache</span> nil
+<span style="color: #385e39a639a6;"> </span> <span style="color: #8b8d8d;">"Cached list of cheatsheet files."</span><span style="color: #635770;">)</span>
+<span style="color: #635770;">(</span><span style="color: #8AC6F2;">defvar</span> <span style="color: #BF93C3;">cheat--last-cache-time</span> nil
+<span style="color: #385e39a639a6;"> </span> <span style="color: #8b8d8d;">"Timestamp of last cache update."</span><span style="color: #635770;">)</span>
+<span style="color: #635770;">(</span><span style="color: #8AC6F2;">defvar</span> <span style="color: #BF93C3;">cheat-history</span> nil
+<span style="color: #385e39a639a6;"> </span> <span style="color: #8b8d8d;">"History of selected cheatsheets."</span><span style="color: #635770;">)</span>
+ 
+<span style="color: #635770;">(</span><span style="color: #8AC6F2;">defun</span> <span style="color: #EA9847;">cheat--refresh-file-list</span> <span style="color: #635770;">()</span>
+<span style="color: #385e39a639a6;"> </span> <span style="color: #8b8d8d;">"Refresh file cache if directory has changed."</span>
+<span style="color: #385e39a639a6;"> </span> <span style="color: #635770;">(</span><span style="color: #8AC6F2;">when</span> <span style="color: #635770;">(</span><span style="color: #8AC6F2;">or</span> <span style="color: #635770;">(</span><span style="color: #635770;">not</span> cheat--file-cache<span style="color: #635770;">)</span>
+<span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #635770;">(</span><span style="color: #635770;">time-less-p</span> cheat--last-cache-time
+<span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span><span style="color: #635770;">(</span><span style="color: #635770;">nth</span> <span style="color: #F6F3E8; font-weight: bold;">5</span> <span style="color: #635770;">(</span><span style="color: #635770;">file-attributes</span> <span style="color: #BF93C3;">cheat-repo-root</span><span style="color: #635770;">))))</span>
+<span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #635770;">(</span><span style="color: #8AC6F2;">setq</span> cheat--file-cache
+<span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #635770;">(</span><span style="color: #635770;">directory-files-recursively</span> <span style="color: #BF93C3;">cheat-repo-root</span> <span style="color: #86B187;">"\\.org$"</span> nil<span style="color: #635770;">))</span>
+<span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #635770;">(</span><span style="color: #8AC6F2;">setq</span> cheat--last-cache-time <span style="color: #635770;">(</span><span style="color: #635770;">current-time</span><span style="color: #635770;">))))</span>
+   
+<span style="color: #635770;">(</span><span style="color: #8AC6F2;">defun</span> <span style="color: #EA9847;">cheat-select-info</span> <span style="color: #635770;">()</span>
+<span style="color: #385e39a639a6;"> </span> <span style="color: #8b8d8d;">"Interactive cheatsheet selector with cached file list."</span>
+<span style="color: #385e39a639a6;"> </span> <span style="color: #635770;">(</span><span style="color: #8AC6F2;">interactive</span><span style="color: #635770;">)</span>
+<span style="color: #385e39a639a6;"> </span> <span style="color: #635770;">(</span>cheat--refresh-file-list<span style="color: #635770;">)</span>
+<span style="color: #385e39a639a6;"> </span> <span style="color: #635770;">(</span><span style="color: #8AC6F2;">let*</span> <span style="color: #635770;">((</span>cheat-dir-abs <span style="color: #635770;">(</span><span style="color: #635770;">expand-file-name</span> <span style="color: #BF93C3;">cheat-repo-root</span><span style="color: #635770;">))</span>
+<span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span><span style="color: #635770;">(</span>selected <span style="color: #635770;">(</span><span style="color: #635770;">completing-read</span>
+<span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #86B187;">"Choose your reference: "</span>
+<span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #635770;">(</span><span style="color: #635770;">mapcar</span> <span style="color: #635770;">(</span><span style="color: #8AC6F2;">lambda</span> <span style="color: #635770;">(</span>f<span style="color: #635770;">)</span> <span style="color: #635770;">(</span><span style="color: #635770;">file-relative-name</span> f cheat-dir-abs<span style="color: #635770;">))</span>
+<span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> cheat--file-cache<span style="color: #635770;">)</span>
+<span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> nil t nil <span style="color: #C7B299;">'</span><span style="color: #C7B299;">cheat-history</span><span style="color: #635770;">)))</span>
+<span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #635770;">(</span><span style="color: #8AC6F2;">when</span> selected
+<span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #635770;">(</span><span style="color: #8AC6F2;">let</span> <span style="color: #635770;">((</span>qref-buf <span style="color: #635770;">(</span><span style="color: #635770;">get-buffer-create</span> <span style="color: #86B187;">"*QUICK-REF*"</span><span style="color: #635770;">)))</span>
+<span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #635770;">(</span><span style="color: #8AC6F2;">with-current-buffer</span> qref-buf
+<span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #635770;">(</span><span style="color: #BF93C3;">view-mode</span> <span style="color: #F6F3E8; font-weight: bold;">-1</span><span style="color: #635770;">)</span>
+<span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #635770;">(</span><span style="color: #635770;">erase-buffer</span><span style="color: #635770;">)</span>
+<span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #635770;">(</span><span style="color: #8AC6F2;">condition-case</span> err
+<span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #635770;">(</span><span style="color: #635770;">insert-file-contents</span> <span style="color: #635770;">(</span><span style="color: #635770;">concat</span> cheat-dir-abs selected<span style="color: #635770;">))</span>
+<span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #635770;">(</span><span style="color: #635770;">error</span> <span style="color: #635770;">(</span><span style="color: #635770;">message</span> <span style="color: #86B187;">"Error loading cheatsheet: %s"</span>
+<span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #635770;">(</span><span style="color: #635770;">error-message-string</span> err<span style="color: #635770;">))))</span>
+<span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #635770;">(</span><span style="color: #EA9847;">org-mode</span><span style="color: #635770;">)</span>
+<span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #635770;">(</span><span style="color: #635770;">goto-char</span> <span style="color: #635770;">(</span><span style="color: #635770;">point-min</span><span style="color: #635770;">))</span>
+<span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #635770;">(</span><span style="color: #BF93C3;">view-mode</span> <span style="color: #F6F3E8; font-weight: bold;">1</span><span style="color: #635770;">)</span>
+<span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #635770;">(</span><span style="color: #635770;">local-set-key</span> <span style="color: #635770;">(</span><span style="color: #635770;">kbd</span> <span style="color: #86B187;">"q"</span><span style="color: #635770;">)</span> <span style="color: #C7B299;">'</span><span style="color: #C7B299;">quit-window</span><span style="color: #635770;">))</span>
+<span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #635770;">(</span><span style="color: #635770;">pop-to-buffer</span> qref-buf<span style="color: #635770;">)))))</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org2da309c" class="outline-3">
+<h3 id="org2da309c"><span class="section-number-3">1.2.</span> Key Features</h3>
+<div class="outline-text-3" id="text-1-2">
+</div>
+<div id="outline-container-org055b7c8" class="outline-4">
+<h4 id="org055b7c8"><span class="section-number-4">1.2.1.</span> 1. Intelligent Caching</h4>
+<div class="outline-text-4" id="text-1-2-1">
+<ul class="org-ul">
+<li>Automatic cache refresh when directory changes</li>
+<li>Fast file listing for large repositories</li>
+<li>History tracking of selections</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org4b21a29" class="outline-4">
+<h4 id="org4b21a29"><span class="section-number-4">1.2.2.</span> 2. Org-Mode Integration</h4>
+<div class="outline-text-4" id="text-1-2-2">
+<ul class="org-ul">
+<li>Syntax highlighting via <code>org-mode</code></li>
+<li>Proper heading navigation</li>
+<li>Support for Org markup features</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org6472cd5" class="outline-4">
+<h4 id="org6472cd5"><span class="section-number-4">1.2.3.</span> 3. Safe Buffer Handling</h4>
+<div class="outline-text-4" id="text-1-2-3">
+<ul class="org-ul">
+<li>Dedicated <code>*QUICK-REF*</code> buffer</li>
+<li>Read-only view with <code>view-mode</code></li>
+<li>Clean buffer reset between uses</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org09df335" class="outline-2">
+<h2 id="org09df335"><span class="section-number-2">2.</span> Installation &amp; Usage</h2>
+<div class="outline-text-2" id="text-2">
+</div>
+<div id="outline-container-org437d4f1" class="outline-3">
+<h3 id="org437d4f1"><span class="section-number-3">2.1.</span> Basic Setup</h3>
+<div class="outline-text-3" id="text-2-1">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #656868;">;; </span><span style="color: #656868;">Sample configuration</span>
+<span style="color: #635770;">(</span><span style="color: #8AC6F2;">use-package</span> cheat-system
+<span style="color: #385e39a639a6;"> </span> <span style="color: #F28B86;">:load-path</span> <span style="color: #86B187;">"~/emacstools/cheat/"</span>
+<span style="color: #385e39a639a6;"> </span> <span style="color: #F28B86;">:commands</span> <span style="color: #635770;">(</span><span style="color: #EA9847;">cheat-select-info</span><span style="color: #635770;">)</span>
+<span style="color: #385e39a639a6;"> </span> <span style="color: #F28B86;">:config</span>
+<span style="color: #385e39a639a6;"> </span> <span style="color: #635770;">(</span><span style="color: #8AC6F2;">setq</span> <span style="color: #BF93C3;">cheat-repo-root</span> <span style="color: #86B187;">"~/my-cheatsheets/"</span><span style="color: #635770;">))</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org43e8ae7" class="outline-3">
+<h3 id="org43e8ae7"><span class="section-number-3">2.2.</span> Keybindings</h3>
+<div class="outline-text-3" id="text-2-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Key</th>
+<th scope="col" class="org-left">Command</th>
+<th scope="col" class="org-left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">q</td>
+<td class="org-left"><code>quit-window</code></td>
+<td class="org-left">Close cheatsheet buffer</td>
+</tr>
+
+<tr>
+<td class="org-left">n</td>
+<td class="org-left"><code>next-line</code></td>
+<td class="org-left">Navigate down</td>
+</tr>
+
+<tr>
+<td class="org-left">p</td>
+<td class="org-left"><code>previous-line</code></td>
+<td class="org-left">Navigate up</td>
+</tr>
+
+<tr>
+<td class="org-left">TAB</td>
+<td class="org-left"><code>org-cycle</code></td>
+<td class="org-left">Fold/Unfold headings</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="outline-container-org1d18097" class="outline-2">
+<h2 id="org1d18097"><span class="section-number-2">3.</span> Customization</h2>
+<div class="outline-text-2" id="text-3">
+</div>
+<div id="outline-container-org61c4d48" class="outline-3">
+<h3 id="org61c4d48"><span class="section-number-3">3.1.</span> Directory Structure Example</h3>
+<div class="outline-text-3" id="text-3-1">
+<pre class="example" id="org8fea13b">
+~/my-cheatsheets/
++-- elisp.org
++-- python.org
++-- git.org
+</pre>
+</div>
+</div>
+<div id="outline-container-orgdbde27f" class="outline-3">
+<h3 id="orgdbde27f"><span class="section-number-3">3.2.</span> Configuration Options</h3>
+<div class="outline-text-3" id="text-3-2">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #635770;">(</span><span style="color: #8AC6F2;">setq</span> <span style="color: #BF93C3;">cheat-repo-root</span> <span style="color: #86B187;">"~/work/cheatsheets/"</span><span style="color: #635770;">)</span>  <span style="color: #656868;">; </span><span style="color: #656868;">Custom repository location</span>
+<span style="color: #635770;">(</span><span style="color: #8AC6F2;">setq-default</span> <span style="color: #BF93C3;">view-read-only</span> t<span style="color: #635770;">)</span>              <span style="color: #656868;">; </span><span style="color: #656868;">Global view-mode settings</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org69a6120" class="outline-2">
+<h2 id="org69a6120"><span class="section-number-2">4.</span> Extension Ideas</h2>
+<div class="outline-text-2" id="text-4">
+</div>
+<div id="outline-container-org450b1ee" class="outline-3">
+<h3 id="org450b1ee"><span class="section-number-3">4.1.</span> Search Integration</h3>
+<div class="outline-text-3" id="text-4-1">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #635770;">(</span><span style="color: #8AC6F2;">defun</span> <span style="color: #EA9847;">cheat-search</span> <span style="color: #635770;">()</span>
+<span style="color: #385e39a639a6;"> </span> <span style="color: #8b8d8d;">"Search across all cheatsheets."</span>
+<span style="color: #385e39a639a6;"> </span> <span style="color: #635770;">(</span><span style="color: #8AC6F2;">interactive</span><span style="color: #635770;">)</span>
+<span style="color: #385e39a639a6;"> </span> <span style="color: #635770;">(</span><span style="color: #8AC6F2;">let</span> <span style="color: #635770;">((</span><span style="color: #BF93C3;">default-directory</span> <span style="color: #BF93C3;">cheat-repo-root</span><span style="color: #635770;">))</span>
+<span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #635770;">(</span><span style="color: #635770;">call-interactively</span> <span style="color: #C7B299;">#'</span><span style="color: #C7B299;">consult-ripgrep</span><span style="color: #635770;">)))</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org13e83dd" class="outline-3">
+<h3 id="org13e83dd"><span class="section-number-3">4.2.</span> Bookmark System</h3>
+<div class="outline-text-3" id="text-4-2">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #635770;">(</span><span style="color: #8AC6F2;">defvar</span> <span style="color: #BF93C3;">cheat-bookmarks</span> nil
+<span style="color: #385e39a639a6;"> </span> <span style="color: #8b8d8d;">"List of bookmarked cheatsheet entries."</span><span style="color: #635770;">)</span>
+ 
+<span style="color: #635770;">(</span><span style="color: #8AC6F2;">defun</span> <span style="color: #EA9847;">cheat-bookmark-add</span> <span style="color: #635770;">()</span>
+<span style="color: #385e39a639a6;"> </span> <span style="color: #8b8d8d;">"Bookmark current cheatsheet."</span>
+<span style="color: #385e39a639a6;"> </span> <span style="color: #635770;">(</span><span style="color: #8AC6F2;">interactive</span><span style="color: #635770;">)</span>
+<span style="color: #385e39a639a6;"> </span> <span style="color: #635770;">(</span><span style="color: #8AC6F2;">when-let</span> <span style="color: #635770;">((</span>name <span style="color: #635770;">(</span><span style="color: #635770;">buffer-name</span><span style="color: #635770;">)))</span>
+<span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #635770;">(</span><span style="color: #635770;">add-to-list</span> <span style="color: #C7B299;">'</span><span style="color: #C7B299;">cheat-bookmarks</span> name<span style="color: #635770;">)</span>
+<span style="color: #385e39a639a6;"> </span> <span style="color: #385e39a639a6;"> </span> <span style="color: #635770;">(</span><span style="color: #635770;">message</span> <span style="color: #86B187;">"Bookmarked: %s"</span> name<span style="color: #635770;">)))</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orgaa5f739" class="outline-2">
+<h2 id="orgaa5f739"><span class="section-number-2">5.</span> Documentation</h2>
+<div class="outline-text-2" id="text-5">
+</div>
+<div id="outline-container-orgd4824e0" class="outline-3">
+<h3 id="orgd4824e0"><span class="section-number-3">5.1.</span> Function Reference</h3>
+<div class="outline-text-3" id="text-5-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Function</th>
+<th scope="col" class="org-left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>cheat-select-info</code></td>
+<td class="org-left">Main entry point for cheatsheet lookup</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>cheat--refresh-file-list</code></td>
+<td class="org-left">Internal cache maintenance function</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-org36e35e8" class="outline-3">
+<h3 id="org36e35e8"><span class="section-number-3">5.2.</span> Variables</h3>
+<div class="outline-text-3" id="text-5-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Variable</th>
+<th scope="col" class="org-left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>cheat-repo-root</code></td>
+<td class="org-left">Root directory for cheatsheet files</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>cheat-history</code></td>
+<td class="org-left">Selection history tracking</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Your Name</p>
+<p class="date">Created: 2025-02-04 Tue 14:36</p>
+</div>
+</body>
+</html>

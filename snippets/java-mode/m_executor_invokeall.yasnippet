@@ -1,0 +1,36 @@
+# [[file:../../all-snippets.org::*Executor Framework Snippets][Executor Framework Snippets:7]]
+# -*- mode: snippet -*-
+# name: Java Invoke All Tasks
+# key: m_executor_invokeall
+# group: Java Executors
+# type: snippet
+# --
+List<Callable<${1:String}>> ${2:tasks} = new ArrayList<>();
+for (int i = 0; i < ${3:10}; i++) {
+   final int taskId = i;
+   $2.add(() -> {
+       ${4:// Task code}
+       return ${5:"Result-" + taskId};
+   });
+}
+
+ExecutorService ${6:executor} = Executors.newFixedThreadPool(${7:Runtime.getRuntime().availableProcessors()});
+try {
+   // Execute all tasks and get results
+   List<Future<$1>> ${8:results} = $6.invokeAll($2, ${9:1}, TimeUnit.${10:MINUTES});
+
+   for (int i = 0; i < $8.size(); i++) {
+       try {
+           $1 result = $8.get(i).get();
+           ${11:// Process result}
+       } catch (ExecutionException e) {
+           ${12:// Handle computation exception}
+       }
+   }
+} catch (InterruptedException e) {
+   Thread.currentThread().interrupt();
+   ${13:// Handle interruption}
+} finally {
+   $6.shutdown();
+}${0:}
+# Executor Framework Snippets:7 ends here

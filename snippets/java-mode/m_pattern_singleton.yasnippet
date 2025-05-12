@@ -1,0 +1,24 @@
+# -*- mode: snippet -*-
+# name: Java Singleton Pattern
+# key: m_pattern_singleton
+# group: Java Design Patterns (Creational)
+# type: snippet
+# --
+// Singleton pattern implementation with thread safety using eager initialization.
+public class ${1:Singleton} {
+   // Private static instance, eagerly initialized
+   private static final $1 INSTANCE = new $1();
+
+   // Private constructor prevents instantiation from other classes
+   private $1() {
+       ${2:// Initialization code}
+   }
+
+   // Returns the single instance of this class
+   // @return the singleton instance
+   public static $1 getInstance() {
+       return INSTANCE;
+   }
+
+   ${0:// Add methods here}
+}

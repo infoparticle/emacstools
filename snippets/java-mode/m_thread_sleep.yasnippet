@@ -1,0 +1,14 @@
+# [[file:../../all-snippets.org::*Thread Creation and Management Snippets][Thread Creation and Management Snippets:5]]
+# -*- mode: snippet -*-
+# name: Java Thread Sleep
+# key: m_thread_sleep
+# group: Java Threads
+# type: snippet
+# --
+try {
+   Thread.sleep(${1:1000}); // Sleep for $1 milliseconds
+} catch (InterruptedException e) {
+   Thread.currentThread().interrupt();
+   ${2:// Handle interruption}
+}${0:}
+# Thread Creation and Management Snippets:5 ends here

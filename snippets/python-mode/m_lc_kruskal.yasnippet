@@ -1,0 +1,71 @@
+# -*- mode: snippet -*-
+# name: Python Kruskal's Algorithm (MST)
+# key: m_lc_kruskal
+# group: LeetCode Graph Algorithms
+# type: snippet
+# --
+def find(parent, i):
+   """Find root parent of a vertex with path compression"""
+   if parent[i] != i:
+       parent[i] = find(parent, parent[i])
+   return parent[i]
+
+def union(parent, rank, x, y):
+   """Union two sets based on rank"""
+   root_x = find(parent, x)
+   root_y = find(parent, y)
+
+   if root_x == root_y:
+       return
+
+   # Attach smaller rank tree under root of higher rank tree
+   if rank[root_x] < rank[root_y]:
+       parent[root_x] = root_y
+   elif rank[root_x] > rank[root_y]:
+       parent[root_y] = root_x
+   else:
+       # If ranks are same, make one as root and increment its rank
+       parent[root_y] = root_x
+       rank[root_x] += 1
+
+def kruskal_mst(graph, num_vertices):
+   """
+   Kruskal's algorithm to find minimum spanning tree of an undirected graph.
+
+   Args:
+       graph: List of edges as (u, v, w) where u,v are vertices and w is weight
+       num_vertices: Number of vertices in the graph
+
+   Returns:
+       List of edges in the MST
+   """
+   result = []  # Stores the MST
+
+   # Sort edges by weight
+   graph.sort(key=lambda x: x[2])
+
+   # Initialize parent and rank arrays for Union-Find
+   parent = [i for i in range(num_vertices)]
+   rank = [0] * num_vertices
+
+   # Process edges one by one
+   for u, v, w in graph:
+       # If including this edge doesn't cause cycle, include it
+       if find(parent, u) != find(parent, v):
+           result.append((u, v, w))
+           union(parent, rank, u, v)
+
+   return result
+
+# Example usage
+edges = [
+   (${1:0}, ${2:1}, ${3:10}),
+   (${4:0}, ${5:2}, ${6:6}),
+   (${7:0}, ${8:3}, ${9:5}),
+   (${10:1}, ${11:3}, ${12:15}),
+   (${13:2}, ${14:3}, ${15:4})
+]
+
+num_vertices = ${16:4}
+mst_edges = kruskal_mst(edges, num_vertices)
+${0:}

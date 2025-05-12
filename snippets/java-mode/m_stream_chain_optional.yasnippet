@@ -1,0 +1,13 @@
+# [[file:../../all-snippets.org::*Stream Chaining Snippets][Stream Chaining Snippets:4]]
+# -*- mode: snippet -*-
+# name: Java Stream Chain with Optional
+# key: m_stream_chain_optional
+# group: Java Streams Chains
+# type: snippet
+# --
+${1:items}.stream()
+   .filter(${2:item} -> ${3:$2.isValid()})
+   .map(${4:item} -> ${5:$4.transform()})
+   .findFirst()
+   .orElse(${6:defaultValue})${0}
+# Stream Chaining Snippets:4 ends here

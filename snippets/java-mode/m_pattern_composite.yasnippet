@@ -1,0 +1,103 @@
+# -*- mode: snippet -*-
+# name: Java Composite Pattern
+# key: m_pattern_composite
+# group: Java Design Patterns (Structural)
+# type: snippet
+# --
+// Composite Pattern
+//
+// Composes objects into tree structures to represent part-whole hierarchies.
+import java.util.ArrayList;
+import java.util.List;
+
+// Component interface
+interface ${1:Component} {
+   void ${2:operation}();
+   void add($1 component);
+   void remove($1 component);
+   $1 getChild(int index);
+}
+
+// Leaf class
+class ${3:Leaf} implements $1 {
+   private String ${4:name};
+
+   public $3(String $4) {
+       this.$4 = $4;
+   }
+
+   @Override
+   public void $2() {
+       System.out.println("Leaf " + $4 + " operation");
+   }
+
+   @Override
+   public void add($1 component) {
+       // Leaf cannot have children
+       throw new UnsupportedOperationException("Cannot add to a leaf");
+   }
+
+   @Override
+   public void remove($1 component) {
+       // Leaf cannot have children
+       throw new UnsupportedOperationException("Cannot remove from a leaf");
+   }
+
+   @Override
+   public $1 getChild(int index) {
+       // Leaf has no children
+       throw new UnsupportedOperationException("Leaf has no children");
+   }
+}
+
+// Composite class
+class ${5:Composite} implements $1 {
+   private String ${6:name};
+   private List<$1> ${7:children} = new ArrayList<>();
+
+   public $5(String $6) {
+       this.$6 = $6;
+   }
+
+   @Override
+   public void $2() {
+       System.out.println("Composite " + $6 + " operation");
+
+       // Execute operation on all children
+       for ($1 component : $7) {
+           component.$2();
+       }
+   }
+
+   @Override
+   public void add($1 component) {
+       $7.add(component);
+   }
+
+   @Override
+   public void remove($1 component) {
+       $7.remove(component);
+   }
+
+   @Override
+   public $1 getChild(int index) {
+       return $7.get(index);
+   }
+}
+
+${0:// Usage example:
+// $1 leaf1 = new $3("Leaf 1");
+// $1 leaf2 = new $3("Leaf 2");
+// $1 leaf3 = new $3("Leaf 3");
+//
+// $1 composite = new $5("Composite 1");
+// $1 subComposite = new $5("SubComposite 1");
+//
+// composite.add(leaf1);
+// composite.add(subComposite);
+// subComposite.add(leaf2);
+// subComposite.add(leaf3);
+//
+// // Execute operation on the entire tree
+// composite.$2();
+}

@@ -1,0 +1,104 @@
+# -*- mode: snippet -*-
+# name: Python Sliding Window Technique
+# key: m_lc_sliding_window
+# group: LeetCode Famous Algorithms
+# type: snippet
+# --
+def sliding_window_fixed(nums, k):
+   """
+   Fixed-size sliding window technique.
+   Example: Find maximum sum of a subarray of size k.
+
+   Args:
+       nums: List of integers
+       k: Window size
+
+   Returns:
+       Maximum sum of a subarray of size k
+   """
+   if not nums or k <= 0 or k > len(nums):
+       return 0
+
+   # Initial window sum
+   window_sum = sum(nums[:k])
+   max_sum = window_sum
+
+   # Slide the window
+   for i in range(k, len(nums)):
+       # Add next element and remove first element of previous window
+       window_sum = window_sum + nums[i] - nums[i - k]
+       max_sum = max(max_sum, window_sum)
+
+   return max_sum
+
+def sliding_window_variable(s, target_chars):
+   """
+   Variable-size sliding window technique.
+   Example: Find the minimum length substring containing all characters in target_chars.
+
+   Args:
+       s: Input string
+       target_chars: Target characters to include
+
+   Returns:
+       Minimum length substring containing all target characters, or empty string if not found
+   """
+   if not s or not target_chars:
+       return ""
+
+   # Frequency counter for target characters
+   target_count = {}
+   for char in target_chars:
+       target_count[char] = target_count.get(char, 0) + 1
+
+   # Number of unique characters to match
+   required_count = len(target_count)
+
+   # Tracking variables
+   left = 0
+   formed = 0  # Number of target characters matched in current window
+   window_counts = {}
+
+   # For result
+   min_len = float('inf')
+   result_indices = (0, 0)
+
+   for right in range(len(s)):
+       # Add current character to window counts
+       char = s[right]
+       window_counts[char] = window_counts.get(char, 0) + 1
+
+       # If we matched a target character, increment formed
+       if char in target_count and window_counts[char] == target_count[char]:
+           formed += 1
+
+       # Try to shrink the window while maintaining all target characters
+       while left <= right and formed == required_count:
+           char = s[left]
+
+           # Update result if current window is smaller
+           if right - left + 1 < min_len:
+               min_len = right - left + 1
+               result_indices = (left, right)
+
+           # Remove leftmost character from window
+           window_counts[char] -= 1
+
+           # If we removed a target character, decrement formed
+           if char in target_count and window_counts[char] < target_count[char]:
+               formed -= 1
+
+           left += 1
+
+   return "" if min_len == float('inf') else s[result_indices[0]:result_indices[1] + 1]
+
+# Example for fixed window
+nums = [${1:1, 3, -1, -3, 5, 3, 6, 7}]
+k = ${2:3}
+max_sum = sliding_window_fixed(nums, k)
+
+# Example for variable window
+s = "${3:ADOBECODEBANC}"
+target_chars = "${4:ABC}"
+min_substring = sliding_window_variable(s, target_chars)
+${0:}

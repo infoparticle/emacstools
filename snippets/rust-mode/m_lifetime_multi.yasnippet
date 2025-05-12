@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: Rust Multiple Lifetimes
+# key: m_lifetime_multi
+# group: Rust Lifetimes
+# type: snippet
+# --
+fn ${1:function_name}<'${2:a}, '${3:b}>(${4:first}: &'$2 ${5:str}, ${6:second}: &'$3 ${7:str}) -> &'$2 $5 {
+   ${0:// Function body}
+}

@@ -1,0 +1,69 @@
+# -*- mode: snippet -*-
+# name: Python Rabin-Karp String Matching
+# key: m_lc_rabin_karp
+# group: LeetCode Famous Algorithms
+# type: snippet
+# --
+def rabin_karp(text, pattern):
+   """
+   Rabin-Karp algorithm for string pattern matching.
+
+   Args:
+       text: The text to search in
+       pattern: The pattern to search for
+
+   Returns:
+       List of starting indices of pattern matches
+   """
+   if not pattern or not text or len(pattern) > len(text):
+       return []
+
+   # Constants
+   d = 256  # Number of characters in input alphabet
+   q = 101  # A prime number for hash calculation
+
+   m, n = len(pattern), len(text)
+   pattern_hash = 0  # Hash value for pattern
+   text_hash = 0     # Hash value for current text window
+   h = 1             # Value of d^(m-1) % q
+
+   # Calculate the value of h
+   for i in range(m - 1):
+       h = (h * d) % q
+
+   # Calculate initial hash values
+   for i in range(m):
+       pattern_hash = (d * pattern_hash + ord(pattern[i])) % q
+       text_hash = (d * text_hash + ord(text[i])) % q
+
+   result = []
+
+   # Slide the pattern over text one by one
+   for i in range(n - m + 1):
+       # Check if hash values match
+       if pattern_hash == text_hash:
+           # Verify character by character
+           match = True
+           for j in range(m):
+               if text[i + j] != pattern[j]:
+                   match = False
+                   break
+
+           if match:
+               result.append(i)
+
+       # Calculate hash for next window
+       if i < n - m:
+           text_hash = (d * (text_hash - ord(text[i]) * h) + ord(text[i + m])) % q
+
+           # Handle negative hash values
+           if text_hash < 0:
+               text_hash += q
+
+   return result
+
+# Example
+text = "${1:ABABDABACDABABCABAB}"
+pattern = "${2:ABABCABAB}"
+matches = rabin_karp(text, pattern)
+${0:}

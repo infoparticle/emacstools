@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# name: Rust Match for Result
+# key: m_match_result
+# group: Rust Conditionals
+# type: snippet
+# --
+match ${1:result_value} {
+   Ok(${2:value}) => {
+       ${3:// Code using value}
+   },
+   Err(${4:err}) => {
+       ${0:// Handle error}
+   },
+}

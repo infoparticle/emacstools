@@ -1,0 +1,16 @@
+# [[file:../../all-snippets.org::*Error Handling Snippets][Error Handling Snippets:2]]
+# -*- mode: snippet -*-
+# name: Nushell Try-Catch-Finally
+# key: m_trycatch_finally
+# group: Nushell Error Handling
+# type: snippet
+# --
+try {
+   ${1:# Code that might fail}
+} catch {|${2:err}|
+   ${3:# Error handling code}
+   echo $"Error: ($$2)"
+} finally {
+   ${0:# Cleanup code that always runs}
+}
+# Error Handling Snippets:2 ends here

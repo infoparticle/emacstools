@@ -1,0 +1,19 @@
+# [[file:../../all-snippets.org::*Stream Chaining Snippets][Stream Chaining Snippets:6]]
+# -*- mode: snippet -*-
+# name: Java Stream Chain with Summary Statistics
+# key: m_stream_chain_summary
+# group: Java Streams Chains
+# type: snippet
+# --
+DoubleSummaryStatistics ${1:stats} = ${2:items}.stream()
+   .mapToDouble(${3:Item}::${4:getValue})
+   .summaryStatistics();
+
+// Access statistics
+double average = $1.getAverage();
+double sum = $1.getSum();
+long count = $1.getCount();
+double max = $1.getMax();
+double min = $1.getMin();
+${0:}
+# Stream Chaining Snippets:6 ends here

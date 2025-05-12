@@ -1,0 +1,10 @@
+# [[file:../../all-snippets.org::*File Operations Snippets][File Operations Snippets:2]]
+# -*- mode: snippet -*-
+# name: Nushell Read JSON File
+# key: m_file_read_json
+# group: Nushell File Operations
+# type: snippet
+# --
+let ${1:data} = open ${2:"data.json"} | from json
+${0:# Process data}
+# File Operations Snippets:2 ends here

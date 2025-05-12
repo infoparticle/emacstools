@@ -1,0 +1,239 @@
+# [[file:../../all-snippets.org::*m_main_fancy][m_main_fancy:1]]
+# -*- mode: snippet -*-
+# name: PowerShell Script Main Template
+# key: m_main_fancy
+# group: PowerShell Scripting
+# type: snippet
+# --
+<#
+.SYNOPSIS
+   ${1:Brief description of script}
+.DESCRIPTION
+   ${2:Detailed description of script}
+.PARAMETER LogPath
+   Path to the log file. Defaults to the script directory.
+.PARAMETER LogLevel
+   Minimum log level to display. Options: DEBUG, INFO, WARNING, ERROR. Defaults to INFO.
+.EXAMPLE
+   ${3:.\ScriptName.ps1 -Parameter Value}
+   ${4:Example description}
+.NOTES
+   Author: ${5:Your Name}
+   Date: ${6:$(format-time-string "%Y-%m-%d")}
+   Version: 1.0
+#>
+
+[CmdletBinding()]
+param (
+   [Parameter()]
+   [string]$LogPath = "$(Split-Path -Parent $MyInvocation.MyCommand.Definition)\$($MyInvocation.MyCommand.Name -replace '.ps1', '.log')",
+
+   [Parameter()]
+   [ValidateSet('DEBUG', 'INFO', 'WARNING', 'ERROR')]
+   [string]$LogLevel = 'INFO'
+)
+
+#region Helper Functions
+
+# Log levels as enum values for comparison
+$LogLevelValues = @{
+   'DEBUG'   = 0
+   'INFO'    = 1
+   'WARNING' = 2
+   'ERROR'   = 3
+}
+
+function Write-Log {
+   [CmdletBinding()]
+   param (
+       [Parameter(Mandatory = $true, ValueFromPipeline = $true)]
+       [string]$Message,
+
+       [Parameter()]
+       [ValidateSet('DEBUG', 'INFO', 'WARNING', 'ERROR')]
+       [string]$Level = 'INFO'
+   )
+
+   # Skip logging if level is lower than configured threshold
+   if ($LogLevelValues[$Level] -lt $LogLevelValues[$LogLevel]) {
+       return
+   }
+
+   $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
+   $formattedMessage = "[$timestamp] [$Level] $Message"
+
+   # Output to console with color based on level
+   switch ($Level) {
+       'DEBUG'   { Write-Host $formattedMessage -ForegroundColor Gray }
+       'INFO'    { Write-Host $formattedMessage -ForegroundColor White }
+       'WARNING' { Write-Host $formattedMessage -ForegroundColor Yellow }
+       'ERROR'   { Write-Host $formattedMessage -ForegroundColor Red }
+   }
+
+   # Ensure log directory exists
+   $logDir = Split-Path -Parent $LogPath
+   if (-not (Test-Path -Path $logDir)) {
+       New-Item -Path $logDir -ItemType Directory -Force | Out-Null
+   }
+
+   # Append to log file
+   Add-Content -Path $LogPath -Value $formattedMessage
+}
+
+function Start-TimedOperation {
+   [CmdletBinding()]
+   param (
+       [Parameter(Mandatory = $true)]
+       [string]$OperationName
+   )
+
+   Write-Log -Message "Starting operation: $OperationName" -Level INFO
+
+   return @{
+       Name      = $OperationName
+       StartTime = Get-Date
+   }
+}
+
+function Stop-TimedOperation {
+   [CmdletBinding()]
+   param (
+       [Parameter(Mandatory = $true)]
+       [hashtable]$Operation
+   )
+
+   $endTime = Get-Date
+   $duration = $endTime - $Operation.StartTime
+   $formattedDuration = "{0:hh\:mm\:ss\.fff}" -f $duration
+
+   Write-Log -Message "Completed operation: $($Operation.Name) (Duration: $formattedDuration)" -Level INFO
+
+   return $formattedDuration
+}
+
+function Test-Administrator {
+   $currentUser = [Security.Principal.WindowsIdentity]::GetCurrent()
+   $windowsPrincipal = New-Object Security.Principal.WindowsPrincipal($currentUser)
+   $administratorRole = [Security.Principal.WindowsBuiltInRole]::Administrator
+
+   return $windowsPrincipal.IsInRole($administratorRole)
+}
+
+function Invoke-WithRetry {
+   [CmdletBinding()]
+   param (
+       [Parameter(Mandatory = $true)]
+       [scriptblock]$ScriptBlock,
+
+       [Parameter()]
+       [int]$MaxAttempts = 3,
+
+       [Parameter()]
+       [int]$RetryDelaySeconds = 2,
+
+       [Parameter()]
+       [scriptblock]$SuccessCondition = { $true },
+
+       [Parameter()]
+       [string]$OperationName = "Operation"
+   )
+
+   $attempt = 1
+   $success = $false
+   $result = $null
+
+   while (-not $success -and $attempt -le $MaxAttempts) {
+       if ($attempt -gt 1) {
+           Write-Log -Message "$OperationName failed, retrying (Attempt $attempt of $MaxAttempts)..." -Level WARNING
+           Start-Sleep -Seconds $RetryDelaySeconds
+       }
+
+       try {
+           $result = Invoke-Command -ScriptBlock $ScriptBlock
+
+           if (Invoke-Command -ScriptBlock $SuccessCondition) {
+               $success = $true
+               Write-Log -Message "$OperationName succeeded on attempt $attempt" -Level DEBUG
+           } else {
+               throw "$OperationName returned unsuccessful result"
+           }
+       } catch {
+           if ($attempt -eq $MaxAttempts) {
+               Write-Log -Message "$OperationName failed after $MaxAttempts attempts: $_" -Level ERROR
+               throw
+           }
+
+           Write-Log -Message "Attempt $attempt failed: $_" -Level DEBUG
+       }
+
+       $attempt++
+   }
+
+   return $result
+}
+
+function Show-BannerMessage {
+   [CmdletBinding()]
+   param (
+       [Parameter(Mandatory = $true)]
+       [string]$Message,
+
+       [Parameter()]
+       [char]$BorderChar = '*',
+
+       [Parameter()]
+       [ConsoleColor]$ForegroundColor = [ConsoleColor]::Cyan
+   )
+
+   $border = $BorderChar * ($Message.Length + 4)
+
+   Write-Host $border -ForegroundColor $ForegroundColor
+   Write-Host "$BorderChar $Message $BorderChar" -ForegroundColor $ForegroundColor
+   Write-Host $border -ForegroundColor $ForegroundColor
+}
+
+#endregion Helper Functions
+
+#region Main Script Execution
+
+# Trap any unhandled exceptions
+trap {
+   Write-Log -Message "UNHANDLED EXCEPTION: $_" -Level ERROR
+   Write-Log -Message "Script execution failed!" -Level ERROR
+   exit 1
+}
+
+# Track total script execution time
+$scriptTimer = Start-TimedOperation -OperationName "Script Execution"
+
+# Script banner
+Show-BannerMessage -Message "${7:$1 v1.0}"
+
+# Check if running as admin if needed
+if (${8:$false}) {
+   if (-not (Test-Administrator)) {
+       Write-Log -Message "This script requires administrator privileges. Please restart as administrator." -Level ERROR
+       exit 1
+   }
+   Write-Log -Message "Running with administrator privileges" -Level INFO
+}
+
+# Main script logic
+try {
+   Write-Log -Message "Script started" -Level INFO
+
+   # Your main code here
+   ${0:# Main implementation}
+
+   Write-Log -Message "Script completed successfully" -Level INFO
+   Stop-TimedOperation -Operation $scriptTimer
+   exit 0
+} catch {
+   Write-Log -Message "Error in main script block: $_" -Level ERROR
+   Write-Log -Message "Script execution failed!" -Level ERROR
+   Stop-TimedOperation -Operation $scriptTimer
+   exit 1
+}
+
+#endregion Main Script Execution
+# m_main_fancy:1 ends here

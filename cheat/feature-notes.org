@@ -1,0 +1,141 @@
+#+TITLE: Cheatsheet Lookup System for Emacs
+#+AUTHOR: Your Name
+#+DESCRIPTION: Enhanced cheatsheet lookup system with caching, org-mode support, and history
+
+* Cheat System Code
+** Core Implementation
+#+BEGIN_SRC emacs-lisp
+;; Customization interface
+(defcustom cheat-repo-root "~/emacstools/cheat/cheat-repo/"
+  "Directory containing cheatsheet .org files."
+  :type 'directory
+  :group 'cheat
+  :package-version '(cheat . "1.0"))
+
+(defvar cheat--file-cache nil
+  "Cached list of cheatsheet files.")
+(defvar cheat--last-cache-time nil
+  "Timestamp of last cache update.")
+(defvar cheat-history nil
+  "History of selected cheatsheets.")
+
+(defun cheat--refresh-file-list ()
+  "Refresh file cache if directory has changed."
+  (when (or (not cheat--file-cache)
+            (time-less-p cheat--last-cache-time
+                         (nth 5 (file-attributes cheat-repo-root))))
+    (setq cheat--file-cache
+          (directory-files-recursively cheat-repo-root "\\.org$" nil))
+    (setq cheat--last-cache-time (current-time))))
+
+(defun cheat-select-info ()
+  "Interactive cheatsheet selector with cached file list."
+  (interactive)
+  (cheat--refresh-file-list)
+  (let* ((cheat-dir-abs (expand-file-name cheat-repo-root))
+         (selected (completing-read
+                    "Choose your reference: "
+                    (mapcar (lambda (f) (file-relative-name f cheat-dir-abs))
+                            cheat--file-cache)
+                    nil t nil 'cheat-history)))
+    (when selected
+      (let ((qref-buf (get-buffer-create "*QUICK-REF*")))
+        (with-current-buffer qref-buf
+          (view-mode -1)
+          (erase-buffer)
+          (condition-case err
+              (insert-file-contents (concat cheat-dir-abs selected))
+            (error (message "Error loading cheatsheet: %s"
+                            (error-message-string err))))
+          (org-mode)
+          (goto-char (point-min))
+          (view-mode 1)
+          (local-set-key (kbd "q") 'quit-window))
+        (pop-to-buffer qref-buf)))))
+#+END_SRC
+
+** Key Features
+*** 1. Intelligent Caching
+- Automatic cache refresh when directory changes
+- Fast file listing for large repositories
+- History tracking of selections
+
+*** 2. Org-Mode Integration
+- Syntax highlighting via ~org-mode~
+- Proper heading navigation
+- Support for Org markup features
+
+*** 3. Safe Buffer Handling
+- Dedicated ~*QUICK-REF*~ buffer
+- Read-only view with ~view-mode~
+- Clean buffer reset between uses
+
+* Installation & Usage
+** Basic Setup
+#+BEGIN_SRC emacs-lisp
+;; Sample configuration
+(use-package cheat-system
+  :load-path "~/emacstools/cheat/"
+  :commands (cheat-select-info)
+  :config
+  (setq cheat-repo-root "~/my-cheatsheets/"))
+#+END_SRC
+
+** Keybindings
+| Key | Command             | Description               |
+|-----|---------------------|---------------------------|
+| q   | ~quit-window~       | Close cheatsheet buffer   |
+| n   | ~next-line~         | Navigate down            |
+| p   | ~previous-line~     | Navigate up              |
+| TAB | ~org-cycle~         | Fold/Unfold headings     |
+
+* Customization
+** Directory Structure Example
+#+BEGIN_EXAMPLE
+~/my-cheatsheets/
++-- elisp.org
++-- python.org
++-- git.org
+#+END_EXAMPLE
+
+** Configuration Options
+#+BEGIN_SRC emacs-lisp
+(setq cheat-repo-root "~/work/cheatsheets/")  ; Custom repository location
+(setq-default view-read-only t)              ; Global view-mode settings
+#+END_SRC
+
+* Extension Ideas
+** Search Integration
+#+BEGIN_SRC emacs-lisp
+(defun cheat-search ()
+  "Search across all cheatsheets."
+  (interactive)
+  (let ((default-directory cheat-repo-root))
+    (call-interactively #'consult-ripgrep)))
+#+END_SRC
+
+** Bookmark System
+#+BEGIN_SRC emacs-lisp
+(defvar cheat-bookmarks nil
+  "List of bookmarked cheatsheet entries.")
+
+(defun cheat-bookmark-add ()
+  "Bookmark current cheatsheet."
+  (interactive)
+  (when-let ((name (buffer-name)))
+    (add-to-list 'cheat-bookmarks name)
+    (message "Bookmarked: %s" name)))
+#+END_SRC
+
+* Documentation
+** Function Reference
+| Function              | Description                          |
+|-----------------------|--------------------------------------|
+| ~cheat-select-info~   | Main entry point for cheatsheet lookup |
+| ~cheat--refresh-file-list~ | Internal cache maintenance function |
+
+** Variables
+| Variable              | Purpose                              |
+|-----------------------|--------------------------------------|
+| ~cheat-repo-root~     | Root directory for cheatsheet files  |
+| ~cheat-history~       | Selection history tracking           |
