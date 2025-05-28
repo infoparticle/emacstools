@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: Check if file exists
+# key: m_if_file_exists
+# group: Bash File Tests
+# --
+if [[ -f "${1:filename}" ]]; then
+    ${0:# code}
+fi

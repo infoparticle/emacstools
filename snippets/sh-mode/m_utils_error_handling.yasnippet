@@ -1,0 +1,20 @@
+# -*- mode: snippet -*-
+# name: Error handling functions
+# key: m_utils_error_handling
+# group: Bash Utilities
+# --
+# Error handling
+error_exit() {
+    echo -e "[\033[0;31mERROR\033[0m] $*" >&2
+    exit 1
+}
+
+# Clean up function on exit
+cleanup() {
+    # Remove temporary files, etc.
+    [[ -f "${TEMP_FILE:-}" ]] && rm -f "$TEMP_FILE"
+    ${0:# Add your cleanup code}
+}
+
+# Set trap to call cleanup on exit
+trap cleanup EXIT INT TERM

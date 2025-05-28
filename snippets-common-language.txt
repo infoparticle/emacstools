@@ -1,0 +1,16 @@
+
+
+- m_loop
+- m_loop_for
+- m_loop_doWhile
+- m_switch
+
+- m_main   : boiler plate need to start a simple script, containing script path etc.
+- m_if
+
+
+- m_utils_logging   : snippet for basic logging function
+
+
+bash sepecific
+

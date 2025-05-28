@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: Safe password handling
+# key: m_sec_safepwd
+# group: Bash Security
+# --
+# Read password securely (no echo)
+read -s -p "${1:Enter password: }" PASSWORD
+echo # Add a line break after input
+
+# Don't use password directly in commands
+# Instead, pass it through stdin or environment
+${0:# Example: Use with stdin - echo "$PASSWORD" | some_command}

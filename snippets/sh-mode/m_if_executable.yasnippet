@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: Check if file is executable
+# key: m_if_executable
+# group: Bash File Tests
+# --
+if [[ -x "${1:filename}" ]]; then
+    ${0:# code}
+fi

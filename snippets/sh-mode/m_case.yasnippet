@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# name: Case statement
+# key: m_case
+# group: Bash Conditionals
+# --
+case "${1:variable}" in
+    ${2:pattern})
+        ${3:# code}
+        ;;
+    ${4:pattern})
+        ${5:# code}
+        ;;
+    *)
+        ${0:# default code}
+        ;;
+esac

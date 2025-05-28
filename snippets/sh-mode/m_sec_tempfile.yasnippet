@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: Secure temporary file creation
+# key: m_sec_tempfile
+# group: Bash Security
+# --
+TEMP_FILE="$(mktemp -t "${1:prefix}.XXXXXX")"
+trap 'rm -f "$TEMP_FILE"' EXIT
+${0:# Use TEMP_FILE}

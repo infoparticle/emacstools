@@ -1,0 +1,492 @@
+#+TITLE: Bash YASnippets Collection
+#+property: header-args :comments link :mkdirp yes :eval yes
+
+* Control Flow Snippets
+
+** For Loops
+
+#+begin_src snippet :tangle ./snippets/sh-mode/m_loop_for.yasnippet
+# -*- mode: snippet -*-
+# name: Basic for loop
+# key: m_loop_for
+# group: Bash Loops
+# --
+for ${1:i} in ${2:"\$@"}; do
+    ${0:# code}
+done
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/sh-mode/m_loop_for_c.yasnippet
+# -*- mode: snippet -*-
+# name: C-style for loop
+# key: m_loop_for_c
+# group: Bash Loops
+# --
+for (( ${1:i}=0; $1<${2:count}; $1++ )); do
+    ${0:# code}
+done
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/sh-mode/m_loop_for_seq.yasnippet
+# -*- mode: snippet -*-
+# name: For loop with sequence
+# key: m_loop_for_seq
+# group: Bash Loops
+# --
+for ${1:i} in $(seq ${2:1} ${3:10}); do
+    ${0:# code}
+done
+#+end_src
+
+** While Loops
+
+#+begin_src snippet :tangle ./snippets/sh-mode/m_loop_while.yasnippet
+# -*- mode: snippet -*-
+# name: While loop
+# key: m_loop_while
+# group: Bash Loops
+# --
+while ${1:condition}; do
+    ${0:# code}
+done
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/sh-mode/m_loop_dowhile.yasnippet
+# -*- mode: snippet -*-
+# name: Do-While loop
+# key: m_loop_dowhile
+# group: Bash Loops
+# --
+while true; do
+    ${0:# code}
+
+    ${1:condition} || break
+done
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/sh-mode/m_loop_until.yasnippet
+# -*- mode: snippet -*-
+# name: Until loop
+# key: m_loop_until
+# group: Bash Loops
+# --
+until ${1:condition}; do
+    ${0:# code}
+done
+#+end_src
+
+** Conditionals
+
+#+begin_src snippet :tangle ./snippets/sh-mode/m_if.yasnippet
+# -*- mode: snippet -*-
+# name: If statement
+# key: m_if
+# group: Bash Conditionals
+# --
+if ${1:condition}; then
+    ${0:# code}
+fi
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/sh-mode/m_ifelse.yasnippet
+# -*- mode: snippet -*-
+# name: If-Else statement
+# key: m_ifelse
+# group: Bash Conditionals
+# --
+if ${1:condition}; then
+    ${2:# code}
+else
+    ${0:# code}
+fi
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/sh-mode/m_ifelifelse.yasnippet
+# -*- mode: snippet -*-
+# name: If-Elif-Else statement
+# key: m_ifelifelse
+# group: Bash Conditionals
+# --
+if ${1:condition}; then
+    ${2:# code}
+elif ${3:condition}; then
+    ${4:# code}
+else
+    ${0:# code}
+fi
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/sh-mode/m_case.yasnippet
+# -*- mode: snippet -*-
+# name: Case statement
+# key: m_case
+# group: Bash Conditionals
+# --
+case "${1:variable}" in
+    ${2:pattern})
+        ${3:# code}
+        ;;
+    ${4:pattern})
+        ${5:# code}
+        ;;
+    *)
+        ${0:# default code}
+        ;;
+esac
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/sh-mode/m_switch.yasnippet
+# -*- mode: snippet -*-
+# name: Switch (case) statement
+# key: m_switch
+# group: Bash Conditionals
+# --
+case "${1:variable}" in
+    ${2:pattern})
+        ${3:# code}
+        ;;
+    ${4:pattern})
+        ${5:# code}
+        ;;
+    *)
+        ${0:# default code}
+        ;;
+esac
+#+end_src
+
+** File Tests
+
+#+begin_src snippet :tangle ./snippets/sh-mode/m_if_file_exists.yasnippet
+# -*- mode: snippet -*-
+# name: Check if file exists
+# key: m_if_file_exists
+# group: Bash File Tests
+# --
+if [[ -f "${1:filename}" ]]; then
+    ${0:# code}
+fi
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/sh-mode/m_if_dir_exists.yasnippet
+# -*- mode: snippet -*-
+# name: Check if directory exists
+# key: m_if_dir_exists
+# group: Bash File Tests
+# --
+if [[ -d "${1:directory}" ]]; then
+    ${0:# code}
+fi
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/sh-mode/m_if_executable.yasnippet
+# -*- mode: snippet -*-
+# name: Check if file is executable
+# key: m_if_executable
+# group: Bash File Tests
+# --
+if [[ -x "${1:filename}" ]]; then
+    ${0:# code}
+fi
+#+end_src
+
+* Script Initialization
+
+#+begin_src snippet :tangle ./snippets/sh-mode/m_main.yasnippet
+# -*- mode: snippet -*-
+# name: Script main boilerplate
+# key: m_main
+# group: Bash Initialization
+# --
+#!/usr/bin/env bash
+
+# Script: ${1:`(file-name-nondirectory (buffer-file-name))`}
+# Description: ${2:Brief description of script purpose}
+# Author: ${3:`user-full-name`}
+# Date: ${4:`(format-time-string "%Y-%m-%d")`}
+
+set -euo pipefail
+IFS=$'\n\t'
+
+# Script directory
+SCRIPT_DIR="$( cd "$( dirname "\${BASH_SOURCE[0]}" )" && pwd )"
+
+# Main function
+main() {
+    ${0:# Main code goes here}
+}
+
+# Execute main function
+main "$@"
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/sh-mode/m_getopt.yasnippet
+# -*- mode: snippet -*-
+# name: Parse command-line arguments with getopts
+# key: m_getopt
+# group: Bash Initialization
+# --
+# Parse command line options
+while getopts ":${1:hvo:}" opt; do
+    case $opt in
+        h)
+            echo "Usage: $0 ${2:[-h] [-v] [-o output_file] args}"
+            exit 0
+            ;;
+        v)
+            verbose=1
+            ;;
+        o)
+            output_file="$OPTARG"
+            ;;
+        \?)
+            echo "Invalid option: -$OPTARG" >&2
+            exit 1
+            ;;
+        :)
+            echo "Option -$OPTARG requires an argument." >&2
+            exit 1
+            ;;
+    esac
+done
+
+# Shift off the options and optional --
+shift "$((OPTIND-1))"
+
+# Remaining arguments
+${0:# Handle remaining arguments}
+#+end_src
+
+* Utility Functions
+
+** Logging
+
+#+begin_src snippet :tangle ./snippets/sh-mode/m_utils_logging.yasnippet
+# -*- mode: snippet -*-
+# name: Basic logging functions
+# key: m_utils_logging
+# group: Bash Utilities
+# --
+# Logging functions
+log_info() {
+    echo -e "[\033[0;34mINFO\033[0m] $*"
+}
+
+log_success() {
+    echo -e "[\033[0;32mSUCCESS\033[0m] $*"
+}
+
+log_warning() {
+    echo -e "[\033[0;33mWARNING\033[0m] $*" >&2
+}
+
+log_error() {
+    echo -e "[\033[0;31mERROR\033[0m] $*" >&2
+}
+
+log_debug() {
+    if [[ "${DEBUG:-0}" -eq 1 ]]; then
+        echo -e "[\033[0;36mDEBUG\033[0m] $*" >&2
+    fi
+}
+
+# Usage
+${0:log_info "Starting process..."}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/sh-mode/m_utils_error_handling.yasnippet
+# -*- mode: snippet -*-
+# name: Error handling functions
+# key: m_utils_error_handling
+# group: Bash Utilities
+# --
+# Error handling
+error_exit() {
+    echo -e "[\033[0;31mERROR\033[0m] $*" >&2
+    exit 1
+}
+
+# Clean up function on exit
+cleanup() {
+    # Remove temporary files, etc.
+    [[ -f "${TEMP_FILE:-}" ]] && rm -f "$TEMP_FILE"
+    ${0:# Add your cleanup code}
+}
+
+# Set trap to call cleanup on exit
+trap cleanup EXIT INT TERM
+#+end_src
+
+** Path Handling
+
+#+begin_src snippet :tangle ./snippets/sh-mode/m_utils_script_path.yasnippet
+# -*- mode: snippet -*-
+# name: Script path handling
+# key: m_utils_script_path
+# group: Bash Utilities
+# --
+# Get script directory (works with symlinks)
+get_script_dir() {
+    local source="${BASH_SOURCE[0]}"
+    local dir=""
+
+    # Resolve $source until the file is no longer a symlink
+    while [ -h "$source" ]; do
+        dir="$( cd -P "$( dirname "$source" )" && pwd )"
+        source="$(readlink "$source")"
+        # If $source was a relative symlink, we need to resolve it relative to the path
+        # where the symlink file was located
+        [[ $source != /* ]] && source="$dir/$source"
+    done
+
+    dir="$( cd -P "$( dirname "$source" )" && pwd )"
+    echo "$dir"
+}
+
+SCRIPT_DIR="$(get_script_dir)"
+${0:# Use SCRIPT_DIR variable}
+#+end_src
+
+* Common Bash Idioms
+
+#+begin_src snippet :tangle ./snippets/sh-mode/m_idiom_subshell.yasnippet
+# -*- mode: snippet -*-
+# name: Command substitution (subshell)
+# key: m_idiom_subshell
+# group: Bash Idioms
+# --
+${1:result}=$(${2:command})
+${0}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/sh-mode/m_idiom_heredoc.yasnippet
+# -*- mode: snippet -*-
+# name: Here document
+# key: m_idiom_heredoc
+# group: Bash Idioms
+# --
+cat <<${1:EOF}
+${0:# Multi-line text here}
+$1
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/sh-mode/m_idiom_redirect.yasnippet
+# -*- mode: snippet -*-
+# name: Redirect stdout and stderr
+# key: m_idiom_redirect
+# group: Bash Idioms
+# --
+${1:command} > ${2:stdout_file} 2> ${3:stderr_file}
+${0}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/sh-mode/m_idiom_redirect_both.yasnippet
+# -*- mode: snippet -*-
+# name: Redirect both stdout and stderr to same file
+# key: m_idiom_redirect_both
+# group: Bash Idioms
+# --
+${1:command} &> ${2:output_file}
+${0}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/sh-mode/m_idiom_null.yasnippet
+# -*- mode: snippet -*-
+# name: Redirect to null
+# key: m_idiom_null
+# group: Bash Idioms
+# --
+${1:command} > /dev/null 2>&1
+${0}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/sh-mode/m_idiom_mkdir_cd.yasnippet
+# -*- mode: snippet -*-
+# name: Create and enter directory
+# key: m_idiom_mkdir_cd
+# group: Bash Idioms
+# --
+mkdir -p "${1:directory}" && cd "$1"
+${0}
+#+end_src
+
+* Data Processing
+
+#+begin_src snippet :tangle ./snippets/sh-mode/m_proc_awk.yasnippet
+# -*- mode: snippet -*-
+# name: AWK processing
+# key: m_proc_awk
+# group: Bash Processing
+# --
+${1:command} | awk '${2:/pattern/} {${3:print $1}}'
+${0}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/sh-mode/m_proc_sed.yasnippet
+# -*- mode: snippet -*-
+# name: SED processing
+# key: m_proc_sed
+# group: Bash Processing
+# --
+${1:command} | sed '${2:s/search/replace/g}'
+${0}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/sh-mode/m_proc_grep.yasnippet
+# -*- mode: snippet -*-
+# name: GREP processing
+# key: m_proc_grep
+# group: Bash Processing
+# --
+${1:command} | grep -${2:E} '${3:pattern}'
+${0}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/sh-mode/m_proc_cut.yasnippet
+# -*- mode: snippet -*-
+# name: CUT processing
+# key: m_proc_cut
+# group: Bash Processing
+# --
+${1:command} | cut -d'${2:,}' -f${3:1}
+${0}
+#+end_src
+
+* Security-Related Snippets
+
+#+begin_src snippet :tangle ./snippets/sh-mode/m_sec_tempfile.yasnippet
+# -*- mode: snippet -*-
+# name: Secure temporary file creation
+# key: m_sec_tempfile
+# group: Bash Security
+# --
+TEMP_FILE="$(mktemp -t "${1:prefix}.XXXXXX")"
+trap 'rm -f "$TEMP_FILE"' EXIT
+${0:# Use TEMP_FILE}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/sh-mode/m_sec_safepwd.yasnippet
+# -*- mode: snippet -*-
+# name: Safe password handling
+# key: m_sec_safepwd
+# group: Bash Security
+# --
+# Read password securely (no echo)
+read -s -p "${1:Enter password: }" PASSWORD
+echo # Add a line break after input
+
+# Don't use password directly in commands
+# Instead, pass it through stdin or environment
+${0:# Example: Use with stdin - echo "$PASSWORD" | some_command}
+#+end_src
+
+#+begin_src snippet :tangle ./snippets/sh-mode/m_sec_strict.yasnippet
+# -*- mode: snippet -*-
+# name: Bash strict mode
+# key: m_sec_strict
+# group: Bash Security
+# --
+# Enable strict mode
+set -euo pipefail
+IFS=$'\n\t'
+${0:# Your code here}
+#+end_src

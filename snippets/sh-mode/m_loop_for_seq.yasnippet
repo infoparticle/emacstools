@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: For loop with sequence
+# key: m_loop_for_seq
+# group: Bash Loops
+# --
+for ${1:i} in $(seq ${2:1} ${3:10}); do
+    ${0:# code}
+done

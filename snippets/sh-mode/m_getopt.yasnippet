@@ -1,0 +1,34 @@
+# -*- mode: snippet -*-
+# name: Parse command-line arguments with getopts
+# key: m_getopt
+# group: Bash Initialization
+# --
+# Parse command line options
+while getopts ":${1:hvo:}" opt; do
+    case $opt in
+        h)
+            echo "Usage: $0 ${2:[-h] [-v] [-o output_file] args}"
+            exit 0
+            ;;
+        v)
+            verbose=1
+            ;;
+        o)
+            output_file="$OPTARG"
+            ;;
+        \?)
+            echo "Invalid option: -$OPTARG" >&2
+            exit 1
+            ;;
+        :)
+            echo "Option -$OPTARG requires an argument." >&2
+            exit 1
+            ;;
+    esac
+done
+
+# Shift off the options and optional --
+shift "$((OPTIND-1))"
+
+# Remaining arguments
+${0:# Handle remaining arguments}

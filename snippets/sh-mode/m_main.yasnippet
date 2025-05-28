@@ -1,0 +1,25 @@
+# -*- mode: snippet -*-
+# name: Script main boilerplate
+# key: m_main
+# group: Bash Initialization
+# --
+#!/usr/bin/env bash
+
+# Script: ${1:`(file-name-nondirectory (buffer-file-name))`}
+# Description: ${2:Brief description of script purpose}
+# Author: ${3:`user-full-name`}
+# Date: ${4:`(format-time-string "%Y-%m-%d")`}
+
+set -euo pipefail
+IFS=$'\n\t'
+
+# Script directory
+SCRIPT_DIR="$( cd "$( dirname "\${BASH_SOURCE[0]}" )" && pwd )"
+
+# Main function
+main() {
+    ${0:# Main code goes here}
+}
+
+# Execute main function
+main "$@"
